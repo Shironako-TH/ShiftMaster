@@ -17,13 +17,14 @@
                         sans: ['Prompt', 'sans-serif'],
                     },
                     boxShadow: {
-                        '3d-sm': '0 4px 12px -2px rgba(0, 0, 0, 0.25), inset 0 1px 1px 0 rgba(255, 255, 255, 0.3)',
-                        '3d-md': '0 12px 32px -6px rgba(0, 0, 0, 0.35), inset 0 1px 2px 0 rgba(255, 255, 255, 0.4)',
-                        '3d-lg': '0 24px 48px -12px rgba(0, 0, 0, 0.5), inset 0 1px 3px 0 rgba(255, 255, 255, 0.5)',
-                        'glow-indigo': '0 0 30px -2px rgba(99, 102, 241, 0.7)',
-                        'glow-violet': '0 0 30px -2px rgba(139, 92, 246, 0.7)',
-                        'glow-emerald': '0 0 30px -2px rgba(16, 185, 129, 0.7)',
-                        'glow-rose': '0 0 30px -2px rgba(244, 63, 94, 0.7)',
+                        '3d-sm': '0 4px 14px -2px rgba(0, 0, 0, 0.4), inset 0 1px 1px 0 rgba(255, 255, 255, 0.4), inset 0 -2px 4px 0 rgba(0, 0, 0, 0.4)',
+                        '3d-md': '0 12px 32px -6px rgba(0, 0, 0, 0.6), inset 0 2px 2px 0 rgba(255, 255, 255, 0.5), inset 0 -3px 6px 0 rgba(0, 0, 0, 0.5)',
+                        '3d-lg': '0 24px 48px -12px rgba(0, 0, 0, 0.7), inset 0 2px 3px 0 rgba(255, 255, 255, 0.6)',
+                        'glow-indigo': '0 0 25px rgba(99, 102, 241, 0.8), inset 0 0 10px rgba(129, 140, 248, 0.6)',
+                        'glow-violet': '0 0 25px rgba(139, 92, 246, 0.8), inset 0 0 10px rgba(167, 139, 250, 0.6)',
+                        'glow-emerald': '0 0 25px rgba(16, 185, 129, 0.8), inset 0 0 10px rgba(52, 211, 153, 0.6)',
+                        'glow-rose': '0 0 25px rgba(244, 63, 94, 0.8), inset 0 0 10px rgba(251, 113, 133, 0.6)',
+                        'glow-cyan': '0 0 25px rgba(6, 182, 212, 0.8), inset 0 0 10px rgba(56, 189, 248, 0.6)',
                     }
                 }
             }
@@ -120,6 +121,50 @@
             animation: starTwinkle 1.5s ease-in-out infinite;
         }
 
+        /* --- SPACE HOLOGRAPHIC 3D BUTTONS --- */
+        .btn-space-3d {
+            position: relative;
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%);
+            border: 1px solid rgba(129, 140, 248, 0.4);
+            box-shadow: 
+                0 6px 20px -2px rgba(0, 0, 0, 0.5),
+                inset 0 1px 1px 0 rgba(255, 255, 255, 0.4),
+                inset 0 -2px 4px 0 rgba(0, 0, 0, 0.6);
+            transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+            overflow: hidden;
+        }
+
+        .btn-space-3d::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+            transition: 0.5s;
+        }
+
+        .btn-space-3d:hover::before {
+            left: 100%;
+        }
+
+        .btn-space-3d:hover {
+            transform: translateY(-3px) scale(1.02);
+            border-color: rgba(168, 85, 247, 0.8);
+            box-shadow: 
+                0 10px 25px -4px rgba(99, 102, 241, 0.6),
+                inset 0 2px 2px 0 rgba(255, 255, 255, 0.6),
+                inset 0 -2px 4px 0 rgba(0, 0, 0, 0.4);
+        }
+
+        .btn-space-3d:active {
+            transform: translateY(1px) scale(0.98);
+            box-shadow: 
+                0 2px 8px rgba(0, 0, 0, 0.4),
+                inset 0 1px 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
         /* --- LASER GLOW 3D ANIMATION FOR "TODAY" COLUMN --- */
         @keyframes laserGlow3D {
             0% {
@@ -182,21 +227,6 @@
         .glass-sidebar-pattern {
             background: linear-gradient(180deg, rgba(15, 23, 42, 0.98) 0%, rgba(9, 13, 22, 0.98) 100%);
             box-shadow: 10px 0 30px rgba(0, 0, 0, 0.5);
-        }
-
-        /* Tactile 3D Button */
-        .btn-tactile-3d {
-            transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.15s ease;
-            position: relative;
-            box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.25);
-        }
-        .btn-tactile-3d:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px -4px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.4);
-        }
-        .btn-tactile-3d:active {
-            transform: translateY(1px);
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
 
         /* Shift Badge inside Table */
@@ -317,16 +347,16 @@
 
             <!-- Navigation Links -->
             <nav class="p-2.5 space-y-2 mt-1">
-                <button onclick="switchTab('roster')" id="nav-roster" class="btn-tactile-3d w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all bg-gradient-to-r from-indigo-600 via-indigo-500 to-violet-600 text-white shadow-glow-indigo border border-indigo-400/30">
+                <button onclick="switchTab('roster')" id="nav-roster" class="btn-space-3d w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all bg-gradient-to-r from-indigo-600 via-indigo-500 to-violet-600 text-white shadow-glow-indigo border-indigo-400/50">
                     <i data-lucide="calendar" class="w-4 h-4"></i>
                     <span>ตารางงานรายเดือน</span>
                 </button>
-                <button onclick="switchTab('daily')" id="nav-daily" class="btn-tactile-3d w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all text-slate-400 hover:bg-white/10 hover:text-white border border-white/5">
-                    <i data-lucide="clock" class="w-4 h-4"></i>
+                <button onclick="switchTab('daily')" id="nav-daily" class="btn-space-3d w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all text-slate-300 hover:text-white border-slate-700/80">
+                    <i data-lucide="clock" class="w-4 h-4 text-indigo-400"></i>
                     <span>สรุปรายวัน</span>
                 </button>
-                <button onclick="switchTab('employees')" id="nav-employees" class="btn-tactile-3d w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all text-slate-400 hover:bg-white/10 hover:text-white border border-white/5">
-                    <i data-lucide="users" class="w-4 h-4"></i>
+                <button onclick="switchTab('employees')" id="nav-employees" class="btn-space-3d w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all text-slate-300 hover:text-white border-slate-700/80">
+                    <i data-lucide="users" class="w-4 h-4 text-purple-400"></i>
                     <span>จัดการพนักงาน</span>
                 </button>
             </nav>
@@ -335,7 +365,7 @@
         <!-- Sidebar Footer -->
         <div class="p-3 border-t border-indigo-500/20 bg-slate-950/80 relative z-10">
             <div class="flex items-center justify-between text-[9.5px] text-indigo-300/80 font-semibold">
-                <span>เวอร์ชัน 5.5 3D </span>
+                <span>เวอร์ชัน 5.6 Space 3D</span>
                 <span id="sync-status" class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[8.5px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-glow-emerald">
                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
                     เชื่อมต่อแล้ว
@@ -356,11 +386,11 @@
                 <h2 id="page-title" class="text-xs font-extrabold text-white tracking-tight drop-shadow">ตารางงานรายเดือน</h2>
             </div>
             <div class="flex items-center space-x-2">
-                <button onclick="jumpToToday()" title="คลิกเพื่อไปยังวันปัจจุบัน" class="btn-tactile-3d text-[11px] font-bold text-indigo-200 bg-slate-800/90 hover:bg-slate-700/90 px-3 py-1.5 rounded-xl border border-indigo-500/30 flex items-center space-x-1.5 cursor-pointer shadow-3d-sm">
+                <button onclick="jumpToToday()" title="คลิกเพื่อไปยังวันปัจจุบัน" class="btn-space-3d text-[11px] font-bold text-indigo-200 px-3 py-1.5 rounded-xl flex items-center space-x-1.5 cursor-pointer shadow-3d-sm">
                     <i data-lucide="calendar-check" class="w-3.5 h-3.5 text-indigo-400"></i>
                     <span id="today-text-display">กำลังโหลด...</span>
                 </button>
-                <button onclick="openShiftSettingsModal()" class="btn-tactile-3d flex items-center space-x-1.5 px-3 py-1.5 bg-gradient-to-r from-indigo-600 via-purple-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white rounded-xl text-[11px] font-bold shadow-glow-indigo border border-indigo-400/40">
+                <button onclick="openShiftSettingsModal()" class="btn-space-3d flex items-center space-x-1.5 px-3 py-1.5 bg-gradient-to-r from-indigo-600 via-purple-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white rounded-xl text-[11px] font-bold shadow-glow-indigo border-indigo-400/50">
                     <i data-lucide="sliders" class="w-3.5 h-3.5 text-indigo-200"></i>
                     <span>จัดการกะและสีกะ</span>
                 </button>
@@ -408,15 +438,15 @@
                     </div>
 
                     <div class="flex items-center space-x-2">
-                        <button onclick="resetMonthSchedule()" class="btn-tactile-3d flex items-center space-x-1 px-3 py-1.5 bg-rose-950/80 hover:bg-rose-900 text-rose-300 text-[11px] font-bold rounded-xl border border-rose-700/50 shadow-3d-sm">
+                        <button onclick="resetMonthSchedule()" class="btn-space-3d flex items-center space-x-1 px-3 py-1.5 bg-rose-950/80 hover:bg-rose-900 text-rose-300 text-[11px] font-bold rounded-xl border-rose-700/50 shadow-3d-sm">
                             <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
                             <span>ล้างกะเดือนนี้</span>
                         </button>
-                        <button onclick="printRosterPDF()" class="btn-tactile-3d flex items-center space-x-1 px-3.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-white text-[11px] font-bold rounded-xl border border-slate-600/50 shadow-3d-sm">
+                        <button onclick="printRosterPDF()" class="btn-space-3d flex items-center space-x-1 px-3.5 py-1.5 text-white text-[11px] font-bold rounded-xl border-slate-600/60 shadow-3d-sm">
                             <i data-lucide="printer" class="w-3.5 h-3.5 text-slate-300"></i>
                             <span>พิมพ์ / PDF</span>
                         </button>
-                        <button onclick="exportRosterExcel()" class="btn-tactile-3d flex items-center space-x-1 px-3.5 py-1.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-[11px] font-bold rounded-xl shadow-glow-emerald border border-emerald-400/40">
+                        <button onclick="exportRosterExcel()" class="btn-space-3d flex items-center space-x-1 px-3.5 py-1.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-[11px] font-bold rounded-xl shadow-glow-emerald border-emerald-400/50">
                             <i data-lucide="file-spreadsheet" class="w-3.5 h-3.5"></i>
                             <span>ดาวน์โหลด Excel</span>
                         </button>
@@ -436,7 +466,7 @@
                     </div>
                     
                     <!-- 3D Cute Rabbit Mascot Card -->
-                    <div onclick="petTheRabbit()" class="flex items-center space-x-2 bg-slate-900/90 px-3 py-1 rounded-xl border border-indigo-400/40 shadow-3d-sm cursor-pointer hover:bg-slate-800 transition group shrink-0" title="คลิกทักทายน้องกระต่ายดุ๊กดิ๊ก!">
+                    <div onclick="petTheRabbit()" class="btn-space-3d flex items-center space-x-2 px-3 py-1 rounded-xl cursor-pointer transition group shrink-0" title="คลิกทักทายน้องกระต่ายดุ๊กดิ๊ก!">
                         <div class="relative animate-rabbit-float shrink-0">
                             <div class="absolute -inset-1 bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 rounded-lg blur-xs opacity-75 group-hover:opacity-100"></div>
                             <div class="relative w-7 h-7 bg-slate-950 rounded-lg border border-pink-400/70 flex items-center justify-center text-sm shadow-glow-rose select-none">
@@ -470,7 +500,7 @@
                     <div class="flex items-center space-x-3">
                         <label class="text-xs font-extrabold text-slate-300">เลือกวันที่:</label>
                         <input type="date" id="daily-date-picker" onchange="renderDailyOverview()" class="bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs font-bold text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-inner">
-                        <button onclick="setDailyPickerToToday()" class="btn-tactile-3d px-3 py-1.5 bg-indigo-950 hover:bg-indigo-900 text-indigo-300 text-xs font-bold rounded-xl border border-indigo-700/50 shadow-3d-sm">
+                        <button onclick="setDailyPickerToToday()" class="btn-space-3d px-3 py-1.5 text-indigo-300 text-xs font-bold rounded-xl border-indigo-700/50 shadow-3d-sm">
                             วันนี้
                         </button>
                     </div>
@@ -515,7 +545,7 @@
                                     พนักงานต้อนรับ (Reception) จะถูกจัดอยู่อันดับแรกอัตโนมัติ
                                 </p>
                             </div>
-                            <button type="submit" class="btn-tactile-3d w-full mt-1 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 hover:from-indigo-500 hover:to-pink-500 text-white font-extrabold py-2.5 rounded-xl shadow-glow-indigo text-xs tracking-wide border border-indigo-400/40">
+                            <button type="submit" class="btn-space-3d w-full mt-1 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 hover:from-indigo-500 hover:to-pink-500 text-white font-extrabold py-2.5 rounded-xl shadow-glow-indigo text-xs tracking-wide border-indigo-400/50">
                                 บันทึกพนักงาน
                             </button>
                         </form>
@@ -529,7 +559,7 @@
                                 <span>รายชื่อพนักงานทั้งหมด (<span id="emp-count">0</span>)</span>
                             </h3>
                             <span class="text-[9.5px] text-amber-300 font-extrabold bg-amber-950/60 border border-amber-500/40 px-2.5 py-0.5 rounded-full shadow-3d-sm flex items-center gap-1">
-                             🫯 Reception / Front Priority Active
+                                ⭐ Reception / Front Priority Active
                             </span>
                         </div>
                         <div class="overflow-x-auto flex-1" style="max-height: calc(100vh - 200px);">
@@ -564,7 +594,7 @@
                     </div>
                     <h3 class="text-sm font-extrabold text-white">จัดการเวลากะและสีแบดจ์</h3>
                 </div>
-                <button onclick="closeShiftSettingsModal()" class="btn-tactile-3d p-1.5 text-slate-400 hover:text-white rounded-xl bg-slate-800 hover:bg-slate-700 transition">
+                <button onclick="closeShiftSettingsModal()" class="btn-space-3d p-1.5 text-slate-400 hover:text-white rounded-xl transition">
                     <i data-lucide="x" class="w-4 h-4"></i>
                 </button>
             </div>
@@ -603,10 +633,10 @@
                             </div>
                         </div>
                         <div class="flex space-x-2 pt-1">
-                            <button type="submit" id="shift-submit-btn" class="btn-tactile-3d flex-1 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-extrabold py-2 rounded-xl text-xs shadow-glow-indigo border border-indigo-400/40">
+                            <button type="submit" id="shift-submit-btn" class="btn-space-3d flex-1 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-extrabold py-2 rounded-xl text-xs shadow-glow-indigo border-indigo-400/50">
                                 บันทึกกะ
                             </button>
-                            <button type="button" id="shift-cancel-btn" onclick="resetShiftForm()" class="btn-tactile-3d hidden px-3.5 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold py-2 rounded-xl text-xs border border-slate-600">
+                            <button type="button" id="shift-cancel-btn" onclick="resetShiftForm()" class="btn-space-3d hidden px-3.5 text-slate-300 font-bold py-2 rounded-xl text-xs border-slate-600">
                                 ยกเลิก
                             </button>
                         </div>
@@ -624,7 +654,7 @@
             </div>
 
             <div class="flex justify-end pt-2 border-t border-slate-800">
-                <button onclick="closeShiftSettingsModal()" class="btn-tactile-3d px-5 py-2 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white rounded-xl text-xs font-extrabold shadow-glow-indigo border border-indigo-400/40">
+                <button onclick="closeShiftSettingsModal()" class="btn-space-3d px-5 py-2 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white rounded-xl text-xs font-extrabold shadow-glow-indigo border-indigo-400/50">
                     เสร็จสิ้น
                 </button>
             </div>
@@ -637,7 +667,7 @@
             <h3 id="modal-title" class="text-xs font-extrabold text-white">แจ้งเตือน</h3>
             <p id="modal-message" class="text-xs font-medium text-slate-300 leading-relaxed"></p>
             <div id="modal-actions" class="flex justify-end space-x-2 pt-1">
-                <button onclick="closeModal()" class="btn-tactile-3d px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold shadow-glow-indigo border border-indigo-400/40">ตกลง</button>
+                <button onclick="closeModal()" class="btn-space-3d px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold shadow-glow-indigo border-indigo-400/50">ตกลง</button>
             </div>
         </div>
     </div>
@@ -828,12 +858,12 @@
             const actions = document.getElementById('modal-actions');
             if (onConfirm) {
                 actions.innerHTML = `
-                    <button onclick="closeModal()" class="btn-tactile-3d px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-bold border border-slate-600">ยกเลิก</button>
-                    <button id="modal-confirm-btn" class="btn-tactile-3d px-4 py-2 bg-rose-600 hover:bg-rose-500 text-white rounded-xl text-xs font-bold shadow-glow-rose border border-rose-400/40">ยืนยัน</button>
+                    <button onclick="closeModal()" class="btn-space-3d px-4 py-2 text-slate-300 rounded-xl text-xs font-bold border-slate-600">ยกเลิก</button>
+                    <button id="modal-confirm-btn" class="btn-space-3d px-4 py-2 bg-rose-600 hover:bg-rose-500 text-white rounded-xl text-xs font-bold shadow-glow-rose border-rose-400/50">ยืนยัน</button>
                 `;
                 document.getElementById('modal-confirm-btn').onclick = () => { onConfirm(); closeModal(); };
             } else {
-                actions.innerHTML = `<button onclick="closeModal()" class="btn-tactile-3d px-5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold shadow-glow-indigo border border-indigo-400/40">ตกลง</button>`;
+                actions.innerHTML = `<button onclick="closeModal()" class="btn-space-3d px-5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold shadow-glow-indigo border-indigo-400/50">ตกลง</button>`;
             }
             document.getElementById('app-modal').classList.remove('hidden');
         }
@@ -845,10 +875,10 @@
         function switchTab(tabId) {
             ['roster', 'daily', 'employees'].forEach(t => {
                 document.getElementById(`tab-${t}`).classList.add('hidden');
-                document.getElementById(`nav-${t}`).className = "btn-tactile-3d w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all text-slate-400 hover:bg-white/10 hover:text-white border border-white/5";
+                document.getElementById(`nav-${t}`).className = "btn-space-3d w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all text-slate-300 hover:text-white border-slate-700/80";
             });
             document.getElementById(`tab-${tabId}`).classList.remove('hidden');
-            document.getElementById(`nav-${tabId}`).className = "btn-tactile-3d w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all bg-gradient-to-r from-indigo-600 via-indigo-500 to-violet-600 text-white shadow-glow-indigo border border-indigo-400/30";
+            document.getElementById(`nav-${tabId}`).className = "btn-space-3d w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all bg-gradient-to-r from-indigo-600 via-indigo-500 to-violet-600 text-white shadow-glow-indigo border-indigo-400/50";
 
             const titles = { roster: 'ตารางงานรายเดือน', daily: 'สรุปรายวัน', employees: 'จัดการพนักงาน' };
             document.getElementById('page-title').innerText = titles[tabId];
@@ -952,7 +982,7 @@
                     <div class="flex items-center space-x-2">
                         <span class="text-[9.5px] font-extrabold ${isRecep ? 'bg-gradient-to-r from-amber-400 to-yellow-400 text-slate-950 shadow-3d-sm' : 'bg-indigo-600 text-white'} px-1.5 py-0.5 rounded-md shrink-0 border border-white/20">[${emp.id}]</span>
                         <div class="overflow-hidden leading-tight">
-                            <div class="text-slate-100 text-xs font-bold truncate max-w-[125px] flex items-center gap-1" title="${emp.name}">${emp.name}${isRecep ? '<span class="text-[9.5px] text-amber-400 font-bold">⭐</span>' : ''}</div>
+                            <div class="text-slate-100 text-xs font-bold truncate max-w-[125px]" title="${emp.name}">${emp.name}</div>
                             <div class="text-[9.5px] ${isRecep ? 'text-amber-300 font-bold' : 'text-indigo-300 font-medium'} truncate max-w-[125px]" title="${emp.role}">${emp.role}</div>
                         </div>
                     </div>
@@ -1073,7 +1103,7 @@
                                     <div class="flex items-center justify-between p-2.5 bg-slate-900/90 rounded-xl border border-slate-800 shadow-3d-sm">
                                         <div>
                                             <div class="text-[10.5px] font-extrabold text-indigo-400">[${emp.id}]</div>
-                                            <div class="text-xs font-bold text-white flex items-center gap-1">${emp.name}${isRecep ? '<span class="text-[9.5px] text-amber-400 font-bold">⭐</span>' : ''}</div>
+                                            <div class="text-xs font-bold text-white">${emp.name}</div>
                                         </div>
                                         <span class="text-[9.5px] font-bold ${isRecep ? 'bg-amber-950/80 text-amber-300 border border-amber-500/40' : 'bg-slate-800 text-slate-300'} px-2 py-0.5 rounded-lg">${emp.role}</span>
                                     </div>
@@ -1126,10 +1156,10 @@
                 return `
                     <tr class="hover:bg-indigo-950/30 transition-colors ${isRecep ? 'bg-amber-950/10' : ''}">
                         <td class="p-3 font-extrabold text-indigo-400">[${emp.id}]</td>
-                        <td class="p-3 font-bold text-white flex items-center gap-1.5">${emp.name}${isRecep ? '<span class="text-[9.5px] bg-amber-400 text-slate-950 font-extrabold px-1.5 py-0.5 rounded shadow-3d-sm">Reception</span>' : ''}</td>
+                        <td class="p-3 font-bold text-white">${emp.name}</td>
                         <td class="p-3 font-semibold text-slate-300">${emp.role}</td>
                         <td class="p-3 text-center">
-                            <button onclick="deleteEmployee('${emp.id}')" class="btn-tactile-3d p-1.5 text-rose-400 hover:bg-rose-950/60 rounded-lg transition-all border border-rose-500/20" title="ลบพนักงาน">
+                            <button onclick="deleteEmployee('${emp.id}')" class="btn-space-3d p-1.5 text-rose-400 hover:bg-rose-950/60 rounded-lg transition-all border-rose-500/30" title="ลบพนักงาน">
                                 <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
                             </button>
                         </td>
@@ -1208,8 +1238,8 @@
                         <div class="text-[10px] text-slate-400 font-semibold mt-0.5">${shift.start !== '-' ? shift.start + ' - ' + shift.end : 'วันหยุด'}</div>
                     </div>
                     <div class="flex items-center space-x-1">
-                        <button onclick="editShift('${shift.code}')" class="btn-tactile-3d p-1 text-indigo-400 hover:bg-indigo-950 rounded-lg border border-indigo-500/20" title="แก้ไข"><i data-lucide="edit-3" class="w-3.5 h-3.5"></i></button>
-                        ${shift.code !== 'OFF' ? `<button onclick="deleteShift('${shift.code}')" class="btn-tactile-3d p-1 text-rose-400 hover:bg-rose-950 rounded-lg border border-rose-500/20" title="ลบ"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>` : ''}
+                        <button onclick="editShift('${shift.code}')" class="btn-space-3d p-1 text-indigo-400 hover:bg-indigo-950 rounded-lg border-indigo-500/30" title="แก้ไข"><i data-lucide="edit-3" class="w-3.5 h-3.5"></i></button>
+                        ${shift.code !== 'OFF' ? `<button onclick="deleteShift('${shift.code}')" class="btn-space-3d p-1 text-rose-400 hover:bg-rose-950 rounded-lg border-rose-500/30" title="ลบ"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>` : ''}
                     </div>
                 </div>
             `).join('');
