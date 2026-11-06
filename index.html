@@ -20,10 +20,10 @@
                         'soft-sm': '0 2px 8px -2px rgba(0, 0, 0, 0.05), 0 1px 4px -1px rgba(0, 0, 0, 0.03)',
                         'soft-md': '0 8px 24px -4px rgba(0, 0, 0, 0.08), 0 4px 12px -2px rgba(0, 0, 0, 0.04)',
                         'soft-lg': '0 16px 32px -6px rgba(0, 0, 0, 0.1), 0 8px 16px -4px rgba(0, 0, 0, 0.06)',
-                        'glow-indigo': '0 0 20px -3px rgba(99, 102, 241, 0.45)',
-                        'glow-violet': '0 0 20px -3px rgba(139, 92, 246, 0.45)',
-                        'glow-emerald': '0 0 20px -3px rgba(16, 185, 129, 0.45)',
-                        'glow-rose': '0 0 20px -3px rgba(244, 63, 94, 0.45)',
+                        'glow-indigo': '0 0 25px -2px rgba(99, 102, 241, 0.6)',
+                        'glow-violet': '0 0 25px -2px rgba(139, 92, 246, 0.6)',
+                        'glow-emerald': '0 0 25px -2px rgba(16, 185, 129, 0.6)',
+                        'glow-rose': '0 0 25px -2px rgba(244, 63, 94, 0.6)',
                         'inner-soft': 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.04)',
                     }
                 }
@@ -44,7 +44,52 @@
     <style>
         body { 
             font-family: 'Prompt', sans-serif; 
-            background: radial-gradient(circle at 50% 0%, #f8fafc 0%, #f1f5f9 60%, #e2e8f0 100%);
+            background: radial-gradient(circle at 50% 0%, #0f172a 0%, #090d16 100%);
+        }
+
+        /* Ambient Dashboard Background Grid Effect */
+        .dashboard-bg-pattern {
+            background-color: #f8fafc;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.1) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(244, 63, 94, 0.06) 0px, transparent 50%),
+                radial-gradient(at 50% 50%, rgba(139, 92, 246, 0.08) 0px, transparent 50%),
+                linear-gradient(to right, rgba(226, 232, 240, 0.4) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(226, 232, 240, 0.4) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 100% 100%, 24px 24px, 24px 24px;
+        }
+
+        /* --- LASER GLOW RUNNING BORDER ANIMATION FOR "TODAY" COLUMN --- */
+        @keyframes laserGlow {
+            0% {
+                box-shadow: inset 0 0 8px rgba(99, 102, 241, 0.8), 0 0 12px rgba(99, 102, 241, 0.5);
+                border-color: rgba(129, 140, 248, 1);
+            }
+            50% {
+                box-shadow: inset 0 0 16px rgba(168, 85, 247, 0.95), 0 0 20px rgba(168, 85, 247, 0.7);
+                border-color: rgba(216, 180, 254, 1);
+            }
+            100% {
+                box-shadow: inset 0 0 8px rgba(99, 102, 241, 0.8), 0 0 12px rgba(99, 102, 241, 0.5);
+                border-color: rgba(129, 140, 248, 1);
+            }
+        }
+
+        .today-laser-column {
+            position: relative;
+            background: linear-gradient(135deg, rgba(238, 242, 255, 0.95) 0%, rgba(224, 231, 255, 0.9) 100%) !important;
+            animation: laserGlow 2s infinite ease-in-out;
+            z-index: 15;
+        }
+
+        /* Top Header Luxury Pattern */
+        .header-glass-bg {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            background-image: radial-gradient(rgba(99, 102, 241, 0.12) 1px, transparent 0);
+            background-size: 12px 12px;
+            border-bottom: 1px solid rgba(226, 232, 240, 0.8);
         }
 
         /* Splash Screen Styling */
@@ -64,16 +109,20 @@
             visibility: hidden;
         }
 
-        /* Glassmorphism Classes */
+        /* Enhanced Glassmorphism Panels */
         .glass-panel {
             background: rgba(255, 255, 255, 0.88);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05), 0 4px 12px -2px rgba(0, 0, 0, 0.03);
         }
 
-        .glass-sidebar {
-            background: linear-gradient(180deg, #0f172a 0%, #1e1b4b 60%, #090d16 100%);
+        .glass-sidebar-pattern {
+            background-image: 
+                radial-gradient(circle at 10% 10%, rgba(99, 102, 241, 0.15), transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(168, 85, 247, 0.15), transparent 40%),
+                linear-gradient(to bottom, rgba(15, 23, 42, 0.98), rgba(9, 13, 22, 0.98));
         }
 
         /* Tactile Button */
@@ -188,33 +237,41 @@
 </head>
 <body class="h-full text-slate-800 flex flex-col md:flex-row overflow-hidden m-0 p-0 antialiased selection:bg-indigo-500 selection:text-white">
 
-    <!-- SPLASH SCREEN (ดึงรูป icon-512.png มาแสดง) -->
+    <!-- SPLASH SCREEN -->
     <div id="splash-screen">
         <div class="flex flex-col items-center space-y-4 animate-in fade-in zoom-in duration-500">
-            <img src="icon-512.png" alt="ShiftMaster Logo" class="w-24 h-24 rounded-3xl shadow-2xl object-cover border-2 border-indigo-500/40 animate-bounce">
+            <img src="icon-512.png" alt="ShiftMaster Logo" class="w-24 h-24 rounded-3xl shadow-glow-indigo object-cover border-2 border-indigo-400/40 animate-bounce">
             <div class="text-center space-y-1">
                 <h1 class="text-2xl font-extrabold text-white tracking-wider flex items-center justify-center gap-2">
                     ShiftMaster
-                    <span class="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-indigo-500 text-white shadow-glow-indigo">ULTRA</span>
+                    <span class="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-glow-indigo">ULTRA</span>
                 </h1>
                 <p class="text-xs text-indigo-300 font-medium">ระบบจัดการตารางกะพนักงานอัจฉริยะ</p>
             </div>
             <div class="w-32 h-1 bg-indigo-950 rounded-full overflow-hidden mt-4">
-                <div class="w-full h-full bg-gradient-to-r from-indigo-500 to-purple-500 animate-[pulse_1s_infinite]"></div>
+                <div class="w-full h-full bg-gradient-to-r from-indigo-500 via-pink-500 to-purple-500 animate-[pulse_1s_infinite]"></div>
             </div>
         </div>
     </div>
 
     <!-- Sidebar Navigation -->
-    <aside class="w-full md:w-64 glass-sidebar text-slate-300 flex flex-col justify-between shrink-0 shadow-2xl z-20 no-print border-r border-indigo-950/40">
-        <div>
-            <!-- App Branding (ดึงรูป icon-192.png มาแสดง) -->
-            <div class="px-4 py-4 flex items-center space-x-3 border-b border-indigo-900/40">
-                <img src="icon-192.png" alt="Logo" class="w-9 h-9 rounded-2xl shadow-glow-indigo object-cover border border-indigo-400/30 transition-all duration-300 hover:rotate-6 hover:scale-110 cursor-pointer">
+    <aside class="w-full md:w-64 glass-sidebar-pattern text-slate-300 flex flex-col justify-between shrink-0 shadow-2xl z-20 no-print border-r border-indigo-900/40 relative overflow-hidden">
+        
+        <!-- Sidebar Glow Orb Background Accent -->
+        <div class="absolute -top-12 -left-12 w-36 h-36 bg-indigo-600/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-10 right-0 w-32 h-32 bg-purple-600/20 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="relative z-10">
+            <!-- App Branding -->
+            <div class="px-5 py-4 flex items-center space-x-3 border-b border-indigo-900/50 bg-slate-950/40 backdrop-blur-md">
+                <div class="relative group">
+                    <div class="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl blur opacity-60 group-hover:opacity-100 transition duration-300"></div>
+                    <img src="icon-192.png" alt="Logo" class="relative w-9 h-9 rounded-2xl object-cover border border-indigo-300/40 transition-all duration-300 group-hover:rotate-6 group-hover:scale-105 cursor-pointer">
+                </div>
                 <div>
                     <h1 class="font-extrabold text-white text-base tracking-wide flex items-center gap-1.5">
                         ShiftMaster
-                        <span class="text-[9px] font-bold px-2 py-0.5 rounded-full bg-indigo-500 text-white shadow-glow-indigo">ULTRA</span>
+                        <span class="text-[9px] font-bold px-2 py-0.5 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-glow-indigo">ULTRA</span>
                     </h1>
                     <p class="text-[10px] text-indigo-300/80 font-medium">ระบบจัดการกะพนักงาน</p>
                 </div>
@@ -238,7 +295,7 @@
         </div>
 
         <!-- Sidebar Footer -->
-        <div class="p-4 border-t border-indigo-900/40 bg-black/30 backdrop-blur-md">
+        <div class="p-4 border-t border-indigo-900/50 bg-slate-950/60 backdrop-blur-md relative z-10">
             <div class="flex items-center justify-between text-[10px] text-indigo-300/70 font-semibold">
                 <span>เวอร์ชัน 4.9 Tactile UI</span>
                 <span id="sync-status" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[9px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 shadow-glow-emerald">
@@ -250,19 +307,23 @@
     </aside>
 
     <!-- Main Content Area -->
-    <main class="flex-1 flex flex-col h-full overflow-hidden">
+    <main class="flex-1 flex flex-col h-full overflow-hidden dashboard-bg-pattern relative">
+        <!-- Dashboard Ambient Effects -->
+        <div class="absolute top-1/4 left-1/3 w-96 h-96 bg-indigo-400/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-10 right-10 w-96 h-96 bg-rose-400/10 rounded-full blur-3xl pointer-events-none"></div>
+
         <!-- Top Header Bar -->
-        <header class="glass-panel px-4 py-3 flex items-center justify-between shrink-0 shadow-soft-sm no-print z-10">
-            <div class="flex items-center space-x-2.5">
+        <header class="header-glass-bg px-5 py-3.5 flex items-center justify-between shrink-0 shadow-soft-sm no-print z-10 relative">
+            <div class="flex items-center space-x-3">
                 <div class="w-2.5 h-6 bg-gradient-to-b from-indigo-500 via-purple-500 to-pink-500 rounded-full shadow-glow-indigo"></div>
                 <h2 id="page-title" class="text-sm font-extrabold text-slate-800 tracking-tight">ตารางงานรายเดือน</h2>
             </div>
             <div class="flex items-center space-x-2.5">
-                <button onclick="jumpToToday()" title="คลิกเพื่อไปยังวันปัจจุบัน" class="btn-tactile text-xs font-bold text-indigo-700 bg-gradient-to-r from-indigo-50 to-purple-50 hover:from-indigo-100 hover:to-purple-100 px-3.5 py-2 rounded-2xl border border-indigo-200/80 flex items-center space-x-2 cursor-pointer shadow-soft-sm">
+                <button onclick="jumpToToday()" title="คลิกเพื่อไปยังวันปัจจุบัน" class="btn-tactile text-xs font-bold text-indigo-700 bg-white/90 hover:bg-indigo-50/90 px-3.5 py-2 rounded-2xl border border-indigo-200/80 flex items-center space-x-2 cursor-pointer shadow-soft-sm">
                     <i data-lucide="calendar-check" class="w-4 h-4 text-indigo-600"></i>
                     <span id="today-text-display">กำลังโหลด...</span>
                 </button>
-                <button onclick="openShiftSettingsModal()" class="btn-tactile flex items-center space-x-2 px-3.5 py-2 bg-gradient-to-r from-slate-900 to-indigo-950 hover:from-slate-800 hover:to-indigo-900 text-white rounded-2xl text-xs font-bold shadow-soft-md">
+                <button onclick="openShiftSettingsModal()" class="btn-tactile flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 hover:from-slate-800 hover:to-indigo-900 text-white rounded-2xl text-xs font-bold shadow-soft-md">
                     <i data-lucide="sliders" class="w-4 h-4 text-indigo-400"></i>
                     <span>จัดการกะและสีกะ</span>
                 </button>
@@ -275,7 +336,7 @@
         </div>
 
         <!-- Viewport Scroll Container -->
-        <div class="flex-1 overflow-auto p-3 md:p-4 flex flex-col space-y-3">
+        <div class="flex-1 overflow-auto p-3 md:p-4 flex flex-col space-y-3 z-0">
 
             <!-- TAB 1: MONTHLY ROSTER -->
             <section id="tab-roster" class="space-y-3 flex-1 flex flex-col">
@@ -733,12 +794,12 @@
                 const isWeekend = dateObj.getDay() === 0 || dateObj.getDay() === 6;
                 const isToday = isCurrentMonthYear && (d === todayDate);
                 let bgClass = isWeekend ? 'bg-rose-50/90 text-rose-700 font-semibold' : '';
-                if (isToday) bgClass = 'bg-gradient-to-b from-indigo-600 via-indigo-500 to-violet-600 text-white font-extrabold today-highlight shadow-glow-indigo';
+                if (isToday) bgClass = 'today-laser-column text-slate-900 font-extrabold';
 
                 headHTML += `<th ${isToday ? 'id="today-col-header"' : ''} class="py-1.5 px-0 text-center border-r border-slate-200/80 w-[42px] min-w-[42px] max-w-[42px] ${bgClass}">
-                    <div class="text-[9px] ${isToday ? 'text-indigo-100' : 'text-slate-500'} leading-none mb-0.5 font-bold">${dayShortNamesTH[dateObj.getDay()]}</div>
+                    <div class="text-[9px] ${isToday ? 'text-indigo-700 font-extrabold' : 'text-slate-500'} leading-none mb-0.5">${dayShortNamesTH[dateObj.getDay()]}</div>
                     <div class="font-extrabold text-xs leading-none">${d}</div>
-                    ${isToday ? '<div class="text-[8px] leading-none mt-0.5 text-amber-300 font-extrabold no-print">• วันนี้</div>' : ''}
+                    ${isToday ? '<div class="text-[8px] leading-none mt-0.5 text-indigo-700 font-extrabold no-print animate-pulse">• วันนี้</div>' : ''}
                 </th>`;
             }
             headHTML += `<th class="py-3 px-2 text-center min-w-[60px] text-xs font-extrabold bg-slate-200/60">รวมวัน</th></tr>`;
@@ -772,7 +833,7 @@
                     if (currentShiftCode !== 'OFF') workDaysCount++;
                     const isToday = isCurrentMonthYear && (d === todayDate);
 
-                    bodyHTML += `<td class="p-0.5 text-center border-r border-slate-200/70 h-[44px] ${isToday ? 'bg-indigo-50/70 ring-1 ring-indigo-400/50' : ''}">
+                    bodyHTML += `<td class="p-0.5 text-center border-r border-slate-200/70 h-[44px] ${isToday ? 'today-laser-column' : ''}">
                         <select onchange="handleShiftChange('${emp.id}', ${year}, ${month}, ${d}, this)" 
                             class="shift-select-badge w-full h-[36px] text-center text-xs font-extrabold py-0 px-0 rounded-xl border border-slate-300/40 focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer appearance-none shadow-soft-sm"
                             style="background-color: ${shiftObj.bg}; color: ${shiftObj.text};">
