@@ -99,11 +99,15 @@
             box-shadow: 0 6px 20px -5px rgba(0, 0, 0, 0.5);
         }
 
-        /* Splash Screen */
+        /* Splash Screen - Fixed Background Color */
         #splash-screen {
             position: fixed;
             inset: 0;
-            background: radial-gradient(circle at 50% 50%, #1e1b4b 0%, #090d16 100%);
+            background: #090d16 !important;
+            background-image: 
+                radial-gradient(at 50% 30%, rgba(99, 102, 241, 0.25) 0px, transparent 60%),
+                radial-gradient(at 80% 80%, rgba(168, 85, 247, 0.2) 0px, transparent 50%),
+                radial-gradient(circle at 50% 50%, #1e1b4b 0%, #090d16 100%) !important;
             z-index: 9999;
             display: flex;
             flex-direction: column;
@@ -1115,9 +1119,11 @@
             lucide.createIcons();
 
             setTimeout(() => {
-                const splash = document.getElementById('splash-screen');
-                splash.classList.add('fade-out');
-                setTimeout(() => splash.remove(), 600);
+                const splash = document.importNode ? document.getElementById('splash-screen') : document.getElementById('splash-screen');
+                if (splash) {
+                    splash.classList.add('fade-out');
+                    setTimeout(() => splash.remove(), 600);
+                }
             }, 1200);
         };
     </script>
