@@ -3,7 +3,7 @@
   "short_name": "WorkSched",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#013E37",
+  "background_color": "#0B112B",
   "theme_color": "#000000",
   "icons": [
     {
