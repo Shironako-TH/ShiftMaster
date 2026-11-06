@@ -68,6 +68,58 @@
             z-index: 1;
         }
 
+        /* --- 3D CUTE CHARACTER ANIMATIONS --- */
+        @keyframes floatCute {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(3deg); }
+        }
+
+        @keyframes floatCat {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-3px) scale(1.05); }
+        }
+
+        @keyframes floatRabbit {
+            0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
+            50% { transform: translateY(-5px) rotate(-5deg) scale(1.08); }
+        }
+
+        @keyframes waveHand {
+            0% { transform: rotate(0deg); }
+            20% { transform: rotate(14deg); }
+            40% { transform: rotate(-10deg); }
+            60% { transform: rotate(14deg); }
+            80% { transform: rotate(-6deg); }
+            100% { transform: rotate(0deg); }
+        }
+
+        @keyframes starTwinkle {
+            0%, 100% { transform: scale(1) rotate(0deg); opacity: 1; filter: drop-shadow(0 0 4px rgba(250, 204, 21, 0.9)); }
+            50% { transform: scale(1.25) rotate(15deg); opacity: 0.8; filter: drop-shadow(0 0 10px rgba(250, 204, 21, 1)); }
+        }
+
+        .animate-cute-float {
+            animation: floatCute 3s ease-in-out infinite;
+        }
+
+        .animate-cat-float {
+            animation: floatCat 2.5s ease-in-out infinite;
+        }
+
+        .animate-rabbit-float {
+            animation: floatRabbit 2s ease-in-out infinite;
+        }
+
+        .animate-wave {
+            display: inline-block;
+            transform-origin: 70% 70%;
+            animation: waveHand 2s infinite;
+        }
+
+        .animate-star-twinkle {
+            animation: starTwinkle 1.5s ease-in-out infinite;
+        }
+
         /* --- LASER GLOW 3D ANIMATION FOR "TODAY" COLUMN --- */
         @keyframes laserGlow3D {
             0% {
@@ -208,7 +260,7 @@
     <!-- SPLASH SCREEN -->
     <div id="splash-screen">
         <div class="flex flex-col items-center space-y-4 animate-in fade-in zoom-in duration-700">
-            <div class="relative group">
+            <div class="relative group animate-cute-float">
                 <div class="absolute -inset-2 bg-gradient-to-r from-indigo-500 via-purple-600 to-pink-500 rounded-3xl blur-xl opacity-75 animate-pulse"></div>
                 <img src="icon-512.png" alt="ShiftMaster Logo" class="relative w-24 h-24 rounded-3xl shadow-glow-indigo object-cover border-2 border-indigo-400/50">
             </div>
@@ -217,7 +269,7 @@
                     ShiftMaster
                     <span class="text-[9px] font-extrabold px-2.5 py-0.5 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-glow-indigo border border-indigo-300/40">3D ULTRA</span>
                 </h1>
-                <p class="text-xs text-indigo-300 font-medium tracking-wide">ระบบจัดการตารางกะพนักงานอัจฉริยะแบบเรียลไทม์</p>
+                <p class="text-xs text-indigo-300 font-medium tracking-wide">ระบบจัดการกะพนักงานอัจฉริยะแบบเรียลไทม์</p>
             </div>
             <div class="w-32 h-1 bg-slate-900 rounded-full overflow-hidden mt-2 shadow-inner">
                 <div class="w-full h-full bg-gradient-to-r from-indigo-500 via-pink-500 to-purple-500 animate-[pulse_1s_infinite]"></div>
@@ -233,23 +285,38 @@
         <div class="absolute bottom-10 -right-10 w-48 h-48 bg-purple-600/25 rounded-full blur-3xl pointer-events-none"></div>
 
         <div class="relative z-10">
-            <!-- App Branding & Preserved Logo -->
-            <div class="px-4 py-3 flex items-center space-x-3 border-b border-indigo-500/20 bg-slate-950/60 shadow-md">
-                <div class="relative group shrink-0">
-                    <div class="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl blur-md opacity-70 group-hover:opacity-100 transition duration-300"></div>
-                    <img src="icon-192.png" alt="Logo" class="relative w-8 h-8 rounded-xl object-cover border border-indigo-300/50 transition-all duration-300 group-hover:rotate-6 group-hover:scale-110 shadow-3d-sm">
+            <!-- App Branding & Preserved Logo + 3D Mascot & Greeting Message on the far right of the same row -->
+            <div class="px-3 py-3 flex items-center justify-between gap-2 border-b border-indigo-500/20 bg-slate-950/60 shadow-md">
+                <div class="flex items-center space-x-2 shrink-0">
+                    <div class="relative group shrink-0 animate-cute-float">
+                        <div class="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl blur-md opacity-70 group-hover:opacity-100 transition duration-300"></div>
+                        <img src="icon-192.png" alt="Logo" class="relative w-8 h-8 rounded-xl object-cover border border-indigo-300/50 transition-all duration-300 group-hover:rotate-6 group-hover:scale-110 shadow-3d-sm">
+                    </div>
+                    <div>
+                        <h1 class="font-extrabold text-white text-xs tracking-wide flex items-center gap-1">
+                            ShiftMaster
+                            <span class="text-[7.5px] font-extrabold px-1.5 py-0.2 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-glow-indigo border border-white/20">3D</span>
+                        </h1>
+                        <p class="text-[8.5px] text-indigo-300/80 font-medium leading-none mt-0.5">ระบบจัดการกะ</p>
+                    </div>
                 </div>
-                <div>
-                    <h1 class="font-extrabold text-white text-sm tracking-wide flex items-center gap-1.5">
-                        ShiftMaster
-                        <span class="text-[8px] font-extrabold px-1.5 py-0.5 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-glow-indigo border border-white/20">3D</span>
-                    </h1>
-                    <p class="text-[9.5px] text-indigo-300/80 font-medium">ระบบจัดการกะพนักงาน</p>
+
+                <!-- 3D Mascot Cat + Greeting Box at top rightmost row -->
+                <div class="flex items-center space-x-1.5 min-w-0 cursor-pointer" onclick="petTheCat()" title="คลิกเพื่อทักทายน้องแมว!">
+                    <div class="glass-panel-3d px-2 py-1 rounded-lg bg-slate-900/90 border border-indigo-500/30 shadow-3d-sm text-[9.5px] font-bold text-indigo-200 truncate hover:bg-slate-800 transition max-w-[95px]">
+                        <span id="cat-greeting-text" class="truncate">สู้ๆ นะคะ ✨</span>
+                    </div>
+                    <div class="relative animate-cat-float shrink-0">
+                        <div class="absolute -inset-1 bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 rounded-lg blur-xs opacity-70"></div>
+                        <div class="relative w-7 h-7 bg-slate-900 rounded-lg border border-indigo-400/60 flex items-center justify-center shadow-glow-indigo text-sm select-none">
+                            🐱
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <!-- Navigation Links -->
-            <nav class="p-2.5 space-y-2">
+            <nav class="p-2.5 space-y-2 mt-1">
                 <button onclick="switchTab('roster')" id="nav-roster" class="btn-tactile-3d w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all bg-gradient-to-r from-indigo-600 via-indigo-500 to-violet-600 text-white shadow-glow-indigo border border-indigo-400/30">
                     <i data-lucide="calendar" class="w-4 h-4"></i>
                     <span>ตารางงานรายเดือน</span>
@@ -268,7 +335,7 @@
         <!-- Sidebar Footer -->
         <div class="p-3 border-t border-indigo-500/20 bg-slate-950/80 relative z-10">
             <div class="flex items-center justify-between text-[9.5px] text-indigo-300/80 font-semibold">
-                <span>เวอร์ชัน 5.3 Perfect Align</span>
+                <span>เวอร์ชัน 5.5 3D </span>
                 <span id="sync-status" class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[8.5px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-glow-emerald">
                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
                     เชื่อมต่อแล้ว
@@ -356,14 +423,29 @@
                     </div>
                 </div>
 
-                <!-- Shift Legend Quick Reference -->
-                <div class="glass-panel-3d px-3 py-1.5 rounded-xl flex flex-wrap items-center gap-2 shrink-0 no-print">
-                    <span class="text-[10px] font-extrabold text-indigo-300 uppercase tracking-wider mr-1 flex items-center gap-1">
-                        <i data-lucide="bookmark" class="w-3 h-3 text-indigo-400"></i>
-                        ประเภทกะ:
-                    </span>
-                    <div id="roster-legend" class="flex flex-wrap gap-1.5">
-                        <!-- Rendered dynamically -->
+                <!-- Shift Legend Quick Reference + 3D Animated Rabbit Mascot -->
+                <div class="glass-panel-3d px-3.5 py-2 rounded-xl flex flex-wrap items-center justify-between gap-2 shrink-0 no-print border border-indigo-500/30">
+                    <div class="flex flex-wrap items-center gap-2">
+                        <span class="text-[10px] font-extrabold text-indigo-300 uppercase tracking-wider mr-1 flex items-center gap-1">
+                            <i data-lucide="bookmark" class="w-3 h-3 text-indigo-400"></i>
+                            ประเภทกะ:
+                        </span>
+                        <div id="roster-legend" class="flex flex-wrap gap-1.5">
+                            <!-- Rendered dynamically -->
+                        </div>
+                    </div>
+                    
+                    <!-- 3D Cute Rabbit Mascot Card -->
+                    <div onclick="petTheRabbit()" class="flex items-center space-x-2 bg-slate-900/90 px-3 py-1 rounded-xl border border-indigo-400/40 shadow-3d-sm cursor-pointer hover:bg-slate-800 transition group shrink-0" title="คลิกทักทายน้องกระต่ายดุ๊กดิ๊ก!">
+                        <div class="relative animate-rabbit-float shrink-0">
+                            <div class="absolute -inset-1 bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 rounded-lg blur-xs opacity-75 group-hover:opacity-100"></div>
+                            <div class="relative w-7 h-7 bg-slate-950 rounded-lg border border-pink-400/70 flex items-center justify-center text-sm shadow-glow-rose select-none">
+                                🐰
+                            </div>
+                        </div>
+                        <div class="text-[10px] font-bold text-pink-200 truncate">
+                            <span id="rabbit-greeting-text">กระต่ายน้อยพร้อมช่วยดูแบดจ์กะค่ะ! ✨</span>
+                        </div>
                     </div>
                 </div>
 
@@ -447,7 +529,7 @@
                                 <span>รายชื่อพนักงานทั้งหมด (<span id="emp-count">0</span>)</span>
                             </h3>
                             <span class="text-[9.5px] text-amber-300 font-extrabold bg-amber-950/60 border border-amber-500/40 px-2.5 py-0.5 rounded-full shadow-3d-sm flex items-center gap-1">
-                                ⭐ Reception / Front Priority Active
+                                 Reception / Front Priority Active
                             </span>
                         </div>
                         <div class="overflow-x-auto flex-1" style="max-height: calc(100vh - 200px);">
@@ -605,6 +687,32 @@
                 requestAnimationFrame(animate);
             }
             animate();
+        }
+
+        // --- PET THE CAT INTERACTION ---
+        function petTheCat() {
+            const messages = [
+                "เมี๊ยวว! ขอให้วันนี้ทำงานอย่างมีความสุขนะก๊ะ! 🐾",
+                "งับ! เหมียวช่วยตรวจสอบตารางกะให้อยู่นะ 😽",
+                "คร่อก... เอ๊ย ตื่นแล้ว! สู้ๆ นะคะเจ้านาย ✨",
+                "Meow~ วันนี้มีพนักงานต้อนรับคนเก่งทำงานด้วยล่ะ! ⭐"
+            ];
+            const randomMsg = messages[Math.floor(Math.random() * messages.length)];
+            document.getElementById('cat-greeting-text').innerText = randomMsg;
+            showModal('น้องเหมียว 3D ส่งเสียงทักทาย', randomMsg);
+        }
+
+        // --- PET THE RABBIT INTERACTION ---
+        function petTheRabbit() {
+            const messages = [
+                "กระโดดดึ๋งๆ! แบดจ์กะสีสวยสดใสมากๆ เลยค่ะ 🐰✨",
+                "น้องกระต่ายช่วยเช็คประเภทกะให้เรียบร้อยแล้วน้า! 🥕",
+                "เย้! จัดตารางกะกับกระต่ายน้อยกันเถอะค่า 💖",
+                "กระต่ายน้อยตรวจดูสีสัญลักษณ์กะให้แล้ว สมบูรณ์แบบสุดๆ! ⭐"
+            ];
+            const randomMsg = messages[Math.floor(Math.random() * messages.length)];
+            document.getElementById('rabbit-greeting-text').innerText = randomMsg;
+            showModal('น้องกระต่าย 3D ส่งเสียงทักทาย', randomMsg);
         }
 
         // --- FIREBASE CONFIG ---
@@ -821,7 +929,7 @@
                 headHTML += `<th ${isToday ? 'id="today-col-header"' : ''} class="py-1.5 px-0 text-center border-r border-slate-800 w-[42px] min-w-[42px] max-w-[42px] ${bgClass}">
                     <div class="text-[9px] ${isToday ? 'text-indigo-200 font-extrabold' : 'text-slate-400'} leading-none mb-0.5">${dayShortNamesTH[dateObj.getDay()]}</div>
                     <div class="font-extrabold text-xs leading-none">${d}</div>
-                    ${isToday ? '<div class="text-[7.5px] leading-none mt-0.5 text-indigo-300 font-extrabold no-print animate-pulse">• วันนี้</div>' : ''}
+                    ${isToday ? '<div class="text-[8px] leading-none mt-0.5 text-amber-300 font-extrabold no-print flex items-center justify-center gap-0.5"><span class="animate-star-twinkle">⭐</span> วันนี้</div>' : ''}
                 </th>`;
             }
             headHTML += `<th class="py-2.5 px-2 text-center min-w-[60px] text-xs font-extrabold bg-slate-900 text-slate-200">รวมวัน</th></tr>`;
@@ -1119,7 +1227,7 @@
             lucide.createIcons();
 
             setTimeout(() => {
-                const splash = document.importNode ? document.getElementById('splash-screen') : document.getElementById('splash-screen');
+                const splash = document.getElementById('splash-screen');
                 if (splash) {
                     splash.classList.add('fade-out');
                     setTimeout(() => splash.remove(), 600);
