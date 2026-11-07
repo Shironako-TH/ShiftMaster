@@ -111,12 +111,6 @@
             animation: floatRabbit 2s ease-in-out infinite;
         }
 
-        .animate-wave {
-            display: inline-block;
-            transform-origin: 70% 70%;
-            animation: waveHand 2s infinite;
-        }
-
         .animate-star-twinkle {
             animation: starTwinkle 1.5s ease-in-out infinite;
         }
@@ -196,27 +190,6 @@
             box-shadow: 0 6px 20px -5px rgba(0, 0, 0, 0.5);
         }
 
-        /* Splash Screen - Fixed Background Color */
-        #splash-screen {
-            position: fixed;
-            inset: 0;
-            background: #090d16 !important;
-            background-image: 
-                radial-gradient(at 50% 30%, rgba(99, 102, 241, 0.25) 0px, transparent 60%),
-                radial-gradient(at 80% 80%, rgba(168, 85, 247, 0.2) 0px, transparent 50%),
-                radial-gradient(circle at 50% 50%, #1e1b4b 0%, #090d16 100%) !important;
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        #splash-screen.fade-out {
-            opacity: 0;
-            visibility: hidden;
-        }
-
         /* 3D Glass Panels */
         .glass-panel-3d {
             background: rgba(30, 41, 59, 0.85);
@@ -269,7 +242,7 @@
         @media print {
             @page { size: A4 landscape; margin: 3mm; }
             html, body { background: white !important; color: black !important; overflow: visible !important; height: auto !important; width: 100% !important; margin: 0 !important; padding: 0 !important; }
-            aside, header, .no-print, button, input, select option, #splash-screen, #bg-canvas { display: none !important; }
+            aside, header, .no-print, button, input, select option, #bg-canvas { display: none !important; }
             main { padding: 0 !important; margin: 0 !important; overflow: visible !important; width: 100% !important; display: block !important; }
             .overflow-x-auto, .overflow-auto, .overflow-y-auto { overflow: visible !important; box-shadow: none !important; border: none !important; background: white !important; }
             #tab-roster { display: block !important; }
@@ -287,26 +260,6 @@
     </style>
 </head>
 <body class="h-full text-slate-100 flex flex-col md:flex-row overflow-hidden m-0 p-0 antialiased selection:bg-indigo-500 selection:text-white">
-
-    <!-- SPLASH SCREEN -->
-    <div id="splash-screen">
-        <div class="flex flex-col items-center space-y-4 animate-in fade-in zoom-in duration-700">
-            <div class="relative group animate-cute-float">
-                <div class="absolute -inset-2 bg-gradient-to-r from-indigo-500 via-purple-600 to-pink-500 rounded-3xl blur-xl opacity-75 animate-pulse"></div>
-                <img src="icon-512.png" alt="ShiftMaster Logo" class="relative w-24 h-24 rounded-3xl shadow-glow-indigo object-cover border-2 border-indigo-400/50">
-            </div>
-            <div class="text-center space-y-1">
-                <h1 class="text-2xl font-extrabold text-white tracking-wider flex items-center justify-center gap-2 drop-shadow-md">
-                    ShiftMaster
-                    <span class="text-[9px] font-extrabold px-2.5 py-0.5 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-glow-indigo border border-indigo-300/40">3D ULTRA</span>
-                </h1>
-                <p class="text-xs text-indigo-300 font-medium tracking-wide">ระบบจัดการกะพนักงานอัจฉริยะแบบเรียลไทม์</p>
-            </div>
-            <div class="w-32 h-1 bg-slate-900 rounded-full overflow-hidden mt-2 shadow-inner">
-                <div class="w-full h-full bg-gradient-to-r from-indigo-500 via-pink-500 to-purple-500 animate-[pulse_1s_infinite]"></div>
-            </div>
-        </div>
-    </div>
 
     <!-- Sidebar Navigation -->
     <aside class="w-full md:w-60 glass-sidebar-pattern text-slate-300 flex flex-col justify-between shrink-0 z-25 no-print border-r border-indigo-500/20 relative overflow-hidden">
@@ -911,7 +864,6 @@
             document.getElementById('roster-year').value = now.getFullYear();
             updateRosterView();
             
-            // ใช้ requestAnimationFrame และ setTimeout ผสานกันเพื่อให้เลื่อนได้อย่างนุ่มนวลและแม่นยำที่สุด
             requestAnimationFrame(() => {
                 setTimeout(() => scrollToTodayColumn(), 50);
             });
@@ -924,7 +876,6 @@
             
             if (todayCol && container) {
                 const stickyWidth = stickyCol ? stickyCol.offsetWidth : 200;
-                // คำนวณตำแหน่งซ้ายสุดของช่องวันนี้ หักลบด้วยความกว้างคอลัมน์ชื่อพนักงานเพื่อให้ชิดขอบพอดี
                 const targetLeft = todayCol.offsetLeft - stickyWidth;
                 
                 container.scrollTo({ 
@@ -1258,7 +1209,7 @@
             lucide.createIcons();
         }
 
-        // Initialize App & Smooth Transitions
+        // Initialize App & Smooth Transitions (Splash Screen Removed)
         window.onload = function() {
             initBackgroundParticles();
             displayTodayInfo();
@@ -1267,14 +1218,6 @@
             updateRosterView();
             initRealtimeSync();
             lucide.createIcons();
-
-            setTimeout(() => {
-                const splash = document.getElementById('splash-screen');
-                if (splash) {
-                    splash.classList.add('fade-out');
-                    setTimeout(() => splash.remove(), 600);
-                }
-            }, 1200);
         };
     </script>
 </body>
