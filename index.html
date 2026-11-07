@@ -839,7 +839,9 @@
         function initRealtimeSync() {
             db.ref('employees').on('value', (snapshot) => {
                 const data = snapshot.val();
-                employees = data ? (Array.isArray(data) ? data.filter(Boolean) : Object.values(data)) : [];
+                if (data) {
+                    employees = Array.isArray(data) ? data.filter(Boolean) : Object.values(data);
+                }
                 localStorage.setItem('shift_employees', JSON.stringify(employees));
                 updateRosterView();
                 if (!document.getElementById('tab-employees').classList.contains('hidden')) renderEmployeeTable();
@@ -866,11 +868,10 @@
         }
 
         function saveData() {
-            const empObj = {};
-            employees.forEach(e => { if (e && e.id) empObj[e.id] = e; });
+            // บันทึก employees เป็น Array เพื่อรักษาลำดับดัชนี (Index Order) ไว้ได้อย่างแม่นยำ
+            db.ref('employees').set(employees);
             const shiftObj = {};
             shifts.forEach(s => { if (s && s.code) shiftObj[s.code] = s; });
-            db.ref('employees').set(empObj);
             db.ref('shifts').set(shiftObj);
             localStorage.setItem('shift_employees', JSON.stringify(employees));
             localStorage.setItem('shift_types', JSON.stringify(shifts));
@@ -1065,7 +1066,9 @@
             employees[index] = employees[newIndex];
             employees[newIndex] = temp;
             
-            saveData();
+            // บันทึกลำดับใหม่ลง Firebase ทันที
+            saveData(); 
+
             updateRosterView();
             if (!document.getElementById('tab-employees').classList.contains('hidden')) {
                 renderEmployeeTable();
@@ -1195,13 +1198,7 @@
         function deleteEmployee(id) {
             showModal('ยืนยันการลบ', 'คุณต้องการลบพนักงานรายนี้ออกจากระบบใช่หรือไม่?', () => {
                 employees = employees.filter(emp => emp && emp.id !== id);
-                if (employees.length === 0) db.ref('employees').remove();
-                else {
-                    const empObj = {};
-                    employees.forEach(e => { if (e && e.id) empObj[e.id] = e; });
-                    db.ref('employees').set(empObj);
-                }
-                localStorage.setItem('shift_employees', JSON.stringify(employees));
+                saveData();
                 renderEmployeeTable();
                 updateRosterView();
             });
