@@ -247,6 +247,7 @@
             position: relative;
             z-index: 1;
             overflow: auto;
+            scroll-behavior: smooth;
         }
 
         /* Sticky Columns Solid Overlay (Fix Text Glitch) */
@@ -909,7 +910,11 @@
             document.getElementById('roster-month').value = now.getMonth();
             document.getElementById('roster-year').value = now.getFullYear();
             updateRosterView();
-            setTimeout(() => scrollToTodayColumn(), 100);
+            
+            // ใช้ requestAnimationFrame และ setTimeout ผสานกันเพื่อให้เลื่อนได้อย่างนุ่มนวลและแม่นยำที่สุด
+            requestAnimationFrame(() => {
+                setTimeout(() => scrollToTodayColumn(), 50);
+            });
         }
 
         function scrollToTodayColumn() {
@@ -918,14 +923,12 @@
             const stickyCol = document.querySelector('.emp-dark-col');
             
             if (todayCol && container) {
-                // คำนวณหาตำแหน่งความกว้างของคอลัมน์รายชื่อพนักงานที่ถูกตรึงไว้ (Sticky Column)
                 const stickyWidth = stickyCol ? stickyCol.offsetWidth : 200;
-                
-                // คำนวณตำแหน่งซ้ายสุดของคอลัมน์ "วันนี้" ลบด้วยความกว้างของคอลัมน์ตรึง เพื่อให้ชิดพอดี
+                // คำนวณตำแหน่งซ้ายสุดของช่องวันนี้ หักลบด้วยความกว้างคอลัมน์ชื่อพนักงานเพื่อให้ชิดขอบพอดี
                 const targetLeft = todayCol.offsetLeft - stickyWidth;
                 
                 container.scrollTo({ 
-                    left: targetLeft, 
+                    left: Math.max(0, targetLeft), 
                     behavior: 'smooth' 
                 });
             }
@@ -937,7 +940,7 @@
             const year = parseInt(document.getElementById('roster-year').value);
             const today = new Date();
             if (today.getFullYear() === year && today.getMonth() === month) {
-                setTimeout(() => { scrollToTodayColumn(); hasInitialAutoScrolled = true; }, 200);
+                setTimeout(() => { scrollToTodayColumn(); hasInitialAutoScrolled = true; }, 150);
             }
         }
 
