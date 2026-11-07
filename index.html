@@ -366,7 +366,7 @@
         <!-- Sidebar Footer -->
         <div class="p-3 border-t border-indigo-500/20 bg-slate-950/80 relative z-10">
             <div class="flex items-center justify-between text-[9.5px] text-indigo-300/80 font-semibold">
-                <span>เวอร์ชัน 5.6 Space 3D</span>
+                <span>เวอร์ชัน 5.7 Space 3D</span>
                 <span id="sync-status" class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[8.5px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-glow-emerald">
                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
                     เชื่อมต่อแล้ว
@@ -454,7 +454,7 @@
                     </div>
                 </div>
 
-                <!-- Shift Legend Quick Reference + 3D Animated Rabbit Mascot -->
+                <!-- Shift Legend Quick Reference + Role Color Guide -->
                 <div class="glass-panel-3d px-3.5 py-2 rounded-xl flex flex-wrap items-center justify-between gap-2 shrink-0 no-print border border-indigo-500/30">
                     <div class="flex flex-wrap items-center gap-2">
                         <span class="text-[10px] font-extrabold text-indigo-300 uppercase tracking-wider mr-1 flex items-center gap-1">
@@ -465,7 +465,18 @@
                             <!-- Rendered dynamically -->
                         </div>
                     </div>
-                    
+
+                    <!-- Role Badge Color Legend -->
+                    <div class="flex flex-wrap items-center gap-1 text-[9px] font-extrabold border-l border-slate-700/80 pl-2 my-0.5">
+                        <span class="text-slate-400 mr-1">สีกะพนักงาน:</span>
+                        <span class="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40">ต้อนรับ</span>
+                        <span class="px-1.5 py-0.5 rounded bg-sky-500/20 text-sky-300 border border-sky-500/40">ตลาด/เสมียน</span>
+                        <span class="px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/40">เบลบอย</span>
+                        <span class="px-1.5 py-0.5 rounded bg-pink-500/20 text-pink-300 border border-pink-500/40">แม่บ้าน</span>
+                        <span class="px-1.5 py-0.5 rounded bg-blue-600/30 text-blue-300 border border-blue-500/40">รปภ.</span>
+                        <span class="px-1.5 py-0.5 rounded bg-amber-900/40 text-amber-200 border border-amber-700/50">ช่าง</span>
+                    </div>
+
                     <!-- 3D Cute Rabbit Mascot Card -->
                     <div onclick="petTheRabbit()" class="btn-space-3d flex items-center space-x-2 px-3 py-1 rounded-xl cursor-pointer transition group shrink-0" title="คลิกทักทายน้องกระต่ายดุ๊กดิ๊ก!">
                         <div class="relative animate-rabbit-float shrink-0">
@@ -540,10 +551,10 @@
                             </div>
                             <div>
                                 <label class="block text-[10px] font-extrabold text-slate-300 uppercase tracking-wider mb-0.5">ตำแหน่ง / แผนก</label>
-                                <input type="text" id="emp-role" required placeholder="เช่น พนักงานต้อนรับ / Reception" class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 font-bold shadow-inner">
+                                <input type="text" id="emp-role" required placeholder="เช่น พนักงานต้อนรับ, ช่าง, แม่บ้าน, รปภ." class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 font-bold shadow-inner">
                                 <p class="text-[9.5px] text-amber-300 font-bold mt-1.5 flex items-center gap-1.5 bg-amber-950/40 border border-amber-500/30 p-1.5 rounded-lg">
                                     <i data-lucide="star" class="w-3.5 h-3.5 text-amber-400 fill-amber-400 shrink-0"></i>
-                                    พนักงานต้อนรับ (Reception) จะถูกจัดอยู่อันดับแรกอัตโนมัติ
+                                    สามารถจัดลำดับขึ้นลงได้ตามต้องการในตารางพนักงาน
                                 </p>
                             </div>
                             <button type="submit" class="btn-space-3d w-full mt-1 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 hover:from-indigo-500 hover:to-pink-500 text-white font-extrabold py-2.5 rounded-xl shadow-glow-indigo text-xs tracking-wide border-indigo-400/50">
@@ -559,17 +570,19 @@
                                 <i data-lucide="users" class="w-4 h-4 text-indigo-400"></i>
                                 <span>รายชื่อพนักงานทั้งหมด (<span id="emp-count">0</span>)</span>
                             </h3>
-                            <span class="text-[9.5px] text-amber-300 font-extrabold bg-amber-950/60 border border-amber-500/40 px-2.5 py-0.5 rounded-full shadow-3d-sm flex items-center gap-1">
-                                ⭐ Reception / Front Priority Active
+                            <span class="text-[9.5px] text-indigo-300 font-extrabold bg-indigo-950/60 border border-indigo-500/40 px-2.5 py-0.5 rounded-full shadow-3d-sm flex items-center gap-1">
+                                ↕️ จัดลำดับขึ้น/ลง ได้อิสระ
                             </span>
                         </div>
                         <div class="overflow-x-auto flex-1" style="max-height: calc(100vh - 200px);">
                             <table class="w-full text-left border-collapse">
                                 <thead class="bg-slate-900 text-slate-300 text-[10px] uppercase tracking-wider sticky top-0 border-b border-slate-800">
                                     <tr>
+                                        <th class="p-3 w-16 text-center">ลำดับ</th>
                                         <th class="p-3">รหัสพนักงาน</th>
                                         <th class="p-3">ชื่อ-นามสกุล</th>
                                         <th class="p-3">ตำแหน่ง</th>
+                                        <th class="p-3 text-center">ย้ายตำแหน่ง</th>
                                         <th class="p-3 text-center">จัดการ</th>
                                     </tr>
                                 </thead>
@@ -675,6 +688,37 @@
 
     <!-- Application Script Logic -->
     <script>
+        // --- HELPER FUNCTION: GET ROLE COLOR STYLES ---
+        function getRoleBadgeStyle(role) {
+            const r = (role || '').toLowerCase();
+            // 1. พนักงานต้อนรับ -> สีเหลือง
+            if (r.includes('ต้อนรับ') || r.includes('reception')) {
+                return { badgeClass: 'bg-amber-500/20 text-amber-300 border-amber-500/40', textClass: 'text-amber-300' };
+            }
+            // 2. การตลาด / เสมียน -> สีฟ้า
+            if (r.includes('การตลาด') || r.includes('เสมียน') || r.includes('marketing') || r.includes('clerk') || r.includes('admin')) {
+                return { badgeClass: 'bg-sky-500/20 text-sky-300 border-sky-500/40', textClass: 'text-sky-300' };
+            }
+            // 3. เบลบอย -> สีม่วง
+            if (r.includes('เบลบอย') || r.includes('bellboy') || r.includes('porter')) {
+                return { badgeClass: 'bg-purple-500/20 text-purple-300 border-purple-500/40', textClass: 'text-purple-300' };
+            }
+            // 4. แม่บ้าน -> สีชมพู
+            if (r.includes('แม่บ้าน') || r.includes('housekeeping') || r.includes('maid')) {
+                return { badgeClass: 'bg-pink-500/20 text-pink-300 border-pink-500/40', textClass: 'text-pink-300' };
+            }
+            // 5. รปภ. -> สีน้ำเงิน
+            if (r.includes('รปภ') || r.includes('รักษาความปลอดภัย') || r.includes('security')) {
+                return { badgeClass: 'bg-blue-600/30 text-blue-300 border-blue-500/40', textClass: 'text-blue-300' };
+            }
+            // 6. ช่าง -> สีน้ำตาล
+            if (r.includes('ช่าง') || r.includes('engineer') || r.includes('maintenance')) {
+                return { badgeClass: 'bg-amber-900/40 text-amber-200 border-amber-700/50', textClass: 'text-amber-300' };
+            }
+            // สีเริ่มต้นมาตรฐาน (เทา/คราม)
+            return { badgeClass: 'bg-slate-800 text-slate-300 border-slate-700', textClass: 'text-indigo-300' };
+        }
+
         // --- DYNAMIC BACKGROUND PARTICLE CANVAS ANIMATION ---
         function initBackgroundParticles() {
             const canvas = document.getElementById('bg-canvas');
@@ -770,9 +814,9 @@
 
         const DEFAULT_EMPLOYEES = [
             { id: 'EMP001', name: 'กัญญา ต้อนรับดี', role: 'พนักงานต้อนรับ (Reception)' },
-            { id: 'EMP002', name: 'สมชาย ใจดี', role: 'ผู้จัดการร้าน' },
-            { id: 'EMP003', name: 'วิชัย มั่นคง', role: 'แคชเชียร์' },
-            { id: 'EMP004', name: 'สุดา สุขสบาย', role: 'บาริสต้า' }
+            { id: 'EMP002', name: 'สมชาย ใจดี', role: 'การตลาด / เสมียน' },
+            { id: 'EMP003', name: 'วิชัย มั่นคง', role: 'ช่างเทคนิค' },
+            { id: 'EMP004', name: 'สุดา สุขสบาย', role: 'แม่บ้าน' }
         ];
 
         const DEFAULT_SHIFTS = [
@@ -786,19 +830,6 @@
         let employees = JSON.parse(localStorage.getItem('shift_employees')) || DEFAULT_EMPLOYEES;
         let shifts = JSON.parse(localStorage.getItem('shift_types')) || DEFAULT_SHIFTS;
         let scheduleData = JSON.parse(localStorage.getItem('shift_schedule')) || {};
-
-        function sortEmployeesByReceptionPriority(empList) {
-            if (!Array.isArray(empList)) return [];
-            return [...empList].sort((a, b) => {
-                const roleA = (a?.role || '').toLowerCase();
-                const roleB = (b?.role || '').toLowerCase();
-                const isRecepA = roleA.includes('reception') || roleA.includes('ต้อนรับ') || roleA.includes('front');
-                const isRecepB = roleB.includes('reception') || roleB.includes('ต้อนรับ') || roleB.includes('front');
-                if (isRecepA && !isRecepB) return -1;
-                if (!isRecepA && isRecepB) return 1;
-                return (a?.id || '').localeCompare(b?.id || '');
-            });
-        }
 
         function displayTodayInfo() {
             const today = new Date();
@@ -911,7 +942,6 @@
             document.getElementById('roster-year').value = now.getFullYear();
             updateRosterView();
             
-            // ใช้ requestAnimationFrame และ setTimeout ผสานกันเพื่อให้เลื่อนได้อย่างนุ่มนวลและแม่นยำที่สุด
             requestAnimationFrame(() => {
                 setTimeout(() => scrollToTodayColumn(), 50);
             });
@@ -924,7 +954,6 @@
             
             if (todayCol && container) {
                 const stickyWidth = stickyCol ? stickyCol.offsetWidth : 200;
-                // คำนวณตำแหน่งซ้ายสุดของช่องวันนี้ หักลบด้วยความกว้างคอลัมน์ชื่อพนักงานเพื่อให้ชิดขอบพอดี
                 const targetLeft = todayCol.offsetLeft - stickyWidth;
                 
                 container.scrollTo({ 
@@ -984,18 +1013,24 @@
             }
 
             let bodyHTML = '';
-            sortEmployeesByReceptionPriority(employees).forEach(emp => {
+            employees.forEach((emp, index) => {
                 if (!emp) return;
                 let workDaysCount = 0;
-                const isRecep = (emp.role || '').toLowerCase().includes('reception') || (emp.role || '').toLowerCase().includes('ต้อนรับ') || (emp.role || '').toLowerCase().includes('front');
+                const roleStyle = getRoleBadgeStyle(emp.role);
 
                 bodyHTML += `<tr class="hover:bg-indigo-950/30 transition-colors">`;
                 bodyHTML += `<td class="py-2 px-3 emp-dark-col border-r border-slate-800">
-                    <div class="flex items-center space-x-2">
-                        <span class="text-[9.5px] font-extrabold ${isRecep ? 'bg-gradient-to-r from-amber-400 to-yellow-400 text-slate-950 shadow-3d-sm' : 'bg-indigo-600 text-white'} px-1.5 py-0.5 rounded-md shrink-0 border border-white/20">[${emp.id}]</span>
-                        <div class="overflow-hidden leading-tight">
-                            <div class="text-slate-100 text-xs font-bold truncate max-w-[125px]" title="${emp.name}">${emp.name}</div>
-                            <div class="text-[9.5px] ${isRecep ? 'text-amber-300 font-bold' : 'text-indigo-300 font-medium'} truncate max-w-[125px]" title="${emp.role}">${emp.role}</div>
+                    <div class="flex items-center justify-between gap-1">
+                        <div class="flex items-center space-x-2 overflow-hidden">
+                            <span class="text-[9.5px] font-extrabold border px-1.5 py-0.5 rounded-md shrink-0 shadow-sm ${roleStyle.badgeClass}">[${emp.id}]</span>
+                            <div class="overflow-hidden leading-tight">
+                                <div class="text-slate-100 text-xs font-bold truncate max-w-[105px]" title="${emp.name}">${emp.name}</div>
+                                <div class="text-[9.5px] font-medium truncate max-w-[105px] ${roleStyle.textClass}" title="${emp.role}">${emp.role}</div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col shrink-0 gap-0.5 no-print">
+                            <button onclick="moveEmployee(${index}, -1)" ${index === 0 ? 'disabled class="opacity-30 cursor-not-allowed"' : ''} class="text-[9px] bg-slate-800 hover:bg-slate-700 text-indigo-300 px-1 rounded transition" title="เลื่อนขึ้น">▲</button>
+                            <button onclick="moveEmployee(${index}, 1)" ${index === employees.length - 1 ? 'disabled class="opacity-30 cursor-not-allowed"' : ''} class="text-[9px] bg-slate-800 hover:bg-slate-700 text-indigo-300 px-1 rounded transition" title="เลื่อนลง">▼</button>
                         </div>
                     </div>
                 </td>`;
@@ -1019,6 +1054,22 @@
             });
             tbody.innerHTML = bodyHTML;
             autoScrollToTodayOnLoad();
+        }
+
+        function moveEmployee(index, direction) {
+            const newIndex = index + direction;
+            if (newIndex < 0 || newIndex >= employees.length) return;
+            
+            // สลับตำแหน่งพนักงานใน Array
+            const temp = employees[index];
+            employees[index] = employees[newIndex];
+            employees[newIndex] = temp;
+            
+            saveData();
+            updateRosterView();
+            if (!document.getElementById('tab-employees').classList.contains('hidden')) {
+                renderEmployeeTable();
+            }
         }
 
         function handleShiftChange(empId, year, month, day, selectElement) {
@@ -1050,7 +1101,7 @@
             headerRow.push("รวมวันปฏิบัติงาน");
 
             let excelData = [headerRow];
-            sortEmployeesByReceptionPriority(employees).forEach(emp => {
+            employees.forEach(emp => {
                 if (!emp) return;
                 let row = [`[${emp.id}]`, emp.name, emp.role];
                 let workDaysCount = 0;
@@ -1089,10 +1140,9 @@
 
             let html = '';
             let totalAssigned = 0;
-            const sortedEmps = sortEmployeesByReceptionPriority(employees);
 
             shifts.forEach(shift => {
-                const assignedEmps = sortedEmps.filter(emp => emp && (scheduleData[`${year}_${month}_${emp.id}_${day}`] || 'OFF') === shift.code);
+                const assignedEmps = employees.filter(emp => emp && (scheduleData[`${year}_${month}_${emp.id}_${day}`] || 'OFF') === shift.code);
                 if (shift.code !== 'OFF') totalAssigned += assignedEmps.length;
 
                 html += `
@@ -1110,14 +1160,14 @@
                         <div class="p-3 flex-1 space-y-2" style="max-height: 280px; overflow-y: auto;">
                             ${assignedEmps.length === 0 ? `<p class="text-xs text-slate-500 italic text-center py-6">ไม่มีพนักงานในกะนี้</p>` : ''}
                             ${assignedEmps.map(emp => {
-                                const isRecep = (emp.role || '').toLowerCase().includes('reception') || (emp.role || '').toLowerCase().includes('ต้อนรับ');
+                                const roleStyle = getRoleBadgeStyle(emp.role);
                                 return `
                                     <div class="flex items-center justify-between p-2.5 bg-slate-900/90 rounded-xl border border-slate-800 shadow-3d-sm">
                                         <div>
-                                            <div class="text-[10.5px] font-extrabold text-indigo-400">[${emp.id}]</div>
+                                            <div class="text-[10.5px] font-extrabold ${roleStyle.textClass}">[${emp.id}]</div>
                                             <div class="text-xs font-bold text-white">${emp.name}</div>
                                         </div>
-                                        <span class="text-[9.5px] font-bold ${isRecep ? 'bg-amber-950/80 text-amber-300 border border-amber-500/40' : 'bg-slate-800 text-slate-300'} px-2 py-0.5 rounded-lg">${emp.role}</span>
+                                        <span class="text-[9.5px] font-bold border px-2 py-0.5 rounded-lg ${roleStyle.badgeClass}">${emp.role}</span>
                                     </div>
                                 `;
                             }).join('')}
@@ -1160,16 +1210,21 @@
         function renderEmployeeTable() {
             const tbody = document.getElementById('employee-table-body');
             document.getElementById('emp-count').innerText = employees.length;
-            if (!employees || employees.length === 0) { tbody.innerHTML = `<tr><td colspan="4" class="p-6 text-center text-slate-400">ยังไม่มีข้อมูลพนักงาน</td></tr>`; return; }
+            if (!employees || employees.length === 0) { tbody.innerHTML = `<tr><td colspan="6" class="p-6 text-center text-slate-400">ยังไม่มีข้อมูลพนักงาน</td></tr>`; return; }
 
-            tbody.innerHTML = sortEmployeesByReceptionPriority(employees).map(emp => {
+            tbody.innerHTML = employees.map((emp, index) => {
                 if (!emp) return '';
-                const isRecep = (emp.role || '').toLowerCase().includes('reception') || (emp.role || '').toLowerCase().includes('ต้อนรับ');
+                const roleStyle = getRoleBadgeStyle(emp.role);
                 return `
-                    <tr class="hover:bg-indigo-950/30 transition-colors ${isRecep ? 'bg-amber-950/10' : ''}">
-                        <td class="p-3 font-extrabold text-indigo-400">[${emp.id}]</td>
+                    <tr class="hover:bg-indigo-950/30 transition-colors">
+                        <td class="p-3 text-center font-bold text-indigo-300">${index + 1}</td>
+                        <td class="p-3 font-extrabold ${roleStyle.textClass}">[${emp.id}]</td>
                         <td class="p-3 font-bold text-white">${emp.name}</td>
-                        <td class="p-3 font-semibold text-slate-300">${emp.role}</td>
+                        <td class="p-3 font-semibold"><span class="px-2 py-0.5 rounded-lg border ${roleStyle.badgeClass}">${emp.role}</span></td>
+                        <td class="p-3 text-center space-x-1">
+                            <button onclick="moveEmployee(${index}, -1)" ${index === 0 ? 'disabled class="opacity-30 cursor-not-allowed"' : ''} class="btn-space-3d px-2 py-1 text-xs bg-slate-800 text-indigo-300 rounded font-bold">▲ เลื่อนขึ้น</button>
+                            <button onclick="moveEmployee(${index}, 1)" ${index === employees.length - 1 ? 'disabled class="opacity-30 cursor-not-allowed"' : ''} class="btn-space-3d px-2 py-1 text-xs bg-slate-800 text-indigo-300 rounded font-bold">▼ เลื่อนลง</button>
+                        </td>
                         <td class="p-3 text-center">
                             <button onclick="deleteEmployee('${emp.id}')" class="btn-space-3d p-1.5 text-rose-400 hover:bg-rose-950/60 rounded-lg transition-all border-rose-500/30" title="ลบพนักงาน">
                                 <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
