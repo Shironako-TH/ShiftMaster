@@ -916,9 +916,18 @@
             const todayCol = document.getElementById('today-col-header');
             const container = document.getElementById('roster-table-container');
             const stickyCol = document.querySelector('.emp-dark-col');
+            
             if (todayCol && container) {
+                // คำนวณหาตำแหน่งความกว้างของคอลัมน์รายชื่อพนักงานที่ถูกตรึงไว้ (Sticky Column)
                 const stickyWidth = stickyCol ? stickyCol.offsetWidth : 200;
-                container.scrollTo({ left: stickyWidth, behavior: 'smooth' });
+                
+                // คำนวณตำแหน่งซ้ายสุดของคอลัมน์ "วันนี้" ลบด้วยความกว้างของคอลัมน์ตรึง เพื่อให้ชิดพอดี
+                const targetLeft = todayCol.offsetLeft - stickyWidth;
+                
+                container.scrollTo({ 
+                    left: targetLeft, 
+                    behavior: 'smooth' 
+                });
             }
         }
 
