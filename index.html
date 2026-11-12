@@ -40,6 +40,8 @@
     <!-- Firebase SDK Compat -->
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+    <!-- Tenor Embed Script -->
+    <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
 
     <style>
         body { 
@@ -495,16 +497,26 @@
                         <span class="px-2 py-0.5 rounded-lg bg-amber-900/40 text-amber-200 border border-amber-700/50 shadow-sm">ช่าง</span>
                     </div>
 
-                    <!-- 3D Cute Rabbit Mascot Card -->
-                    <div onclick="petTheRabbit()" class="btn-space-3d flex items-center space-x-2 px-3.5 py-1.5 rounded-xl cursor-pointer transition group shrink-0 relative z-10" title="คลิกทักทายน้องกระต่ายดุ๊กดิ๊ก!">
-                        <div class="relative animate-rabbit-float shrink-0">
-                            <div class="absolute -inset-1 bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 rounded-lg blur-xs opacity-75 group-hover:opacity-100"></div>
-                            <div class="relative w-7 h-7 bg-slate-950 rounded-lg border border-pink-400/70 flex items-center justify-center text-sm shadow-glow-rose select-none">
-                                🐰
+                    <!-- Right Container: Tenor GIF Embed (Outside) & 3D Cute Rabbit Mascot Card -->
+                    <div class="flex items-center space-x-2 relative z-10">
+                        <!-- Tenor GIF Embed (แยกออกมาด้านนอกและขยายใหญ่ขึ้นเล็กน้อย) -->
+                        <div class="w-14 h-12 rounded-xl overflow-hidden shrink-0 border border-pink-400/60 bg-slate-950/90 shadow-glow-rose flex items-center justify-center p-0.5">
+                            <div class="tenor-gif-embed" data-postid="15293090" data-share-method="host" data-aspect-ratio="1.12676" data-width="100%">
+                                <a href="https://tenor.com/view/bear-bunny-gif-15293090">Bear Bunny Sticker</a>
                             </div>
                         </div>
-                        <div class="text-[10px] font-bold text-pink-200 truncate">
-                            <span id="rabbit-greeting-text">กระต่ายน้อยช่วยดูแลกะให้แล้วค่า! ✨</span>
+
+                        <!-- 3D Cute Rabbit Mascot Card -->
+                        <div onclick="petTheRabbit()" class="btn-space-3d flex items-center space-x-2 px-3.5 py-1.5 rounded-xl cursor-pointer transition group shrink-0" title="คลิกทักทายน้องกระต่ายดุ๊กดิ๊ก!">
+                            <div class="relative animate-rabbit-float shrink-0">
+                                <div class="absolute -inset-1 bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 rounded-lg blur-xs opacity-75 group-hover:opacity-100"></div>
+                                <div class="relative w-7 h-7 bg-slate-950 rounded-lg border border-pink-400/70 flex items-center justify-center text-sm shadow-glow-rose select-none">
+                                    🐰
+                                </div>
+                            </div>
+                            <div class="text-[10px] font-bold text-pink-200 truncate">
+                                <span id="rabbit-greeting-text">กระต่ายน้อยช่วยดูแลกะให้แล้วค่า! ✨</span>
+                            </div>
                         </div>
                     </div>
                 </div>
