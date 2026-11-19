@@ -94,32 +94,35 @@
             50% { transform: scale(1.25) rotate(15deg); opacity: 0.8; filter: drop-shadow(0 0 10px rgba(250, 204, 21, 1)); }
         }
 
-        /* --- FULL FLOATING BUBBLE ANIMATION FOR SHIFT LEGEND --- */
-        @keyframes floatBubble {
+        /* --- FLOATING KRATHONG ANIMATION FOR SHIFT LEGEND --- */
+        @keyframes floatKrathong {
             0% {
-                transform: translateY(35px) scale(0.6);
+                transform: translateY(28px) translateX(0px) rotate(-4deg) scale(0.8);
                 opacity: 0;
             }
             20% {
-                opacity: 0.75;
+                opacity: 0.9;
+            }
+            50% {
+                transform: translateY(-6px) translateX(8px) rotate(4deg) scale(1);
+                opacity: 0.95;
             }
             80% {
-                opacity: 0.75;
+                opacity: 0.85;
             }
             100% {
-                transform: translateY(-45px) scale(1.35);
+                transform: translateY(-42px) translateX(-6px) rotate(-3deg) scale(1.08);
                 opacity: 0;
             }
         }
 
-        .bubble-particle {
+        .krathong-particle {
             position: absolute;
-            border-radius: 50%;
             pointer-events: none;
-            animation: floatBubble linear infinite;
-            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.95), rgba(99, 102, 241, 0.35));
-            box-shadow: 0 0 12px rgba(168, 85, 247, 0.6), inset 0 0 6px rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(1.5px);
+            user-select: none;
+            animation: floatKrathong linear infinite;
+            filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.75)) drop-shadow(0 4px 10px rgba(99, 102, 241, 0.45));
+            line-height: 1;
         }
 
         .animate-cute-float {
@@ -458,20 +461,20 @@
                     </div>
                 </div>
 
-                <!-- Shift Legend Quick Reference + Role Color Guide (FULL FLOATING BUBBLE BACKGROUND) -->
+                <!-- Shift Legend Quick Reference + Role Color Guide (FULL FLOATING KRATHONG BACKGROUND) -->
                 <div class="glass-panel-3d px-4 py-3 rounded-2xl flex flex-wrap items-center justify-between gap-3 shrink-0 no-print border border-indigo-500/40 relative overflow-hidden shadow-glow-indigo">
                     
-                    <!-- FULL COVERAGE BUBBLE PARTICLES -->
+                    <!-- FULL COVERAGE FLOATING KRATHONG PARTICLES -->
                     <div id="legend-bubble-container" class="absolute inset-0 pointer-events-none overflow-hidden z-0">
-                        <div class="bubble-particle" style="width: 18px; height: 18px; left: 3%; top: 15%; animation-duration: 3.5s; animation-delay: 0s;"></div>
-                        <div class="bubble-particle" style="width: 28px; height: 28px; left: 14%; top: 60%; animation-duration: 5.5s; animation-delay: 0.8s;"></div>
-                        <div class="bubble-particle" style="width: 14px; height: 14px; left: 25%; top: 20%; animation-duration: 4s; animation-delay: 1.2s;"></div>
-                        <div class="bubble-particle" style="width: 22px; height: 22px; left: 38%; top: 50%; animation-duration: 4.5s; animation-delay: 0.3s;"></div>
-                        <div class="bubble-particle" style="width: 16px; height: 16px; left: 50%; top: 30%; animation-duration: 3.8s; animation-delay: 1.8s;"></div>
-                        <div class="bubble-particle" style="width: 32px; height: 32px; left: 63%; top: 70%; animation-duration: 6s; animation-delay: 0.5s;"></div>
-                        <div class="bubble-particle" style="width: 12px; height: 12px; left: 74%; top: 10%; animation-duration: 4.2s; animation-delay: 2.2s;"></div>
-                        <div class="bubble-particle" style="width: 24px; height: 24px; left: 85%; top: 40%; animation-duration: 5s; animation-delay: 1s;"></div>
-                        <div class="bubble-particle" style="width: 20px; height: 20px; left: 95%; top: 65%; animation-duration: 4.6s; animation-delay: 0.1s;"></div>
+                        <span class="krathong-particle text-base" style="left: 3%; top: 20%; animation-duration: 4.5s; animation-delay: 0s;">🪷</span>
+                        <span class="krathong-particle text-xl" style="left: 14%; top: 55%; animation-duration: 6s; animation-delay: 0.8s;">🪷</span>
+                        <span class="krathong-particle text-sm" style="left: 25%; top: 25%; animation-duration: 4.8s; animation-delay: 1.2s;">🕯️</span>
+                        <span class="krathong-particle text-lg" style="left: 38%; top: 50%; animation-duration: 5.2s; animation-delay: 0.3s;">🪷</span>
+                        <span class="krathong-particle text-base" style="left: 50%; top: 30%; animation-duration: 4.4s; animation-delay: 1.8s;">🪷</span>
+                        <span class="krathong-particle text-xl" style="left: 63%; top: 65%; animation-duration: 6.4s; animation-delay: 0.5s;">🪷</span>
+                        <span class="krathong-particle text-sm" style="left: 74%; top: 15%; animation-duration: 4.9s; animation-delay: 2.2s;">🕯️</span>
+                        <span class="krathong-particle text-lg" style="left: 85%; top: 40%; animation-duration: 5.5s; animation-delay: 1s;">🪷</span>
+                        <span class="krathong-particle text-base" style="left: 94%; top: 60%; animation-duration: 5s; animation-delay: 0.1s;">🪷</span>
                     </div>
 
                     <div class="flex flex-wrap items-center gap-2 relative z-10">
