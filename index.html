@@ -42,23 +42,33 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
 
     <style>
+        :root {
+            --theme-primary: #6366f1;
+            --theme-secondary: #a855f7;
+            --theme-accent: #fbbf24;
+            --theme-glow: rgba(99, 102, 241, 0.55);
+            --weather-tint-1: rgba(99, 102, 241, 0.16);
+            --weather-tint-2: rgba(168, 85, 247, 0.12);
+        }
+
         body { 
             font-family: 'Prompt', sans-serif; 
             background: #090d16;
         }
 
-        /* Background Grid */
+        /* Background Grid + Dynamic Weather Tint */
         .dashboard-bg-pattern {
             background-color: #090d16;
             background-image: 
-                radial-gradient(at 10% 20%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
-                radial-gradient(at 90% 80%, rgba(168, 85, 247, 0.12) 0px, transparent 50%),
+                radial-gradient(at 15% 15%, var(--weather-tint-1) 0px, transparent 55%),
+                radial-gradient(at 85% 85%, var(--weather-tint-2) 0px, transparent 55%),
                 linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
                 linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
             background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;
+            transition: background-image 0.8s ease;
         }
 
-        /* Ambient Dynamic Canvas */
+        /* Ambient Dynamic Weather Canvas */
         #bg-canvas {
             position: absolute;
             top: 0;
@@ -66,7 +76,7 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: 1;
+            z-index: 2;
         }
 
         /* Festival Legend Canvas */
@@ -82,7 +92,7 @@
         /* --- 3D CUTE CHARACTER ANIMATIONS --- */
         @keyframes floatCute {
             0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-8px) rotate(3deg); }
+            50% { transform: translateY(-6px) rotate(3deg); }
         }
 
         @keyframes floatRabbit {
@@ -97,64 +107,26 @@
 
         /* --- FESTIVAL FLOATING PARTICLES FOR SHIFT LEGEND --- */
         @keyframes floatUpFestival {
-            0% {
-                transform: translateY(28px) translateX(0px) rotate(-4deg) scale(0.8);
-                opacity: 0;
-            }
-            20% {
-                opacity: 0.9;
-            }
-            50% {
-                transform: translateY(-6px) translateX(8px) rotate(4deg) scale(1);
-                opacity: 0.95;
-            }
-            80% {
-                opacity: 0.85;
-            }
-            100% {
-                transform: translateY(-42px) translateX(-6px) rotate(-3deg) scale(1.08);
-                opacity: 0;
-            }
+            0% { transform: translateY(28px) translateX(0px) rotate(-4deg) scale(0.8); opacity: 0; }
+            20% { opacity: 0.9; }
+            50% { transform: translateY(-6px) translateX(8px) rotate(4deg) scale(1); opacity: 0.95; }
+            80% { opacity: 0.85; }
+            100% { transform: translateY(-42px) translateX(-6px) rotate(-3deg) scale(1.08); opacity: 0; }
         }
 
         @keyframes fallDownFestival {
-            0% {
-                transform: translateY(-35px) translateX(-6px) rotate(-8deg) scale(0.85);
-                opacity: 0;
-            }
-            20% {
-                opacity: 0.92;
-            }
-            50% {
-                transform: translateY(4px) translateX(8px) rotate(6deg) scale(1);
-                opacity: 0.95;
-            }
-            80% {
-                opacity: 0.85;
-            }
-            100% {
-                transform: translateY(42px) translateX(-4px) rotate(-5deg) scale(1.05);
-                opacity: 0;
-            }
+            0% { transform: translateY(-35px) translateX(-6px) rotate(-8deg) scale(0.85); opacity: 0; }
+            20% { opacity: 0.92; }
+            50% { transform: translateY(4px) translateX(8px) rotate(6deg) scale(1); opacity: 0.95; }
+            80% { opacity: 0.85; }
+            100% { transform: translateY(42px) translateX(-4px) rotate(-5deg) scale(1.05); opacity: 0; }
         }
 
         @keyframes popBurstFestival {
-            0% {
-                transform: scale(0.5) rotate(-10deg);
-                opacity: 0;
-            }
-            30% {
-                transform: scale(1.15) rotate(6deg);
-                opacity: 1;
-            }
-            70% {
-                transform: scale(0.95) rotate(-4deg);
-                opacity: 0.9;
-            }
-            100% {
-                transform: scale(1.25) rotate(8deg);
-                opacity: 0;
-            }
+            0% { transform: scale(0.5) rotate(-10deg); opacity: 0; }
+            30% { transform: scale(1.15) rotate(6deg); opacity: 1; }
+            70% { transform: scale(0.95) rotate(-4deg); opacity: 0.9; }
+            100% { transform: scale(1.25) rotate(8deg); opacity: 0; }
         }
 
         .festival-particle {
@@ -166,17 +138,9 @@
             line-height: 1;
         }
 
-        .animate-cute-float {
-            animation: floatCute 3s ease-in-out infinite;
-        }
-
-        .animate-rabbit-float {
-            animation: floatRabbit 2s ease-in-out infinite;
-        }
-
-        .animate-star-twinkle {
-            animation: starTwinkle 1.5s ease-in-out infinite;
-        }
+        .animate-cute-float { animation: floatCute 3s ease-in-out infinite; }
+        .animate-rabbit-float { animation: floatRabbit 2s ease-in-out infinite; }
+        .animate-star-twinkle { animation: starTwinkle 1.5s ease-in-out infinite; }
 
         /* --- SPACE HOLOGRAPHIC 3D BUTTONS --- */
         .btn-space-3d {
@@ -202,39 +166,43 @@
             transition: 0.5s;
         }
 
-        .btn-space-3d:hover::before {
-            left: 100%;
-        }
+        .btn-space-3d:hover::before { left: 100%; }
 
         .btn-space-3d:hover {
-            transform: translateY(-3px) scale(1.02);
-            border-color: rgba(168, 85, 247, 0.8);
+            transform: translateY(-2px) scale(1.02);
+            border-color: var(--theme-accent);
             box-shadow: 
-                0 10px 25px -4px rgba(99, 102, 241, 0.6),
+                0 10px 25px -4px var(--theme-glow),
                 inset 0 2px 2px 0 rgba(255, 255, 255, 0.6),
                 inset 0 -2px 4px 0 rgba(0, 0, 0, 0.4);
         }
 
         .btn-space-3d:active {
             transform: translateY(1px) scale(0.98);
-            box-shadow: 
-                0 2px 8px rgba(0, 0, 0, 0.4),
-                inset 0 1px 1px 0 rgba(255, 255, 255, 0.2);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4), inset 0 1px 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        /* Dynamic Theme Active Nav Button */
+        .nav-btn-theme-active {
+            background: linear-gradient(135deg, var(--theme-primary), var(--theme-secondary)) !important;
+            border-color: rgba(255, 255, 255, 0.45) !important;
+            box-shadow: 0 0 22px var(--theme-glow), inset 0 1px 2px rgba(255, 255, 255, 0.5) !important;
+            color: #ffffff !important;
         }
 
         /* --- LASER GLOW 3D ANIMATION FOR "TODAY" COLUMN --- */
         @keyframes laserGlow3D {
             0% {
-                box-shadow: inset 0 0 12px rgba(99, 102, 241, 0.9), 0 0 20px rgba(99, 102, 241, 0.6);
-                border-color: rgba(129, 140, 248, 1);
+                box-shadow: inset 0 0 12px var(--theme-glow), 0 0 20px var(--theme-glow);
+                border-color: var(--theme-primary);
             }
             50% {
-                box-shadow: inset 0 0 22px rgba(168, 85, 247, 1), 0 0 30px rgba(168, 85, 247, 0.8);
-                border-color: rgba(216, 180, 254, 1);
+                box-shadow: inset 0 0 22px var(--theme-glow), 0 0 30px var(--theme-glow);
+                border-color: var(--theme-accent);
             }
             100% {
-                box-shadow: inset 0 0 12px rgba(99, 102, 241, 0.9), 0 0 20px rgba(99, 102, 241, 0.6);
-                border-color: rgba(129, 140, 248, 1);
+                box-shadow: inset 0 0 12px var(--theme-glow), 0 0 20px var(--theme-glow);
+                border-color: var(--theme-primary);
             }
         }
 
@@ -249,7 +217,7 @@
             background: rgba(15, 23, 42, 0.92);
             background-image: radial-gradient(rgba(99, 102, 241, 0.2) 1px, transparent 0);
             background-size: 16px 16px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
             box-shadow: 0 6px 20px -5px rgba(0, 0, 0, 0.5);
         }
 
@@ -269,10 +237,7 @@
             justify-content: center;
             transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        #splash-screen.fade-out {
-            opacity: 0;
-            visibility: hidden;
-        }
+        #splash-screen.fade-out { opacity: 0; visibility: hidden; }
 
         /* 3D Glass Panels */
         .glass-panel-3d {
@@ -350,13 +315,14 @@
     <div id="splash-screen">
         <div class="flex flex-col items-center space-y-4 animate-in fade-in zoom-in duration-700">
             <div class="relative group animate-cute-float">
-                <div class="absolute -inset-2 bg-gradient-to-r from-indigo-500 via-purple-600 to-pink-500 rounded-3xl blur-xl opacity-75 animate-pulse"></div>
+                <div id="splash-logo-glow" class="absolute -inset-2 bg-gradient-to-r from-indigo-500 via-purple-600 to-pink-500 rounded-3xl blur-xl opacity-75 animate-pulse"></div>
                 <img src="icon-512.png" alt="ShiftMaster Logo" class="relative w-24 h-24 rounded-3xl shadow-glow-indigo object-cover border-2 border-indigo-400/50">
+                <span id="splash-festival-badge" class="absolute -top-3 -right-3 w-10 h-10 rounded-2xl bg-slate-900/95 border-2 border-amber-400/70 flex items-center justify-center text-xl shadow-lg">🪷</span>
             </div>
             <div class="text-center space-y-1">
                 <h1 class="text-2xl font-extrabold text-white tracking-wider flex items-center justify-center gap-2 drop-shadow-md">
                     ShiftMaster
-                    <span class="text-[9px] font-extrabold px-2.5 py-0.5 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-glow-indigo border border-indigo-300/40">3D ULTRA</span>
+                    <span id="splash-3d-tag" class="text-[9px] font-extrabold px-2.5 py-0.5 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-glow-indigo border border-indigo-300/40">3D ULTRA</span>
                 </h1>
                 <p class="text-xs text-indigo-300 font-medium tracking-wide">ระบบจัดการกะพนักงานอัจฉริยะแบบเรียลไทม์</p>
             </div>
@@ -369,47 +335,57 @@
     <!-- Sidebar Navigation -->
     <aside class="w-full md:w-60 glass-sidebar-pattern text-slate-300 flex flex-col justify-between shrink-0 z-25 no-print border-r border-indigo-500/20 relative overflow-hidden">
         
-        <!-- Ambient Glow Orbs -->
-        <div class="absolute -top-16 -left-16 w-48 h-48 bg-indigo-600/30 rounded-full blur-3xl pointer-events-none"></div>
-        <div class="absolute bottom-10 -right-10 w-48 h-48 bg-purple-600/25 rounded-full blur-3xl pointer-events-none"></div>
+        <!-- Ambient Glow Orbs (Dynamic Theme Color) -->
+        <div id="sidebar-orb-top" class="absolute -top-16 -left-16 w-48 h-48 bg-indigo-600/30 rounded-full blur-3xl pointer-events-none transition-colors duration-700"></div>
+        <div id="sidebar-orb-bottom" class="absolute bottom-10 -right-10 w-48 h-48 bg-purple-600/25 rounded-full blur-3xl pointer-events-none transition-colors duration-700"></div>
 
         <div class="relative z-10">
-            <!-- App Branding & Preserved Logo -->
-            <div class="px-3.5 py-3.5 flex items-center space-x-2.5 border-b border-indigo-500/20 bg-slate-950/60 shadow-md">
+            <!-- App Branding & Dynamic Festival Badge -->
+            <div class="px-3.5 py-3.5 flex items-center space-x-2.5 border-b border-white/10 bg-slate-950/60 shadow-md">
                 <div class="relative group shrink-0 animate-cute-float">
-                    <div class="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl blur-md opacity-70 group-hover:opacity-100 transition duration-300"></div>
-                    <img src="icon-192.png" alt="Logo" class="relative w-8 h-8 rounded-xl object-cover border border-indigo-300/50 transition-all duration-300 group-hover:rotate-6 group-hover:scale-110 shadow-3d-sm">
+                    <div id="sidebar-logo-glow" class="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl blur-md opacity-70 group-hover:opacity-100 transition duration-300"></div>
+                    <img src="icon-192.png" alt="Logo" class="relative w-9 h-9 rounded-xl object-cover border border-white/40 transition-all duration-300 group-hover:rotate-6 group-hover:scale-110 shadow-3d-sm">
+                    <span id="sidebar-logo-festival-badge" class="absolute -bottom-1.5 -right-1.5 w-5 h-5 rounded-lg bg-slate-950 border border-amber-400/70 flex items-center justify-center text-[11px] shadow-md select-none">🪷</span>
                 </div>
                 <div>
                     <h1 class="font-extrabold text-white text-xs tracking-wide flex items-center gap-1">
                         ShiftMaster
-                        <span class="text-[7.5px] font-extrabold px-1.5 py-0.2 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-glow-indigo border border-white/20">3D</span>
+                        <span id="sidebar-3d-badge" class="text-[7.5px] font-extrabold px-1.5 py-0.2 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white border border-white/20">3D</span>
                     </h1>
-                    <p class="text-[8.5px] text-indigo-300/80 font-medium leading-none mt-0.5">ระบบจัดการกะ</p>
+                    <p id="sidebar-festival-subtitle" class="text-[9px] text-amber-300 font-bold leading-none mt-0.5">เทศกาลลอยกระทง</p>
                 </div>
             </div>
 
-            <!-- Navigation Links -->
+            <!-- Navigation Links (Dynamic Theme Icons) -->
             <nav class="p-2.5 space-y-2 mt-1">
-                <button onclick="switchTab('roster')" id="nav-roster" class="btn-space-3d w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all bg-gradient-to-r from-indigo-600 via-indigo-500 to-violet-600 text-white shadow-glow-indigo border-indigo-400/50">
-                    <i data-lucide="calendar" class="w-4 h-4"></i>
-                    <span>ตารางงานรายเดือน</span>
+                <button onclick="switchTab('roster')" id="nav-roster" class="btn-space-3d nav-btn-theme-active w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all">
+                    <div class="flex items-center space-x-2.5">
+                        <span id="nav-icon-roster" class="text-sm leading-none">📅</span>
+                        <span>ตารางงานรายเดือน</span>
+                    </div>
+                    <span id="nav-deco-roster" class="text-[11px] opacity-90">🪷</span>
                 </button>
-                <button onclick="switchTab('daily')" id="nav-daily" class="btn-space-3d w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all text-slate-300 hover:text-white border-slate-700/80">
-                    <i data-lucide="clock" class="w-4 h-4 text-indigo-400"></i>
-                    <span>สรุปรายวัน</span>
+                <button onclick="switchTab('daily')" id="nav-daily" class="btn-space-3d w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all text-slate-300 hover:text-white border-slate-700/80">
+                    <div class="flex items-center space-x-2.5">
+                        <span id="nav-icon-daily" class="text-sm leading-none">⏰</span>
+                        <span>สรุปรายวัน</span>
+                    </div>
+                    <span id="nav-deco-daily" class="text-[11px] opacity-75">✨</span>
                 </button>
-                <button onclick="switchTab('employees')" id="nav-employees" class="btn-space-3d w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all text-slate-300 hover:text-white border-slate-700/80">
-                    <i data-lucide="users" class="w-4 h-4 text-purple-400"></i>
-                    <span>จัดการพนักงาน</span>
+                <button onclick="switchTab('employees')" id="nav-employees" class="btn-space-3d w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all text-slate-300 hover:text-white border-slate-700/80">
+                    <div class="flex items-center space-x-2.5">
+                        <span id="nav-icon-employees" class="text-sm leading-none">👥</span>
+                        <span>จัดการพนักงาน</span>
+                    </div>
+                    <span id="nav-deco-employees" class="text-[11px] opacity-75">🏮</span>
                 </button>
             </nav>
         </div>
 
         <!-- Sidebar Footer -->
-        <div class="p-3 border-t border-indigo-500/20 bg-slate-950/80 relative z-10">
-            <div class="flex items-center justify-between text-[9.5px] text-indigo-300/80 font-semibold">
-                <span>เวอร์ชัน 5.8 Festival 3D</span>
+        <div class="p-3 border-t border-white/10 bg-slate-950/80 relative z-10">
+            <div class="flex items-center justify-between text-[9.5px] font-semibold">
+                <span id="sidebar-version-text" class="text-indigo-300/90">v6.0 Festival & Weather</span>
                 <span id="sync-status" class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[8.5px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-glow-emerald">
                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
                     เชื่อมต่อแล้ว
@@ -420,22 +396,23 @@
 
     <!-- Main Content Area -->
     <main class="flex-1 flex flex-col h-full overflow-hidden dashboard-bg-pattern relative">
-        <!-- Canvas Animated Particles Background -->
+        <!-- Canvas Animated Seasonal Weather Background -->
         <canvas id="bg-canvas"></canvas>
 
         <!-- Top Header Bar -->
-        <header class="header-glass-bg px-4 py-1.5 flex items-center justify-between shrink-0 z-20 relative">
+        <header class="header-glass-bg px-4 py-1.5 flex flex-wrap items-center justify-between gap-2 shrink-0 z-20 relative">
             <div class="flex items-center space-x-2.5">
-                <div class="w-2 h-5 bg-gradient-to-b from-indigo-500 via-purple-500 to-pink-500 rounded-full shadow-glow-indigo"></div>
+                <div id="header-accent-bar" class="w-2 h-5 bg-gradient-to-b from-indigo-500 via-purple-500 to-pink-500 rounded-full shadow-glow-indigo"></div>
+                <span id="header-festival-icon" class="text-sm">🪷</span>
                 <h2 id="page-title" class="text-xs font-extrabold text-white tracking-tight drop-shadow">ตารางงานรายเดือน</h2>
             </div>
-            <div class="flex items-center space-x-2">
+            <div class="flex flex-wrap items-center space-x-2">
                 <button onclick="jumpToToday()" title="คลิกเพื่อไปยังวันปัจจุบัน" class="btn-space-3d text-[11px] font-bold text-indigo-200 px-3 py-1.5 rounded-xl flex items-center space-x-1.5 cursor-pointer shadow-3d-sm">
-                    <i data-lucide="calendar-check" class="w-3.5 h-3.5 text-indigo-400"></i>
+                    <span id="header-today-icon" class="text-xs">📅</span>
                     <span id="today-text-display">กำลังโหลด...</span>
                 </button>
-                <button onclick="openShiftSettingsModal()" class="btn-space-3d flex items-center space-x-1.5 px-3 py-1.5 bg-gradient-to-r from-indigo-600 via-purple-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white rounded-xl text-[11px] font-bold shadow-glow-indigo border-indigo-400/50">
-                    <i data-lucide="sliders" class="w-3.5 h-3.5 text-indigo-200"></i>
+                <button onclick="openShiftSettingsModal()" id="header-settings-btn" class="btn-space-3d nav-btn-theme-active flex items-center space-x-1.5 px-3 py-1.5 text-white rounded-xl text-[11px] font-bold">
+                    <span id="header-settings-icon" class="text-xs">⚙️</span>
                     <span>จัดการกะและสีกะ</span>
                 </button>
             </div>
@@ -455,7 +432,7 @@
                 <div class="glass-panel-3d p-2 rounded-2xl flex flex-wrap items-center justify-between gap-2 shrink-0 no-print">
                     <div class="flex flex-wrap items-center space-x-2 gap-y-1.5">
                         <div class="flex items-center space-x-1.5 bg-slate-900/80 px-3 py-1 rounded-xl border border-slate-700/80 shadow-inner">
-                            <i data-lucide="filter" class="w-3.5 h-3.5 text-indigo-400"></i>
+                            <span id="toolbar-filter-icon" class="text-xs">🗓️</span>
                             <label class="text-[11px] font-bold text-slate-300">เดือน:</label>
                             <select id="roster-month" onchange="updateRosterView()" class="bg-transparent text-[11px] font-extrabold text-white focus:outline-none cursor-pointer">
                                 <option value="0" class="bg-slate-900">มกราคม</option>
@@ -482,7 +459,7 @@
 
                         <!-- FESTIVAL THEME SELECTOR -->
                         <div class="flex items-center space-x-1.5 bg-gradient-to-r from-indigo-950/90 to-purple-950/90 px-3 py-1 rounded-xl border border-indigo-500/50 shadow-3d-sm">
-                            <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-400"></i>
+                            <span id="toolbar-festival-icon" class="text-xs">✨</span>
                             <label class="text-[11px] font-bold text-indigo-200">เทศกาล:</label>
                             <select id="festival-theme-select" onchange="changeFestivalTheme(this.value)" class="bg-transparent text-[11px] font-extrabold text-amber-300 focus:outline-none cursor-pointer">
                                 <option value="auto" class="bg-slate-900 text-white">✨ อัตโนมัติ (ตามเดือน)</option>
@@ -491,6 +468,18 @@
                                 <option value="halloween" class="bg-slate-900 text-white">🎃 ฮาโลวีน</option>
                                 <option value="newyear" class="bg-slate-900 text-white">🎆 ปีใหม่</option>
                                 <option value="songkran" class="bg-slate-900 text-white">💦 สงกรานต์</option>
+                            </select>
+                        </div>
+
+                        <!-- SEASONAL WEATHER SELECTOR -->
+                        <div class="flex items-center space-x-1.5 bg-gradient-to-r from-sky-950/90 to-slate-900/90 px-3 py-1 rounded-xl border border-sky-500/50 shadow-3d-sm">
+                            <span id="toolbar-weather-icon" class="text-xs">🌤️</span>
+                            <label class="text-[11px] font-bold text-sky-200">ฤดูกาล:</label>
+                            <select id="weather-season-select" onchange="changeWeatherSeason(this.value)" class="bg-transparent text-[11px] font-extrabold text-sky-300 focus:outline-none cursor-pointer">
+                                <option value="auto" class="bg-slate-900 text-white">🌤️ อัตโนมัติ (ตามฤดู)</option>
+                                <option value="winter" class="bg-slate-900 text-white">❄️ ฤดูหนาว (หิมะ/ลมหนาว)</option>
+                                <option value="summer" class="bg-slate-900 text-white">☀️ ฤดูร้อน (แดดอบอุ่น)</option>
+                                <option value="rainy" class="bg-slate-900 text-white">🌧️ ฤดูฝน (สายฝนโปรยปราย)</option>
                             </select>
                         </div>
                     </div>
@@ -523,8 +512,8 @@
                     </div>
 
                     <div class="flex flex-wrap items-center gap-2 relative z-10">
-                        <span class="text-[10px] font-extrabold text-indigo-200 uppercase tracking-wider mr-1 flex items-center gap-1 bg-indigo-950/60 px-2.5 py-1 rounded-xl border border-indigo-500/40 shadow-3d-sm">
-                            <i data-lucide="bookmark" class="w-3.5 h-3.5 text-indigo-400"></i>
+                        <span class="text-[10px] font-extrabold text-indigo-200 uppercase tracking-wider mr-1 flex items-center gap-1.5 bg-indigo-950/60 px-2.5 py-1 rounded-xl border border-indigo-500/40 shadow-3d-sm">
+                            <span id="legend-bookmark-icon" class="text-xs">🪷</span>
                             ประเภทกะ:
                         </span>
                         <div id="roster-legend" class="flex flex-wrap gap-2">
@@ -543,8 +532,8 @@
                         <span class="px-2 py-0.5 rounded-lg bg-amber-900/40 text-amber-200 border border-amber-700/50 shadow-sm">ช่าง</span>
                     </div>
 
-                    <!-- 3D Cute Rabbit Mascot Card -->
-                    <div onclick="petTheRabbit()" class="btn-space-3d flex items-center space-x-2 px-3.5 py-1.5 rounded-xl cursor-pointer transition group shrink-0 relative z-10" title="คลิกทักทายน้องกระต่ายดุ๊กดิ๊ก!">
+                    <!-- 3D Cute Mascot Card -->
+                    <div onclick="petTheRabbit()" class="btn-space-3d flex items-center space-x-2 px-3.5 py-1.5 rounded-xl cursor-pointer transition group shrink-0 relative z-10" title="คลิกทักทายน้องมาสคอต!">
                         <div class="relative animate-rabbit-float shrink-0">
                             <div class="absolute -inset-1 bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 rounded-lg blur-xs opacity-75 group-hover:opacity-100"></div>
                             <div id="rabbit-avatar-icon" class="relative w-7 h-7 bg-slate-950 rounded-lg border border-pink-400/70 flex items-center justify-center text-sm shadow-glow-rose select-none">
@@ -598,8 +587,8 @@
                     <!-- Add Employee Card -->
                     <div class="glass-panel-3d p-5 rounded-2xl h-fit space-y-3 border border-white/10 shadow-3d-md">
                         <div class="flex items-center space-x-3 border-b border-slate-800 pb-3">
-                            <div class="p-2 bg-gradient-to-tr from-indigo-600 to-purple-600 text-white rounded-xl shadow-glow-indigo">
-                                <i data-lucide="user-plus" class="w-4 h-4"></i>
+                            <div id="emp-add-icon-box" class="p-2 bg-gradient-to-tr from-indigo-600 to-purple-600 text-white rounded-xl shadow-glow-indigo">
+                                <span id="emp-add-emoji" class="text-base">👤</span>
                             </div>
                             <div>
                                 <h3 class="font-extrabold text-white text-xs">เพิ่มพนักงานใหม่</h3>
@@ -623,7 +612,7 @@
                                     สามารถจัดลำดับขึ้นลงได้ตามต้องการในตารางพนักงาน
                                 </p>
                             </div>
-                            <button type="submit" class="btn-space-3d w-full mt-1 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 hover:from-indigo-500 hover:to-pink-500 text-white font-extrabold py-2.5 rounded-xl shadow-glow-indigo text-xs tracking-wide border-indigo-400/50">
+                            <button type="submit" class="btn-space-3d nav-btn-theme-active w-full mt-1 text-white font-extrabold py-2.5 rounded-xl text-xs tracking-wide">
                                 บันทึกพนักงาน
                             </button>
                         </form>
@@ -713,7 +702,7 @@
                             </div>
                         </div>
                         <div class="flex space-x-2 pt-1">
-                            <button type="submit" id="shift-submit-btn" class="btn-space-3d flex-1 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-extrabold py-2 rounded-xl text-xs shadow-glow-indigo border-indigo-400/50">
+                            <button type="submit" id="shift-submit-btn" class="btn-space-3d nav-btn-theme-active flex-1 text-white font-extrabold py-2 rounded-xl text-xs">
                                 บันทึกกะ
                             </button>
                             <button type="button" id="shift-cancel-btn" onclick="resetShiftForm()" class="btn-space-3d hidden px-3.5 text-slate-300 font-bold py-2 rounded-xl text-xs border-slate-600">
@@ -734,7 +723,7 @@
             </div>
 
             <div class="flex justify-end pt-2 border-t border-slate-800">
-                <button onclick="closeShiftSettingsModal()" class="btn-space-3d px-5 py-2 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white rounded-xl text-xs font-extrabold shadow-glow-indigo border-indigo-400/50">
+                <button onclick="closeShiftSettingsModal()" class="btn-space-3d nav-btn-theme-active px-5 py-2 text-white rounded-xl text-xs font-extrabold">
                     เสร็จสิ้น
                 </button>
             </div>
@@ -747,14 +736,68 @@
             <h3 id="modal-title" class="text-xs font-extrabold text-white">แจ้งเตือน</h3>
             <p id="modal-message" class="text-xs font-medium text-slate-300 leading-relaxed"></p>
             <div id="modal-actions" class="flex justify-end space-x-2 pt-1">
-                <button onclick="closeModal()" class="btn-space-3d px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold shadow-glow-indigo border-indigo-400/50">ตกลง</button>
+                <button onclick="closeModal()" class="btn-space-3d nav-btn-theme-active px-4 py-2 text-white rounded-xl text-xs font-bold">ตกลง</button>
             </div>
         </div>
     </div>
 
     <!-- Application Script Logic -->
     <script>
-        // --- FESTIVAL THEME CONFIGURATIONS ---
+        // --- SEASONAL WEATHER CONFIGURATIONS (THAILAND SEASONS) ---
+        const WEATHER_SEASONS = {
+            winter: {
+                name: 'ฤดูหนาว',
+                icon: '❄️',
+                tint1: 'rgba(56, 189, 248, 0.22)',
+                tint2: 'rgba(129, 140, 248, 0.16)'
+            },
+            summer: {
+                name: 'ฤดูร้อน',
+                icon: '☀️',
+                tint1: 'rgba(251, 191, 36, 0.22)',
+                tint2: 'rgba(249, 115, 22, 0.15)'
+            },
+            rainy: {
+                name: 'ฤดูฝน',
+                icon: '🌧️',
+                tint1: 'rgba(20, 184, 166, 0.20)',
+                tint2: 'rgba(59, 130, 246, 0.16)'
+            }
+        };
+
+        let selectedWeatherPref = localStorage.getItem('shift_weather_season') || 'auto';
+        let activeWeatherKey = 'winter';
+
+        function resolveWeatherSeasonKey() {
+            if (selectedWeatherPref !== 'auto' && WEATHER_SEASONS[selectedWeatherPref]) {
+                return selectedWeatherPref;
+            }
+            const monthSelect = document.getElementById('roster-month');
+            const m = monthSelect ? parseInt(monthSelect.value) : new Date().getMonth();
+            if (m === 10 || m === 11 || m === 0 || m === 1) return 'winter';
+            if (m >= 2 && m <= 4) return 'summer';
+            return 'rainy';
+        }
+
+        function changeWeatherSeason(val) {
+            selectedWeatherPref = val;
+            localStorage.setItem('shift_weather_season', val);
+            applyWeatherSeason();
+        }
+
+        function applyWeatherSeason() {
+            const newKey = resolveWeatherSeasonKey();
+            activeWeatherKey = newKey;
+            const weather = WEATHER_SEASONS[newKey] || WEATHER_SEASONS.winter;
+
+            document.documentElement.style.setProperty('--weather-tint-1', weather.tint1);
+            document.documentElement.style.setProperty('--weather-tint-2', weather.tint2);
+
+            const toolbarIcon = document.getElementById('toolbar-weather-icon');
+            if (toolbarIcon) toolbarIcon.innerText = weather.icon;
+        }
+
+        // --- FESTIVAL THEME CONFIGURATIONS & GLOBAL UI ICONS ---
         const FESTIVAL_THEMES = {
             loykrathong: {
                 name: 'ลอยกระทง',
@@ -763,6 +806,29 @@
                 shadow: 'drop-shadow(0 0 8px rgba(251, 191, 36, 0.75)) drop-shadow(0 4px 10px rgba(99, 102, 241, 0.45))',
                 borderColor: 'rgba(251, 191, 36, 0.45)',
                 boxGlow: '0 0 25px rgba(251, 191, 36, 0.25), inset 0 0 12px rgba(99, 102, 241, 0.35)',
+                primaryColor: '#6366f1',
+                secondaryColor: '#d97706',
+                accentColor: '#fbbf24',
+                glowColor: 'rgba(251, 191, 36, 0.45)',
+                orbTop: 'rgba(245, 158, 11, 0.28)',
+                orbBottom: 'rgba(99, 102, 241, 0.28)',
+                icons: {
+                    logoBadge: '🪷',
+                    header: '🪷',
+                    today: '🌕',
+                    settings: '🏮',
+                    filter: '🪷',
+                    festival: '✨',
+                    bookmark: '🪷',
+                    navRoster: '📅',
+                    navRosterDeco: '🪷',
+                    navDaily: '⏰',
+                    navDailyDeco: '✨',
+                    navEmp: '👥',
+                    navEmpDeco: '🏮',
+                    empAdd: '🪷',
+                    todayStar: '🌕'
+                },
                 rabbitIcon: '🐰',
                 rabbitMsgs: [
                     "สุขสันต์วันลอยกระทง! ลอยทุกข์ลอยโศก จัดกะราบรื่นค่า 🪷✨",
@@ -777,6 +843,29 @@
                 shadow: 'drop-shadow(0 0 8px rgba(52, 211, 153, 0.8)) drop-shadow(0 0 10px rgba(244, 63, 94, 0.6))',
                 borderColor: 'rgba(52, 211, 153, 0.55)',
                 boxGlow: '0 0 25px rgba(16, 185, 129, 0.3), inset 0 0 14px rgba(244, 63, 94, 0.25)',
+                primaryColor: '#059669',
+                secondaryColor: '#e11d48',
+                accentColor: '#34d399',
+                glowColor: 'rgba(16, 185, 129, 0.55)',
+                orbTop: 'rgba(16, 185, 129, 0.32)',
+                orbBottom: 'rgba(244, 63, 94, 0.28)',
+                icons: {
+                    logoBadge: '🎄',
+                    header: '🎄',
+                    today: '🎁',
+                    settings: '🔔',
+                    filter: '❄️',
+                    festival: '🎅',
+                    bookmark: '🎄',
+                    navRoster: '🗓️',
+                    navRosterDeco: '🎄',
+                    navDaily: '🔔',
+                    navDailyDeco: '❄️',
+                    navEmp: '🎅',
+                    navEmpDeco: '🎁',
+                    empAdd: '⛄',
+                    todayStar: '🌟'
+                },
                 rabbitIcon: '🎅',
                 rabbitMsgs: [
                     "Merry Christmas! ซานต้ากระต่ายมาส่งความสุขให้ตารางกะแล้วค่า 🎄🎁",
@@ -791,6 +880,29 @@
                 shadow: 'drop-shadow(0 0 10px rgba(249, 115, 22, 0.85)) drop-shadow(0 0 12px rgba(168, 85, 247, 0.7))',
                 borderColor: 'rgba(249, 115, 22, 0.55)',
                 boxGlow: '0 0 28px rgba(249, 115, 22, 0.3), inset 0 0 14px rgba(168, 85, 247, 0.35)',
+                primaryColor: '#ea580c',
+                secondaryColor: '#7e22ce',
+                accentColor: '#fb923c',
+                glowColor: 'rgba(249, 115, 22, 0.55)',
+                orbTop: 'rgba(249, 115, 22, 0.32)',
+                orbBottom: 'rgba(147, 51, 234, 0.32)',
+                icons: {
+                    logoBadge: '🎃',
+                    header: '🎃',
+                    today: '👻',
+                    settings: '🔮',
+                    filter: '🦇',
+                    festival: '🕸️',
+                    bookmark: '🎃',
+                    navRoster: '📅',
+                    navRosterDeco: '🎃',
+                    navDaily: '🕯️',
+                    navDailyDeco: '🦇',
+                    navEmp: '👻',
+                    navEmpDeco: '🍬',
+                    empAdd: '🧙',
+                    todayStar: '🎃'
+                },
                 rabbitIcon: '🎃',
                 rabbitMsgs: [
                     "Trick or Treat! ผีน้อยกระต่ายมาช่วยเฝ้ากะดึกให้แล้วแฮ่! 🎃👻",
@@ -805,6 +917,29 @@
                 shadow: 'drop-shadow(0 0 10px rgba(250, 204, 21, 0.9)) drop-shadow(0 0 12px rgba(236, 72, 153, 0.7))',
                 borderColor: 'rgba(250, 204, 21, 0.55)',
                 boxGlow: '0 0 28px rgba(250, 204, 21, 0.3), inset 0 0 14px rgba(236, 72, 153, 0.3)',
+                primaryColor: '#ca8a04',
+                secondaryColor: '#db2777',
+                accentColor: '#facc15',
+                glowColor: 'rgba(250, 204, 21, 0.55)',
+                orbTop: 'rgba(234, 179, 8, 0.32)',
+                orbBottom: 'rgba(236, 72, 153, 0.28)',
+                icons: {
+                    logoBadge: '🎆',
+                    header: '🎆',
+                    today: '🎉',
+                    settings: '🥂',
+                    filter: '🎇',
+                    festival: '🎊',
+                    bookmark: '🎆',
+                    navRoster: '🗓️',
+                    navRosterDeco: '🎆',
+                    navDaily: '⏳',
+                    navDailyDeco: '✨',
+                    navEmp: '🥳',
+                    navEmpDeco: '🎉',
+                    empAdd: '🎊',
+                    todayStar: '🎆'
+                },
                 rabbitIcon: '🥳',
                 rabbitMsgs: [
                     "Happy New Year! สวัสดีปีใหม่ ขอให้ตารางกะปังตลอดปีค่า 🎆🎉",
@@ -819,6 +954,29 @@
                 shadow: 'drop-shadow(0 0 8px rgba(56, 189, 248, 0.85)) drop-shadow(0 0 10px rgba(34, 211, 238, 0.65))',
                 borderColor: 'rgba(56, 189, 248, 0.55)',
                 boxGlow: '0 0 28px rgba(6, 182, 212, 0.35), inset 0 0 14px rgba(56, 189, 248, 0.3)',
+                primaryColor: '#0284c7',
+                secondaryColor: '#0d9488',
+                accentColor: '#38bdf8',
+                glowColor: 'rgba(56, 189, 248, 0.55)',
+                orbTop: 'rgba(14, 165, 233, 0.32)',
+                orbBottom: 'rgba(20, 184, 166, 0.28)',
+                icons: {
+                    logoBadge: '💦',
+                    header: '💦',
+                    today: '🌺',
+                    settings: '🔫',
+                    filter: '💧',
+                    festival: '🫧',
+                    bookmark: '💦',
+                    navRoster: '📅',
+                    navRosterDeco: '💦',
+                    navDaily: '☀️',
+                    navDailyDeco: '🌺',
+                    navEmp: '🏄',
+                    navEmpDeco: '🔫',
+                    empAdd: '🌺',
+                    todayStar: '💦'
+                },
                 rabbitIcon: '💦',
                 rabbitMsgs: [
                     "สุขสันต์วันสงกรานต์! สาดความสดชื่นให้ตารางกะชุ่มฉ่ำค่า 💦🔫",
@@ -830,6 +988,7 @@
 
         let selectedFestivalPref = localStorage.getItem('shift_festival_theme') || 'auto';
         let activeFestivalKey = 'loykrathong';
+        let currentActiveTab = 'roster';
 
         function resolveFestivalThemeKey() {
             if (selectedFestivalPref !== 'auto' && FESTIVAL_THEMES[selectedFestivalPref]) {
@@ -837,7 +996,6 @@
             }
             const monthSelect = document.getElementById('roster-month');
             const m = monthSelect ? parseInt(monthSelect.value) : new Date().getMonth();
-            // Auto detect by month: 0=Jan(NewYear), 3=Apr(Songkran), 9=Oct(Halloween), 10=Nov(LoyKrathong), 11=Dec(Christmas)
             if (m === 0) return 'newyear';
             if (m === 3) return 'songkran';
             if (m === 9) return 'halloween';
@@ -849,12 +1007,64 @@
             selectedFestivalPref = val;
             localStorage.setItem('shift_festival_theme', val);
             applyFestivalTheme();
+            updateRosterView();
         }
 
         function applyFestivalTheme() {
             const newKey = resolveFestivalThemeKey();
             activeFestivalKey = newKey;
             const theme = FESTIVAL_THEMES[newKey] || FESTIVAL_THEMES.loykrathong;
+
+            document.documentElement.style.setProperty('--theme-primary', theme.primaryColor);
+            document.documentElement.style.setProperty('--theme-secondary', theme.secondaryColor);
+            document.documentElement.style.setProperty('--theme-accent', theme.accentColor);
+            document.documentElement.style.setProperty('--theme-glow', theme.glowColor);
+
+            const orbTop = document.getElementById('sidebar-orb-top');
+            const orbBottom = document.getElementById('sidebar-orb-bottom');
+            if (orbTop) orbTop.style.backgroundColor = theme.orbTop;
+            if (orbBottom) orbBottom.style.backgroundColor = theme.orbBottom;
+
+            const logoBadge = document.getElementById('sidebar-logo-festival-badge');
+            const splashBadge = document.getElementById('splash-festival-badge');
+            const sidebarSub = document.getElementById('sidebar-festival-subtitle');
+            const sidebar3d = document.getElementById('sidebar-3d-badge');
+            const logoGlow = document.getElementById('sidebar-logo-glow');
+
+            if (logoBadge) logoBadge.innerText = theme.icons.logoBadge;
+            if (splashBadge) splashBadge.innerText = theme.icons.logoBadge;
+            if (sidebarSub) {
+                sidebarSub.innerText = `เทศกาล${theme.name}`;
+                sidebarSub.style.color = theme.accentColor;
+            }
+            if (sidebar3d) {
+                sidebar3d.style.background = `linear-gradient(135deg, ${theme.primaryColor}, ${theme.secondaryColor})`;
+            }
+            if (logoGlow) {
+                logoGlow.style.background = `linear-gradient(135deg, ${theme.primaryColor}, ${theme.secondaryColor})`;
+            }
+
+            const setTxt = (id, txt) => { const el = document.getElementById(id); if (el) el.innerText = txt; };
+            setTxt('nav-icon-roster', theme.icons.navRoster);
+            setTxt('nav-deco-roster', theme.icons.navRosterDeco);
+            setTxt('nav-icon-daily', theme.icons.navDaily);
+            setTxt('nav-deco-daily', theme.icons.navDailyDeco);
+            setTxt('nav-icon-employees', theme.icons.navEmp);
+            setTxt('nav-deco-employees', theme.icons.navEmpDeco);
+
+            setTxt('header-festival-icon', theme.icons.header);
+            setTxt('header-today-icon', theme.icons.today);
+            setTxt('header-settings-icon', theme.icons.settings);
+            setTxt('toolbar-filter-icon', theme.icons.filter);
+            setTxt('toolbar-festival-icon', theme.icons.festival);
+            setTxt('legend-bookmark-icon', theme.icons.bookmark);
+            setTxt('emp-add-emoji', theme.icons.empAdd);
+
+            const headerBar = document.getElementById('header-accent-bar');
+            if (headerBar) {
+                headerBar.style.background = `linear-gradient(to bottom, ${theme.primaryColor}, ${theme.accentColor}, ${theme.secondaryColor})`;
+                headerBar.style.boxShadow = `0 0 15px ${theme.glowColor}`;
+            }
 
             const box = document.getElementById('shift-legend-box');
             const container = document.getElementById('legend-particle-container');
@@ -913,8 +1123,8 @@
             return { badgeClass: 'bg-slate-800 text-slate-300 border-slate-700', textClass: 'text-indigo-300' };
         }
 
-        // --- DYNAMIC BACKGROUND PARTICLE CANVAS ANIMATION ---
-        function initBackgroundParticles() {
+        // --- DYNAMIC SEASONAL WEATHER CANVAS ANIMATION (FULL BACKGROUND) ---
+        function initBackgroundWeatherParticles() {
             const canvas = document.getElementById('bg-canvas');
             if (!canvas) return;
             const ctx = canvas.getContext('2d');
@@ -926,36 +1136,112 @@
                 height = canvas.height = canvas.offsetHeight;
             });
 
-            const particles = Array.from({ length: 30 }, () => ({
+            const winterSnow = Array.from({ length: 55 }, () => ({
                 x: Math.random() * width,
                 y: Math.random() * height,
-                radius: Math.random() * 2 + 0.5,
-                alpha: Math.random() * 0.4 + 0.1,
-                speedX: (Math.random() - 0.5) * 0.3,
-                speedY: (Math.random() - 0.5) * 0.3,
-                color: Math.random() > 0.5 ? '#818cf8' : '#c084fc'
+                radius: Math.random() * 2.5 + 1,
+                alpha: Math.random() * 0.45 + 0.15,
+                speedY: Math.random() * 0.8 + 0.35,
+                drift: (Math.random() - 0.5) * 0.5,
+                phase: Math.random() * Math.PI * 2
             }));
 
-            function animate() {
+            const summerMotes = Array.from({ length: 45 }, () => ({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                radius: Math.random() * 3 + 1,
+                alpha: Math.random() * 0.4 + 0.1,
+                speedX: (Math.random() - 0.5) * 0.35,
+                speedY: -(Math.random() * 0.35 + 0.1),
+                phase: Math.random() * Math.PI * 2
+            }));
+
+            const raindrops = Array.from({ length: 75 }, () => ({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                length: Math.random() * 14 + 8,
+                speedY: Math.random() * 5 + 4.5,
+                speedX: -1.4,
+                alpha: Math.random() * 0.35 + 0.12
+            }));
+
+            function animate(time = 0) {
                 ctx.clearRect(0, 0, width, height);
-                particles.forEach(p => {
-                    p.x += p.speedX;
-                    p.y += p.speedY;
 
-                    if (p.x < 0) p.x = width;
-                    if (p.x > width) p.x = 0;
-                    if (p.y < 0) p.y = height;
-                    if (p.y > height) p.y = 0;
+                if (activeWeatherKey === 'winter') {
+                    winterSnow.forEach(p => {
+                        p.y += p.speedY;
+                        p.x += p.drift + Math.sin(time * 0.002 + p.phase) * 0.3;
 
-                    ctx.beginPath();
-                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                    ctx.fillStyle = p.color;
-                    ctx.globalAlpha = p.alpha;
-                    ctx.fill();
-                });
+                        if (p.y > height + 5) { p.y = -5; p.x = Math.random() * width; }
+                        if (p.x > width) p.x = 0;
+                        if (p.x < 0) p.x = width;
+
+                        ctx.save();
+                        ctx.beginPath();
+                        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                        ctx.fillStyle = '#e0f2fe';
+                        ctx.shadowColor = '#38bdf8';
+                        ctx.shadowBlur = 8;
+                        ctx.globalAlpha = p.alpha;
+                        ctx.fill();
+                        ctx.restore();
+                    });
+
+                } else if (activeWeatherKey === 'summer') {
+                    const sunGrad = ctx.createRadialGradient(width * 0.85, height * 0.08, 10, width * 0.85, height * 0.08, Math.max(width, height) * 0.55);
+                    sunGrad.addColorStop(0, 'rgba(251, 191, 36, 0.12)');
+                    sunGrad.addColorStop(0.5, 'rgba(249, 115, 22, 0.04)');
+                    sunGrad.addColorStop(1, 'transparent');
+                    ctx.fillStyle = sunGrad;
+                    ctx.fillRect(0, 0, width, height);
+
+                    summerMotes.forEach(p => {
+                        p.x += p.speedX + Math.sin(time * 0.002 + p.phase) * 0.2;
+                        p.y += p.speedY;
+
+                        if (p.y < -10) { p.y = height + 10; p.x = Math.random() * width; }
+                        if (p.x > width) p.x = 0;
+                        if (p.x < 0) p.x = width;
+
+                        const twinkle = 0.6 + 0.4 * Math.sin(time * 0.004 + p.phase);
+                        ctx.save();
+                        ctx.beginPath();
+                        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                        ctx.fillStyle = '#fde047';
+                        ctx.shadowColor = '#f59e0b';
+                        ctx.shadowBlur = 10;
+                        ctx.globalAlpha = p.alpha * twinkle;
+                        ctx.fill();
+                        ctx.restore();
+                    });
+
+                } else if (activeWeatherKey === 'rainy') {
+                    raindrops.forEach(r => {
+                        r.x += r.speedX;
+                        r.y += r.speedY;
+
+                        if (r.y > height + 20) {
+                            r.y = -20;
+                            r.x = Math.random() * (width + 100);
+                        }
+                        if (r.x < -20) r.x = width + 20;
+
+                        ctx.save();
+                        ctx.beginPath();
+                        ctx.moveTo(r.x, r.y);
+                        ctx.lineTo(r.x + r.speedX * 1.6, r.y + r.length);
+                        ctx.strokeStyle = '#7dd3fc';
+                        ctx.lineWidth = 1.2;
+                        ctx.globalAlpha = r.alpha;
+                        ctx.stroke();
+                        ctx.restore();
+                    });
+                }
+
                 requestAnimationFrame(animate);
             }
-            animate();
+            requestAnimationFrame(animate);
         }
 
         // --- MULTI-FESTIVAL CANVAS ANIMATION BEHIND SHIFT LEGEND ---
@@ -976,7 +1262,6 @@
             resizeObserver.observe(box);
             window.addEventListener('resize', resizeLegendCanvas);
 
-            // 1. Loy Krathong Fish Data
             const fishPalettes = [
                 { body: '#38bdf8', fin: '#818cf8', glow: 'rgba(56, 189, 248, 0.45)' },
                 { body: '#f472b6', fin: '#e879f9', glow: 'rgba(244, 114, 182, 0.45)' },
@@ -999,7 +1284,6 @@
                 };
             });
 
-            // 2. Christmas Snowflakes Data
             const snowflakes = Array.from({ length: 24 }, () => ({
                 x: Math.random() * 800,
                 y: Math.random() * 80,
@@ -1009,7 +1293,6 @@
                 alpha: 0.4 + Math.random() * 0.45
             }));
 
-            // 3. Halloween Bats & Fireflies Data
             const bats = Array.from({ length: 5 }, (_, i) => ({
                 x: Math.random() * 800,
                 y: 15 + Math.random() * 40,
@@ -1018,7 +1301,6 @@
                 phase: Math.random() * Math.PI * 2
             }));
 
-            // 4. New Year Fireworks Data
             let fireworks = [];
             function spawnFirework() {
                 const colors = ['#facc15', '#f472b6', '#38bdf8', '#a78bfa', '#34d399', '#fb923c'];
@@ -1033,7 +1315,6 @@
                 fireworks.push({ sparks, color, life: 1.0 });
             }
 
-            // 5. Songkran Water Bubbles Data
             const waterBubbles = Array.from({ length: 22 }, () => ({
                 x: Math.random() * 800,
                 y: Math.random() * 80,
@@ -1090,7 +1371,6 @@
                 ctx.shadowColor = 'rgba(249, 115, 22, 0.6)';
                 ctx.shadowBlur = 8;
 
-                // Wings
                 ctx.beginPath();
                 ctx.moveTo(0, 0);
                 ctx.quadraticCurveTo(-s * 0.9, -s * 0.9 + flap, -s * 1.8, flap * 0.5);
@@ -1159,7 +1439,7 @@
                         fw.sparks.forEach(sp => {
                             sp.x += sp.vx;
                             sp.y += sp.vy;
-                            sp.vy += 0.012; // slight gravity
+                            sp.vy += 0.012;
                             ctx.save();
                             ctx.beginPath();
                             ctx.arc(sp.x, sp.y, 1.8, 0, Math.PI * 2);
@@ -1204,10 +1484,11 @@
         // --- PET THE RABBIT INTERACTION ---
         function petTheRabbit() {
             const theme = FESTIVAL_THEMES[activeFestivalKey] || FESTIVAL_THEMES.loykrathong;
+            const weather = WEATHER_SEASONS[activeWeatherKey] || WEATHER_SEASONS.winter;
             const msgs = theme.rabbitMsgs;
             const randomMsg = msgs[Math.floor(Math.random() * msgs.length)];
             document.getElementById('rabbit-greeting-text').innerText = randomMsg;
-            showModal(`น้องมาสคอตเทศกาล${theme.name}`, randomMsg);
+            showModal(`${theme.icons.header} เทศกาล${theme.name} • ${weather.icon} ${weather.name}`, randomMsg);
         }
 
         // --- FIREBASE CONFIG ---
@@ -1315,7 +1596,7 @@
                 `;
                 document.getElementById('modal-confirm-btn').onclick = () => { onConfirm(); closeModal(); };
             } else {
-                actions.innerHTML = `<button onclick="closeModal()" class="btn-space-3d px-5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold shadow-glow-indigo border-indigo-400/50">ตกลง</button>`;
+                actions.innerHTML = `<button onclick="closeModal()" class="btn-space-3d nav-btn-theme-active px-5 py-2 text-white rounded-xl text-xs font-bold">ตกลง</button>`;
             }
             document.getElementById('app-modal').classList.remove('hidden');
         }
@@ -1325,12 +1606,13 @@
         function closeShiftSettingsModal() { document.getElementById('shift-settings-modal').classList.add('hidden'); updateRosterView(); }
 
         function switchTab(tabId) {
+            currentActiveTab = tabId;
             ['roster', 'daily', 'employees'].forEach(t => {
                 document.getElementById(`tab-${t}`).classList.add('hidden');
-                document.getElementById(`nav-${t}`).className = "btn-space-3d w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all text-slate-300 hover:text-white border-slate-700/80";
+                document.getElementById(`nav-${t}`).className = "btn-space-3d w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all text-slate-300 hover:text-white border-slate-700/80";
             });
             document.getElementById(`tab-${tabId}`).classList.remove('hidden');
-            document.getElementById(`nav-${tabId}`).className = "btn-space-3d w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all bg-gradient-to-r from-indigo-600 via-indigo-500 to-violet-600 text-white shadow-glow-indigo border-indigo-400/50";
+            document.getElementById(`nav-${tabId}`).className = "btn-space-3d nav-btn-theme-active w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all";
 
             const titles = { roster: 'ตารางงานรายเดือน', daily: 'สรุปรายวัน', employees: 'จัดการพนักงาน' };
             document.getElementById('page-title').innerText = titles[tabId];
@@ -1344,9 +1626,11 @@
             const monthSelect = document.getElementById('roster-month');
             const yearSelect = document.getElementById('roster-year');
             const festivalSelect = document.getElementById('festival-theme-select');
+            const weatherSelect = document.getElementById('weather-season-select');
             const now = new Date();
             monthSelect.value = now.getMonth();
             if (festivalSelect) festivalSelect.value = selectedFestivalPref;
+            if (weatherSelect) weatherSelect.value = selectedWeatherPref;
             yearSelect.innerHTML = '';
             for (let y = now.getFullYear() - 2; y <= now.getFullYear() + 2; y++) {
                 const opt = document.createElement('option');
@@ -1399,7 +1683,11 @@
             if (selectedFestivalPref === 'auto') {
                 applyFestivalTheme();
             }
+            if (selectedWeatherPref === 'auto') {
+                applyWeatherSeason();
+            }
 
+            const theme = FESTIVAL_THEMES[activeFestivalKey] || FESTIVAL_THEMES.loykrathong;
             const month = parseInt(document.getElementById('roster-month').value);
             const year = parseInt(document.getElementById('roster-year').value);
             const daysInMonth = new Date(year, month + 1, 0).getDate();
@@ -1415,7 +1703,7 @@
                 </span>
             `).join('');
 
-            let headHTML = `<tr><th class="py-2.5 px-3 emp-dark-col min-w-[200px] text-xs font-extrabold border-r border-slate-700">รหัสและรายชื่อพนักงาน</th>`;
+            let headHTML = `<tr><th class="py-2.5 px-3 emp-dark-col min-w-[200px] text-xs font-extrabold border-r border-slate-700">${theme.icons.header} รหัสและรายชื่อพนักงาน</th>`;
             for (let d = 1; d <= daysInMonth; d++) {
                 const dateObj = new Date(year, month, d);
                 const isWeekend = dateObj.getDay() === 0 || dateObj.getDay() === 6;
@@ -1426,7 +1714,7 @@
                 headHTML += `<th ${isToday ? 'id="today-col-header"' : ''} class="py-1.5 px-0 text-center border-r border-slate-800 w-[42px] min-w-[42px] max-w-[42px] ${bgClass}">
                     <div class="text-[9px] ${isToday ? 'text-indigo-200 font-extrabold' : 'text-slate-400'} leading-none mb-0.5">${dayShortNamesTH[dateObj.getDay()]}</div>
                     <div class="font-extrabold text-xs leading-none">${d}</div>
-                    ${isToday ? '<div class="text-[8px] leading-none mt-0.5 text-amber-300 font-extrabold no-print flex items-center justify-center gap-0.5"><span class="animate-star-twinkle">⭐</span> วันนี้</div>' : ''}
+                    ${isToday ? `<div class="text-[8px] leading-none mt-0.5 text-amber-300 font-extrabold no-print flex items-center justify-center gap-0.5"><span class="animate-star-twinkle">${theme.icons.todayStar}</span> วันนี้</div>` : ''}
                 </th>`;
             }
             headHTML += `<th class="py-2.5 px-2 text-center min-w-[60px] text-xs font-extrabold bg-slate-900 text-slate-200">รวมวัน</th></tr>`;
@@ -1734,11 +2022,2058 @@
 
         // Initialize App & Smooth Transitions
         window.onload = function() {
-            initBackgroundParticles();
+            initBackgroundWeatherParticles();
             initLegendFestivalCanvas();
             displayTodayInfo();
             initRosterSelectors();
             applyFestivalTheme();
+            applyWeatherSeason();
+            initDailyPicker();
+            updateRosterView();
+            initRealtimeSync();
+            lucide.createIcons();
+
+            setTimeout(() => {
+                const splash = document.getElementById('splash-screen');
+                if (splash) {
+                    splash.classList.add('fade-out');
+                    setTimeout(() => splash.remove(), 600);
+                }
+            }, 1200);
+        };
+    </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="th" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบจัดการตารางกะพนักงาน (ShiftMaster Real-time 3D Ultra)</title>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#090d16">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Prompt', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        '3d-sm': '0 4px 14px -2px rgba(0, 0, 0, 0.4), inset 0 1px 1px 0 rgba(255, 255, 255, 0.4), inset 0 -2px 4px 0 rgba(0, 0, 0, 0.4)',
+                        '3d-md': '0 12px 32px -6px rgba(0, 0, 0, 0.6), inset 0 2px 2px 0 rgba(255, 255, 255, 0.5), inset 0 -3px 6px 0 rgba(0, 0, 0, 0.5)',
+                        '3d-lg': '0 24px 48px -12px rgba(0, 0, 0, 0.7), inset 0 2px 3px 0 rgba(255, 255, 255, 0.6)',
+                        'glow-indigo': '0 0 25px rgba(99, 102, 241, 0.8), inset 0 0 10px rgba(129, 140, 248, 0.6)',
+                        'glow-violet': '0 0 25px rgba(139, 92, 246, 0.8), inset 0 0 10px rgba(167, 139, 250, 0.6)',
+                        'glow-emerald': '0 0 25px rgba(16, 185, 129, 0.8), inset 0 0 10px rgba(52, 211, 153, 0.6)',
+                        'glow-rose': '0 0 25px rgba(244, 63, 94, 0.8), inset 0 0 10px rgba(251, 113, 133, 0.6)',
+                        'glow-cyan': '0 0 25px rgba(6, 182, 212, 0.8), inset 0 0 10px rgba(56, 189, 248, 0.6)',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Font: Prompt -->
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- SheetJS (xlsx) for Excel Export -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <!-- Firebase SDK Compat -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+
+    <style>
+        :root {
+            --theme-primary: #6366f1;
+            --theme-secondary: #a855f7;
+            --theme-accent: #fbbf24;
+            --theme-glow: rgba(99, 102, 241, 0.55);
+            --weather-tint-1: rgba(99, 102, 241, 0.16);
+            --weather-tint-2: rgba(168, 85, 247, 0.12);
+        }
+
+        body { 
+            font-family: 'Prompt', sans-serif; 
+            background: #090d16;
+        }
+
+        /* Background Grid + Dynamic Weather Tint */
+        .dashboard-bg-pattern {
+            background-color: #090d16;
+            background-image: 
+                radial-gradient(at 15% 15%, var(--weather-tint-1) 0px, transparent 55%),
+                radial-gradient(at 85% 85%, var(--weather-tint-2) 0px, transparent 55%),
+                linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;
+            transition: background-image 0.8s ease;
+        }
+
+        /* Ambient Dynamic Weather Canvas */
+        #bg-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        /* Festival Legend Canvas */
+        #legend-festival-canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* --- 3D CUTE CHARACTER ANIMATIONS --- */
+        @keyframes floatCute {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-6px) rotate(3deg); }
+        }
+
+        @keyframes floatRabbit {
+            0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
+            50% { transform: translateY(-5px) rotate(-5deg) scale(1.08); }
+        }
+
+        @keyframes starTwinkle {
+            0%, 100% { transform: scale(1) rotate(0deg); opacity: 1; filter: drop-shadow(0 0 4px rgba(250, 204, 21, 0.9)); }
+            50% { transform: scale(1.25) rotate(15deg); opacity: 0.8; filter: drop-shadow(0 0 10px rgba(250, 204, 21, 1)); }
+        }
+
+        /* --- FESTIVAL FLOATING PARTICLES FOR SHIFT LEGEND --- */
+        @keyframes floatUpFestival {
+            0% { transform: translateY(28px) translateX(0px) rotate(-4deg) scale(0.8); opacity: 0; }
+            20% { opacity: 0.9; }
+            50% { transform: translateY(-6px) translateX(8px) rotate(4deg) scale(1); opacity: 0.95; }
+            80% { opacity: 0.85; }
+            100% { transform: translateY(-42px) translateX(-6px) rotate(-3deg) scale(1.08); opacity: 0; }
+        }
+
+        @keyframes fallDownFestival {
+            0% { transform: translateY(-35px) translateX(-6px) rotate(-8deg) scale(0.85); opacity: 0; }
+            20% { opacity: 0.92; }
+            50% { transform: translateY(4px) translateX(8px) rotate(6deg) scale(1); opacity: 0.95; }
+            80% { opacity: 0.85; }
+            100% { transform: translateY(42px) translateX(-4px) rotate(-5deg) scale(1.05); opacity: 0; }
+        }
+
+        @keyframes popBurstFestival {
+            0% { transform: scale(0.5) rotate(-10deg); opacity: 0; }
+            30% { transform: scale(1.15) rotate(6deg); opacity: 1; }
+            70% { transform: scale(0.95) rotate(-4deg); opacity: 0.9; }
+            100% { transform: scale(1.25) rotate(8deg); opacity: 0; }
+        }
+
+        .festival-particle {
+            position: absolute;
+            pointer-events: none;
+            user-select: none;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+            line-height: 1;
+        }
+
+        .animate-cute-float { animation: floatCute 3s ease-in-out infinite; }
+        .animate-rabbit-float { animation: floatRabbit 2s ease-in-out infinite; }
+        .animate-star-twinkle { animation: starTwinkle 1.5s ease-in-out infinite; }
+
+        /* --- SPACE HOLOGRAPHIC 3D BUTTONS --- */
+        .btn-space-3d {
+            position: relative;
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%);
+            border: 1px solid rgba(129, 140, 248, 0.4);
+            box-shadow: 
+                0 6px 20px -2px rgba(0, 0, 0, 0.5),
+                inset 0 1px 1px 0 rgba(255, 255, 255, 0.4),
+                inset 0 -2px 4px 0 rgba(0, 0, 0, 0.6);
+            transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+            overflow: hidden;
+        }
+
+        .btn-space-3d::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+            transition: 0.5s;
+        }
+
+        .btn-space-3d:hover::before { left: 100%; }
+
+        .btn-space-3d:hover {
+            transform: translateY(-2px) scale(1.02);
+            border-color: var(--theme-accent);
+            box-shadow: 
+                0 10px 25px -4px var(--theme-glow),
+                inset 0 2px 2px 0 rgba(255, 255, 255, 0.6),
+                inset 0 -2px 4px 0 rgba(0, 0, 0, 0.4);
+        }
+
+        .btn-space-3d:active {
+            transform: translateY(1px) scale(0.98);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4), inset 0 1px 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        /* Dynamic Theme Active Nav Button */
+        .nav-btn-theme-active {
+            background: linear-gradient(135deg, var(--theme-primary), var(--theme-secondary)) !important;
+            border-color: rgba(255, 255, 255, 0.45) !important;
+            box-shadow: 0 0 22px var(--theme-glow), inset 0 1px 2px rgba(255, 255, 255, 0.5) !important;
+            color: #ffffff !important;
+        }
+
+        /* --- LASER GLOW 3D ANIMATION FOR "TODAY" COLUMN --- */
+        @keyframes laserGlow3D {
+            0% {
+                box-shadow: inset 0 0 12px var(--theme-glow), 0 0 20px var(--theme-glow);
+                border-color: var(--theme-primary);
+            }
+            50% {
+                box-shadow: inset 0 0 22px var(--theme-glow), 0 0 30px var(--theme-glow);
+                border-color: var(--theme-accent);
+            }
+            100% {
+                box-shadow: inset 0 0 12px var(--theme-glow), 0 0 20px var(--theme-glow);
+                border-color: var(--theme-primary);
+            }
+        }
+
+        .today-laser-column {
+            position: relative;
+            background: linear-gradient(135deg, rgba(49, 46, 129, 0.9) 0%, rgba(30, 27, 75, 0.95) 100%) !important;
+            animation: laserGlow3D 2s infinite ease-in-out;
+        }
+
+        /* Header Glass */
+        .header-glass-bg {
+            background: rgba(15, 23, 42, 0.92);
+            background-image: radial-gradient(rgba(99, 102, 241, 0.2) 1px, transparent 0);
+            background-size: 16px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 6px 20px -5px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Splash Screen */
+        #splash-screen {
+            position: fixed;
+            inset: 0;
+            background: #090d16 !important;
+            background-image: 
+                radial-gradient(at 50% 30%, rgba(99, 102, 241, 0.25) 0px, transparent 60%),
+                radial-gradient(at 80% 80%, rgba(168, 85, 247, 0.2) 0px, transparent 50%),
+                radial-gradient(circle at 50% 50%, #1e1b4b 0%, #090d16 100%) !important;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        #splash-screen.fade-out { opacity: 0; visibility: hidden; }
+
+        /* 3D Glass Panels */
+        .glass-panel-3d {
+            background: rgba(30, 41, 59, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 16px 32px -12px rgba(0, 0, 0, 0.6), inset 0 1px 0 0 rgba(255, 255, 255, 0.15);
+            transition: border-color 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .glass-sidebar-pattern {
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.98) 0%, rgba(9, 13, 22, 0.98) 100%);
+            box-shadow: 10px 0 30px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Shift Badge inside Table */
+        .shift-select-badge-3d {
+            transition: transform 0.15s ease, filter 0.15s ease;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3), inset 0 1.5px 0 rgba(255, 255, 255, 0.5);
+            font-weight: 800;
+            letter-spacing: 0.04em;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+        }
+        .shift-select-badge-3d:hover {
+            transform: scale(1.04);
+            filter: brightness(1.15);
+        }
+
+        /* STABILITY & TEXT VISIBILITY FIX FOR SCROLLING */
+        #roster-table-container {
+            position: relative;
+            z-index: 1;
+            overflow: auto;
+            scroll-behavior: smooth;
+        }
+
+        /* Sticky Columns Solid Overlay */
+        .emp-dark-col {
+            background-color: #0b1120 !important;
+            color: #ffffff !important;
+            position: sticky !important;
+            left: 0 !important;
+            z-index: 30 !important;
+            box-shadow: 4px 0 12px rgba(0, 0, 0, 0.5);
+        }
+        
+        thead th.emp-dark-col {
+            z-index: 50 !important;
+            background-color: #030712 !important;
+        }
+
+        /* Print Style */
+        @media print {
+            @page { size: A4 landscape; margin: 3mm; }
+            html, body { background: white !important; color: black !important; overflow: visible !important; height: auto !important; width: 100% !important; margin: 0 !important; padding: 0 !important; }
+            aside, header, .no-print, button, input, select option, #splash-screen, #bg-canvas, #legend-festival-canvas { display: none !important; }
+            main { padding: 0 !important; margin: 0 !important; overflow: visible !important; width: 100% !important; display: block !important; }
+            .overflow-x-auto, .overflow-auto, .overflow-y-auto { overflow: visible !important; box-shadow: none !important; border: none !important; background: white !important; }
+            #tab-roster { display: block !important; }
+            #roster-table { width: 100% !important; table-layout: fixed !important; font-size: 7px !important; border-collapse: collapse !important; color: black !important; }
+            #roster-table th, #roster-table td { padding: 1px 0px !important; border: 0.5pt solid #64748b !important; text-align: center !important; height: 22px !important; background: white !important; color: black !important; }
+            .emp-dark-col { background-color: #f1f5f9 !important; color: #0f172a !important; text-align: left !important; padding-left: 3px !important; width: 125px !important; }
+            .print-title { display: block !important; text-align: center; font-size: 11px; font-weight: bold; margin-bottom: 4px; color: #0f172a; }
+        }
+        .print-title { display: none; }
+
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.6); }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 999px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+    </style>
+</head>
+<body class="h-full text-slate-100 flex flex-col md:flex-row overflow-hidden m-0 p-0 antialiased selection:bg-indigo-500 selection:text-white">
+
+    <!-- SPLASH SCREEN -->
+    <div id="splash-screen">
+        <div class="flex flex-col items-center space-y-4 animate-in fade-in zoom-in duration-700">
+            <div class="relative group animate-cute-float">
+                <div id="splash-logo-glow" class="absolute -inset-2 bg-gradient-to-r from-indigo-500 via-purple-600 to-pink-500 rounded-3xl blur-xl opacity-75 animate-pulse"></div>
+                <img src="icon-512.png" alt="ShiftMaster Logo" class="relative w-24 h-24 rounded-3xl shadow-glow-indigo object-cover border-2 border-indigo-400/50">
+                <span id="splash-festival-badge" class="absolute -top-3 -right-3 w-10 h-10 rounded-2xl bg-slate-900/95 border-2 border-amber-400/70 flex items-center justify-center text-xl shadow-lg">🪷</span>
+            </div>
+            <div class="text-center space-y-1">
+                <h1 class="text-2xl font-extrabold text-white tracking-wider flex items-center justify-center gap-2 drop-shadow-md">
+                    ShiftMaster
+                    <span id="splash-3d-tag" class="text-[9px] font-extrabold px-2.5 py-0.5 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-glow-indigo border border-indigo-300/40">3D ULTRA</span>
+                </h1>
+                <p class="text-xs text-indigo-300 font-medium tracking-wide">ระบบจัดการกะพนักงานอัจฉริยะแบบเรียลไทม์</p>
+            </div>
+            <div class="w-32 h-1 bg-slate-900 rounded-full overflow-hidden mt-2 shadow-inner">
+                <div class="w-full h-full bg-gradient-to-r from-indigo-500 via-pink-500 to-purple-500 animate-[pulse_1s_infinite]"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar Navigation -->
+    <aside class="w-full md:w-60 glass-sidebar-pattern text-slate-300 flex flex-col justify-between shrink-0 z-25 no-print border-r border-indigo-500/20 relative overflow-hidden">
+        
+        <!-- Ambient Glow Orbs (Dynamic Theme Color) -->
+        <div id="sidebar-orb-top" class="absolute -top-16 -left-16 w-48 h-48 bg-indigo-600/30 rounded-full blur-3xl pointer-events-none transition-colors duration-700"></div>
+        <div id="sidebar-orb-bottom" class="absolute bottom-10 -right-10 w-48 h-48 bg-purple-600/25 rounded-full blur-3xl pointer-events-none transition-colors duration-700"></div>
+
+        <div class="relative z-10">
+            <!-- App Branding & Dynamic Festival Badge -->
+            <div class="px-3.5 py-3.5 flex items-center space-x-2.5 border-b border-white/10 bg-slate-950/60 shadow-md">
+                <div class="relative group shrink-0 animate-cute-float">
+                    <div id="sidebar-logo-glow" class="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl blur-md opacity-70 group-hover:opacity-100 transition duration-300"></div>
+                    <img src="icon-192.png" alt="Logo" class="relative w-9 h-9 rounded-xl object-cover border border-white/40 transition-all duration-300 group-hover:rotate-6 group-hover:scale-110 shadow-3d-sm">
+                    <span id="sidebar-logo-festival-badge" class="absolute -bottom-1.5 -right-1.5 w-5 h-5 rounded-lg bg-slate-950 border border-amber-400/70 flex items-center justify-center text-[11px] shadow-md select-none">🪷</span>
+                </div>
+                <div>
+                    <h1 class="font-extrabold text-white text-xs tracking-wide flex items-center gap-1">
+                        ShiftMaster
+                        <span id="sidebar-3d-badge" class="text-[7.5px] font-extrabold px-1.5 py-0.2 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white border border-white/20">3D</span>
+                    </h1>
+                    <p id="sidebar-festival-subtitle" class="text-[9px] text-amber-300 font-bold leading-none mt-0.5">เทศกาลลอยกระทง</p>
+                </div>
+            </div>
+
+            <!-- Navigation Links (Dynamic Theme Icons) -->
+            <nav class="p-2.5 space-y-2 mt-1">
+                <button onclick="switchTab('roster')" id="nav-roster" class="btn-space-3d nav-btn-theme-active w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all">
+                    <div class="flex items-center space-x-2.5">
+                        <span id="nav-icon-roster" class="text-sm leading-none">📅</span>
+                        <span>ตารางงานรายเดือน</span>
+                    </div>
+                    <span id="nav-deco-roster" class="text-[11px] opacity-90">🪷</span>
+                </button>
+                <button onclick="switchTab('daily')" id="nav-daily" class="btn-space-3d w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all text-slate-300 hover:text-white border-slate-700/80">
+                    <div class="flex items-center space-x-2.5">
+                        <span id="nav-icon-daily" class="text-sm leading-none">⏰</span>
+                        <span>สรุปรายวัน</span>
+                    </div>
+                    <span id="nav-deco-daily" class="text-[11px] opacity-75">✨</span>
+                </button>
+                <button onclick="switchTab('employees')" id="nav-employees" class="btn-space-3d w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all text-slate-300 hover:text-white border-slate-700/80">
+                    <div class="flex items-center space-x-2.5">
+                        <span id="nav-icon-employees" class="text-sm leading-none">👥</span>
+                        <span>จัดการพนักงาน</span>
+                    </div>
+                    <span id="nav-deco-employees" class="text-[11px] opacity-75">🏮</span>
+                </button>
+            </nav>
+        </div>
+
+        <!-- Sidebar Footer -->
+        <div class="p-3 border-t border-white/10 bg-slate-950/80 relative z-10">
+            <div class="flex items-center justify-between text-[9.5px] font-semibold">
+                <span id="sidebar-version-text" class="text-indigo-300/90">v6.0 Festival & Weather</span>
+                <span id="sync-status" class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[8.5px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-glow-emerald">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+                    เชื่อมต่อแล้ว
+                </span>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 flex flex-col h-full overflow-hidden dashboard-bg-pattern relative">
+        <!-- Canvas Animated Seasonal Weather Background -->
+        <canvas id="bg-canvas"></canvas>
+
+        <!-- Top Header Bar -->
+        <header class="header-glass-bg px-4 py-1.5 flex flex-wrap items-center justify-between gap-2 shrink-0 z-20 relative">
+            <div class="flex items-center space-x-2.5">
+                <div id="header-accent-bar" class="w-2 h-5 bg-gradient-to-b from-indigo-500 via-purple-500 to-pink-500 rounded-full shadow-glow-indigo"></div>
+                <span id="header-festival-icon" class="text-sm">🪷</span>
+                <h2 id="page-title" class="text-xs font-extrabold text-white tracking-tight drop-shadow">ตารางงานรายเดือน</h2>
+            </div>
+            <div class="flex flex-wrap items-center space-x-2">
+                <button onclick="jumpToToday()" title="คลิกเพื่อไปยังวันปัจจุบัน" class="btn-space-3d text-[11px] font-bold text-indigo-200 px-3 py-1.5 rounded-xl flex items-center space-x-1.5 cursor-pointer shadow-3d-sm">
+                    <span id="header-today-icon" class="text-xs">📅</span>
+                    <span id="today-text-display">กำลังโหลด...</span>
+                </button>
+                <button onclick="openShiftSettingsModal()" id="header-settings-btn" class="btn-space-3d nav-btn-theme-active flex items-center space-x-1.5 px-3 py-1.5 text-white rounded-xl text-[11px] font-bold">
+                    <span id="header-settings-icon" class="text-xs">⚙️</span>
+                    <span>จัดการกะและสีกะ</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Printable Title -->
+        <div class="print-title" id="print-header-title">
+            ตารางปฏิบัติงานพนักงาน
+        </div>
+
+        <!-- Viewport Scroll Container -->
+        <div class="flex-1 overflow-auto p-2.5 md:p-3 flex flex-col space-y-2.5 z-10">
+
+            <!-- TAB 1: MONTHLY ROSTER -->
+            <section id="tab-roster" class="space-y-2 flex-1 flex flex-col">
+                <!-- Toolbar Area -->
+                <div class="glass-panel-3d p-2 rounded-2xl flex flex-wrap items-center justify-between gap-2 shrink-0 no-print">
+                    <div class="flex flex-wrap items-center space-x-2 gap-y-1.5">
+                        <div class="flex items-center space-x-1.5 bg-slate-900/80 px-3 py-1 rounded-xl border border-slate-700/80 shadow-inner">
+                            <span id="toolbar-filter-icon" class="text-xs">🗓️</span>
+                            <label class="text-[11px] font-bold text-slate-300">เดือน:</label>
+                            <select id="roster-month" onchange="updateRosterView()" class="bg-transparent text-[11px] font-extrabold text-white focus:outline-none cursor-pointer">
+                                <option value="0" class="bg-slate-900">มกราคม</option>
+                                <option value="1" class="bg-slate-900">กุมภาพันธ์</option>
+                                <option value="2" class="bg-slate-900">มีนาคม</option>
+                                <option value="3" class="bg-slate-900">เมษายน</option>
+                                <option value="4" class="bg-slate-900">พฤษภาคม</option>
+                                <option value="5" class="bg-slate-900">มิถุนายน</option>
+                                <option value="6" class="bg-slate-900">กรกฎาคม</option>
+                                <option value="7" class="bg-slate-900">สิงหาคม</option>
+                                <option value="8" class="bg-slate-900">กันยายน</option>
+                                <option value="9" class="bg-slate-900">ตุลาคม</option>
+                                <option value="10" class="bg-slate-900">พฤศจิกายน</option>
+                                <option value="11" class="bg-slate-900">ธันวาคม</option>
+                            </select>
+                        </div>
+                        
+                        <div class="flex items-center space-x-1.5 bg-slate-900/80 px-3 py-1 rounded-xl border border-slate-700/80 shadow-inner">
+                            <label class="text-[11px] font-bold text-slate-300">ปี:</label>
+                            <select id="roster-year" onchange="updateRosterView()" class="bg-transparent text-[11px] font-extrabold text-white focus:outline-none cursor-pointer">
+                                <!-- Populated via JS -->
+                            </select>
+                        </div>
+
+                        <!-- FESTIVAL THEME SELECTOR -->
+                        <div class="flex items-center space-x-1.5 bg-gradient-to-r from-indigo-950/90 to-purple-950/90 px-3 py-1 rounded-xl border border-indigo-500/50 shadow-3d-sm">
+                            <span id="toolbar-festival-icon" class="text-xs">✨</span>
+                            <label class="text-[11px] font-bold text-indigo-200">เทศกาล:</label>
+                            <select id="festival-theme-select" onchange="changeFestivalTheme(this.value)" class="bg-transparent text-[11px] font-extrabold text-amber-300 focus:outline-none cursor-pointer">
+                                <option value="auto" class="bg-slate-900 text-white">✨ อัตโนมัติ (ตามเดือน)</option>
+                                <option value="loykrathong" class="bg-slate-900 text-white">🪷 ลอยกระทง</option>
+                                <option value="christmas" class="bg-slate-900 text-white">🎄 คริสต์มาส</option>
+                                <option value="halloween" class="bg-slate-900 text-white">🎃 ฮาโลวีน</option>
+                                <option value="newyear" class="bg-slate-900 text-white">🎆 ปีใหม่</option>
+                                <option value="songkran" class="bg-slate-900 text-white">💦 สงกรานต์</option>
+                            </select>
+                        </div>
+
+                        <!-- SEASONAL WEATHER SELECTOR -->
+                        <div class="flex items-center space-x-1.5 bg-gradient-to-r from-sky-950/90 to-slate-900/90 px-3 py-1 rounded-xl border border-sky-500/50 shadow-3d-sm">
+                            <span id="toolbar-weather-icon" class="text-xs">🌤️</span>
+                            <label class="text-[11px] font-bold text-sky-200">ฤดูกาล:</label>
+                            <select id="weather-season-select" onchange="changeWeatherSeason(this.value)" class="bg-transparent text-[11px] font-extrabold text-sky-300 focus:outline-none cursor-pointer">
+                                <option value="auto" class="bg-slate-900 text-white">🌤️ อัตโนมัติ (ตามฤดู)</option>
+                                <option value="winter" class="bg-slate-900 text-white">❄️ ฤดูหนาว (หิมะ/ลมหนาว)</option>
+                                <option value="summer" class="bg-slate-900 text-white">☀️ ฤดูร้อน (แดดอบอุ่น)</option>
+                                <option value="rainy" class="bg-slate-900 text-white">🌧️ ฤดูฝน (สายฝนโปรยปราย)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center space-x-2">
+                        <button onclick="resetMonthSchedule()" class="btn-space-3d flex items-center space-x-1 px-3 py-1.5 bg-rose-950/80 hover:bg-rose-900 text-rose-300 text-[11px] font-bold rounded-xl border-rose-700/50 shadow-3d-sm">
+                            <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+                            <span>ล้างกะเดือนนี้</span>
+                        </button>
+                        <button onclick="printRosterPDF()" class="btn-space-3d flex items-center space-x-1 px-3.5 py-1.5 text-white text-[11px] font-bold rounded-xl border-slate-600/60 shadow-3d-sm">
+                            <i data-lucide="printer" class="w-3.5 h-3.5 text-slate-300"></i>
+                            <span>พิมพ์ / PDF</span>
+                        </button>
+                        <button onclick="exportRosterExcel()" class="btn-space-3d flex items-center space-x-1 px-3.5 py-1.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-[11px] font-bold rounded-xl shadow-glow-emerald border-emerald-400/50">
+                            <i data-lucide="file-spreadsheet" class="w-3.5 h-3.5"></i>
+                            <span>ดาวน์โหลด Excel</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Shift Legend Quick Reference + Role Color Guide (DYNAMIC FESTIVAL BACKGROUND) -->
+                <div id="shift-legend-box" class="glass-panel-3d px-4 py-3 rounded-2xl flex flex-wrap items-center justify-between gap-3 shrink-0 no-print border border-indigo-500/40 relative overflow-hidden shadow-glow-indigo">
+                    
+                    <!-- DYNAMIC CANVAS EFFECT BEHIND LEGEND -->
+                    <canvas id="legend-festival-canvas"></canvas>
+
+                    <!-- DYNAMIC FLOATING EMOJI PARTICLES CONTAINER -->
+                    <div id="legend-particle-container" class="absolute inset-0 pointer-events-none overflow-hidden z-0">
+                        <!-- Populated dynamically based on festival theme -->
+                    </div>
+
+                    <div class="flex flex-wrap items-center gap-2 relative z-10">
+                        <span class="text-[10px] font-extrabold text-indigo-200 uppercase tracking-wider mr-1 flex items-center gap-1.5 bg-indigo-950/60 px-2.5 py-1 rounded-xl border border-indigo-500/40 shadow-3d-sm">
+                            <span id="legend-bookmark-icon" class="text-xs">🪷</span>
+                            ประเภทกะ:
+                        </span>
+                        <div id="roster-legend" class="flex flex-wrap gap-2">
+                            <!-- Rendered dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Role Badge Color Legend -->
+                    <div class="flex flex-wrap items-center gap-1.5 text-[9.5px] font-extrabold border-l border-indigo-500/30 pl-3 my-0.5 relative z-10 bg-slate-950/50 px-3 py-1.5 rounded-xl border border-white/5">
+                        <span class="text-indigo-300 mr-1">สีกะพนักงาน:</span>
+                        <span class="px-2 py-0.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/40 shadow-sm">ต้อนรับ</span>
+                        <span class="px-2 py-0.5 rounded-lg bg-sky-500/20 text-sky-300 border border-sky-500/40 shadow-sm">ตลาด/เสมียน</span>
+                        <span class="px-2 py-0.5 rounded-lg bg-purple-500/20 text-purple-300 border border-purple-500/40 shadow-sm">เบลบอย</span>
+                        <span class="px-2 py-0.5 rounded-lg bg-pink-500/20 text-pink-300 border border-pink-500/40 shadow-sm">แม่บ้าน</span>
+                        <span class="px-2 py-0.5 rounded-lg bg-blue-600/30 text-blue-300 border border-blue-500/40 shadow-sm">รปภ.</span>
+                        <span class="px-2 py-0.5 rounded-lg bg-amber-900/40 text-amber-200 border border-amber-700/50 shadow-sm">ช่าง</span>
+                    </div>
+
+                    <!-- 3D Cute Mascot Card -->
+                    <div onclick="petTheRabbit()" class="btn-space-3d flex items-center space-x-2 px-3.5 py-1.5 rounded-xl cursor-pointer transition group shrink-0 relative z-10" title="คลิกทักทายน้องมาสคอต!">
+                        <div class="relative animate-rabbit-float shrink-0">
+                            <div class="absolute -inset-1 bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 rounded-lg blur-xs opacity-75 group-hover:opacity-100"></div>
+                            <div id="rabbit-avatar-icon" class="relative w-7 h-7 bg-slate-950 rounded-lg border border-pink-400/70 flex items-center justify-center text-sm shadow-glow-rose select-none">
+                                🐰
+                            </div>
+                        </div>
+                        <div class="text-[10px] font-bold text-pink-200 truncate max-w-[210px]">
+                            <span id="rabbit-greeting-text">กระต่ายน้อยช่วยดูแลกะให้แล้วค่า! ✨</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Roster Grid Table Container -->
+                <div class="glass-panel-3d rounded-2xl flex-1 flex flex-col overflow-hidden border border-white/10 shadow-3d-lg">
+                    <div id="roster-table-container" class="flex-1 relative rounded-2xl">
+                        <table id="roster-table" class="w-full text-left border-collapse">
+                            <thead id="roster-thead" class="bg-slate-900 text-slate-300 text-[10px] uppercase tracking-wider sticky top-0 z-40 border-b border-slate-700/80 shadow-3d-sm">
+                                <!-- Generated Dynamically -->
+                            </thead>
+                            <tbody id="roster-tbody" class="divide-y divide-slate-800/60 text-xs">
+                                <!-- Generated Dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 2: DAILY OVERVIEW -->
+            <section id="tab-daily" class="space-y-3 hidden">
+                <div class="glass-panel-3d p-3 rounded-2xl flex flex-wrap items-center justify-between gap-3">
+                    <div class="flex items-center space-x-3">
+                        <label class="text-xs font-extrabold text-slate-300">เลือกวันที่:</label>
+                        <input type="date" id="daily-date-picker" onchange="renderDailyOverview()" class="bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs font-bold text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-inner">
+                        <button onclick="setDailyPickerToToday()" class="btn-space-3d px-3 py-1.5 text-indigo-300 text-xs font-bold rounded-xl border-indigo-700/50 shadow-3d-sm">
+                            วันนี้
+                        </button>
+                    </div>
+                    <div id="daily-stats-summary" class="flex items-center space-x-2 text-xs font-semibold text-slate-300">
+                        <!-- Summary stats -->
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="daily-shift-cards">
+                    <!-- Rendered Shift Column Cards -->
+                </div>
+            </section>
+
+            <!-- TAB 3: EMPLOYEE MANAGEMENT -->
+            <section id="tab-employees" class="space-y-3 hidden">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                    <!-- Add Employee Card -->
+                    <div class="glass-panel-3d p-5 rounded-2xl h-fit space-y-3 border border-white/10 shadow-3d-md">
+                        <div class="flex items-center space-x-3 border-b border-slate-800 pb-3">
+                            <div id="emp-add-icon-box" class="p-2 bg-gradient-to-tr from-indigo-600 to-purple-600 text-white rounded-xl shadow-glow-indigo">
+                                <span id="emp-add-emoji" class="text-base">👤</span>
+                            </div>
+                            <div>
+                                <h3 class="font-extrabold text-white text-xs">เพิ่มพนักงานใหม่</h3>
+                                <p class="text-[10px] text-indigo-300/80 font-medium">ใส่ข้อมูลพนักงานเพื่อเข้าตารางกะ</p>
+                            </div>
+                        </div>
+                        <form id="add-employee-form" onsubmit="handleAddEmployee(event)" class="space-y-3">
+                            <div>
+                                <label class="block text-[10px] font-extrabold text-slate-300 uppercase tracking-wider mb-0.5">รหัสพนักงาน (ID)</label>
+                                <input type="text" id="emp-id" required placeholder="เช่น EMP001" class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 font-bold shadow-inner">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-extrabold text-slate-300 uppercase tracking-wider mb-0.5">ชื่อ - นามสกุล</label>
+                                <input type="text" id="emp-name" required placeholder="เช่น สมชาย ใจดี" class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 font-bold shadow-inner">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-extrabold text-slate-300 uppercase tracking-wider mb-0.5">ตำแหน่ง / แผนก</label>
+                                <input type="text" id="emp-role" required placeholder="เช่น พนักงานต้อนรับ, ช่าง, แม่บ้าน, รปภ." class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 font-bold shadow-inner">
+                                <p class="text-[9.5px] text-amber-300 font-bold mt-1.5 flex items-center gap-1.5 bg-amber-950/40 border border-amber-500/30 p-1.5 rounded-lg">
+                                    <i data-lucide="star" class="w-3.5 h-3.5 text-amber-400 fill-amber-400 shrink-0"></i>
+                                    สามารถจัดลำดับขึ้นลงได้ตามต้องการในตารางพนักงาน
+                                </p>
+                            </div>
+                            <button type="submit" class="btn-space-3d nav-btn-theme-active w-full mt-1 text-white font-extrabold py-2.5 rounded-xl text-xs tracking-wide">
+                                บันทึกพนักงาน
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Employee List Table -->
+                    <div class="lg:col-span-2 glass-panel-3d rounded-2xl border border-white/10 shadow-3d-md overflow-hidden flex flex-col">
+                        <div class="p-3 border-b border-slate-800 flex items-center justify-between bg-slate-900/60">
+                            <h3 class="font-extrabold text-white text-xs flex items-center space-x-2">
+                                <i data-lucide="users" class="w-4 h-4 text-indigo-400"></i>
+                                <span>รายชื่อพนักงานทั้งหมด (<span id="emp-count">0</span>)</span>
+                            </h3>
+                            <span class="text-[9.5px] text-indigo-300 font-extrabold bg-indigo-950/60 border border-indigo-500/40 px-2.5 py-0.5 rounded-full shadow-3d-sm flex items-center gap-1">
+                                ↕️ จัดลำดับขึ้น/ลง ได้อิสระ
+                            </span>
+                        </div>
+                        <div class="overflow-x-auto flex-1" style="max-height: calc(100vh - 200px);">
+                            <table class="w-full text-left border-collapse">
+                                <thead class="bg-slate-900 text-slate-300 text-[10px] uppercase tracking-wider sticky top-0 border-b border-slate-800">
+                                    <tr>
+                                        <th class="p-3 w-16 text-center">ลำดับ</th>
+                                        <th class="p-3">รหัสพนักงาน</th>
+                                        <th class="p-3">ชื่อ-นามสกุล</th>
+                                        <th class="p-3">ตำแหน่ง</th>
+                                        <th class="p-3 text-center">ย้ายตำแหน่ง</th>
+                                        <th class="p-3 text-center">จัดการ</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="employee-table-body" class="divide-y divide-slate-800/60 text-xs">
+                                    <!-- Rendered dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- POPUP MODAL: SHIFT SETTINGS -->
+    <div id="shift-settings-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center hidden p-4 no-print">
+        <div class="glass-panel-3d bg-slate-900/95 rounded-3xl max-w-2xl w-full p-5 shadow-3d-lg border border-white/20 space-y-4 animate-in fade-in zoom-in duration-200 max-h-[90vh] overflow-y-auto">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                <div class="flex items-center space-x-2.5 text-indigo-400">
+                    <div class="p-2 bg-indigo-950 rounded-xl shadow-3d-sm border border-indigo-800/50">
+                        <i data-lucide="sliders" class="w-4 h-4"></i>
+                    </div>
+                    <h3 class="text-sm font-extrabold text-white">จัดการเวลากะและสีแบดจ์</h3>
+                </div>
+                <button onclick="closeShiftSettingsModal()" class="btn-space-3d p-1.5 text-slate-400 hover:text-white rounded-xl transition">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-slate-950/80 p-3.5 rounded-2xl border border-slate-800 shadow-inner space-y-2.5">
+                    <h4 class="font-extrabold text-white text-xs" id="shift-form-title">เพิ่มกะเวลาใหม่</h4>
+                    <form id="add-shift-form" onsubmit="handleSaveShift(event)" class="space-y-2">
+                        <input type="hidden" id="shift-edit-code" value="">
+                        <div>
+                            <label class="block text-[10px] font-extrabold text-slate-300 uppercase tracking-wider mb-0.5">รหัสย่อกะ (Code)</label>
+                            <input type="text" id="shift-code" required placeholder="เช่น M, A, N" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs uppercase font-extrabold text-white focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-extrabold text-slate-300 uppercase tracking-wider mb-0.5">ชื่อกะ (Shift Name)</label>
+                            <input type="text" id="shift-name" required placeholder="เช่น กะเช้า" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs font-semibold text-white focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        </div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="block text-[10px] font-extrabold text-slate-300 uppercase tracking-wider mb-0.5">เวลาเริ่ม</label>
+                                <input type="time" id="shift-start" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-2 py-1 text-xs font-semibold text-white">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-extrabold text-slate-300 uppercase tracking-wider mb-0.5">เวลาสิ้นสุด</label>
+                                <input type="time" id="shift-end" required class="w-full bg-slate-900 border border-slate-700 rounded-xl px-2 py-1 text-xs font-semibold text-white">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="block text-[10px] font-extrabold text-slate-300 uppercase tracking-wider mb-0.5">สีพื้นหลัง (Bg)</label>
+                                <input type="color" id="shift-bg-color" value="#dbeafe" class="w-full h-8 bg-slate-900 border border-slate-700 rounded-xl px-1 py-0.5 cursor-pointer">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-extrabold text-slate-300 uppercase tracking-wider mb-0.5">สีตัวอักษร (Text)</label>
+                                <input type="color" id="shift-text-color" value="#1e40af" class="w-full h-8 bg-slate-900 border border-slate-700 rounded-xl px-1 py-0.5 cursor-pointer">
+                            </div>
+                        </div>
+                        <div class="flex space-x-2 pt-1">
+                            <button type="submit" id="shift-submit-btn" class="btn-space-3d nav-btn-theme-active flex-1 text-white font-extrabold py-2 rounded-xl text-xs">
+                                บันทึกกะ
+                            </button>
+                            <button type="button" id="shift-cancel-btn" onclick="resetShiftForm()" class="btn-space-3d hidden px-3.5 text-slate-300 font-bold py-2 rounded-xl text-xs border-slate-600">
+                                ยกเลิก
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="bg-slate-950/80 rounded-2xl border border-slate-800 overflow-hidden flex flex-col shadow-inner">
+                    <div class="p-2.5 bg-slate-900 border-b border-slate-800 font-extrabold text-[10px] uppercase tracking-wider text-slate-300 flex justify-between items-center">
+                        <span>รายการกะ (<span id="shift-count">0</span>)</span>
+                    </div>
+                    <div class="overflow-y-auto flex-1 p-2 space-y-2 max-h-[260px]" id="shift-modal-list">
+                        <!-- Rendered dynamically -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-end pt-2 border-t border-slate-800">
+                <button onclick="closeShiftSettingsModal()" class="btn-space-3d nav-btn-theme-active px-5 py-2 text-white rounded-xl text-xs font-extrabold">
+                    เสร็จสิ้น
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- General App Alert / Confirmation Modal -->
+    <div id="app-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center hidden p-4 no-print">
+        <div class="glass-panel-3d bg-slate-900/95 rounded-3xl max-w-xs w-full p-5 shadow-3d-lg border border-white/20 space-y-3.5">
+            <h3 id="modal-title" class="text-xs font-extrabold text-white">แจ้งเตือน</h3>
+            <p id="modal-message" class="text-xs font-medium text-slate-300 leading-relaxed"></p>
+            <div id="modal-actions" class="flex justify-end space-x-2 pt-1">
+                <button onclick="closeModal()" class="btn-space-3d nav-btn-theme-active px-4 py-2 text-white rounded-xl text-xs font-bold">ตกลง</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Script Logic -->
+    <script>
+        // --- SEASONAL WEATHER CONFIGURATIONS (THAILAND SEASONS) ---
+        const WEATHER_SEASONS = {
+            winter: {
+                name: 'ฤดูหนาว',
+                icon: '❄️',
+                tint1: 'rgba(56, 189, 248, 0.22)',
+                tint2: 'rgba(129, 140, 248, 0.16)'
+            },
+            summer: {
+                name: 'ฤดูร้อน',
+                icon: '☀️',
+                tint1: 'rgba(251, 191, 36, 0.22)',
+                tint2: 'rgba(249, 115, 22, 0.15)'
+            },
+            rainy: {
+                name: 'ฤดูฝน',
+                icon: '🌧️',
+                tint1: 'rgba(20, 184, 166, 0.20)',
+                tint2: 'rgba(59, 130, 246, 0.16)'
+            }
+        };
+
+        let selectedWeatherPref = localStorage.getItem('shift_weather_season') || 'auto';
+        let activeWeatherKey = 'winter';
+
+        function resolveWeatherSeasonKey() {
+            if (selectedWeatherPref !== 'auto' && WEATHER_SEASONS[selectedWeatherPref]) {
+                return selectedWeatherPref;
+            }
+            const monthSelect = document.getElementById('roster-month');
+            const m = monthSelect ? parseInt(monthSelect.value) : new Date().getMonth();
+            if (m === 10 || m === 11 || m === 0 || m === 1) return 'winter';
+            if (m >= 2 && m <= 4) return 'summer';
+            return 'rainy';
+        }
+
+        function changeWeatherSeason(val) {
+            selectedWeatherPref = val;
+            localStorage.setItem('shift_weather_season', val);
+            applyWeatherSeason();
+        }
+
+        function applyWeatherSeason() {
+            const newKey = resolveWeatherSeasonKey();
+            activeWeatherKey = newKey;
+            const weather = WEATHER_SEASONS[newKey] || WEATHER_SEASONS.winter;
+
+            document.documentElement.style.setProperty('--weather-tint-1', weather.tint1);
+            document.documentElement.style.setProperty('--weather-tint-2', weather.tint2);
+
+            const toolbarIcon = document.getElementById('toolbar-weather-icon');
+            if (toolbarIcon) toolbarIcon.innerText = weather.icon;
+        }
+
+        // --- FESTIVAL THEME CONFIGURATIONS & GLOBAL UI ICONS ---
+        const FESTIVAL_THEMES = {
+            loykrathong: {
+                name: 'ลอยกระทง',
+                emojis: ['🪷', '🪷', '✨', '🏮', '🌕', '🪷'],
+                animation: 'floatUpFestival',
+                shadow: 'drop-shadow(0 0 8px rgba(251, 191, 36, 0.75)) drop-shadow(0 4px 10px rgba(99, 102, 241, 0.45))',
+                borderColor: 'rgba(251, 191, 36, 0.45)',
+                boxGlow: '0 0 25px rgba(251, 191, 36, 0.25), inset 0 0 12px rgba(99, 102, 241, 0.35)',
+                primaryColor: '#6366f1',
+                secondaryColor: '#d97706',
+                accentColor: '#fbbf24',
+                glowColor: 'rgba(251, 191, 36, 0.45)',
+                orbTop: 'rgba(245, 158, 11, 0.28)',
+                orbBottom: 'rgba(99, 102, 241, 0.28)',
+                icons: {
+                    logoBadge: '🪷',
+                    header: '🪷',
+                    today: '🌕',
+                    settings: '🏮',
+                    filter: '🪷',
+                    festival: '✨',
+                    bookmark: '🪷',
+                    navRoster: '📅',
+                    navRosterDeco: '🪷',
+                    navDaily: '⏰',
+                    navDailyDeco: '✨',
+                    navEmp: '👥',
+                    navEmpDeco: '🏮',
+                    empAdd: '🪷',
+                    todayStar: '🌕'
+                },
+                rabbitIcon: '🐰',
+                rabbitMsgs: [
+                    "สุขสันต์วันลอยกระทง! ลอยทุกข์ลอยโศก จัดกะราบรื่นค่า 🪷✨",
+                    "น้องกระต่ายพาลอยกระทงกับฝูงปลาวิบวับในตารางกะแล้วน้า! 🌕",
+                    "กระทงสวยๆ ลอยเต็มแถบกะเลย เย้ๆ! 🏮💖"
+                ]
+            },
+            christmas: {
+                name: 'คริสต์มาส',
+                emojis: ['🎄', '🎅', '🎁', '⛄', '❄️', '🦌', '🔔'],
+                animation: 'fallDownFestival',
+                shadow: 'drop-shadow(0 0 8px rgba(52, 211, 153, 0.8)) drop-shadow(0 0 10px rgba(244, 63, 94, 0.6))',
+                borderColor: 'rgba(52, 211, 153, 0.55)',
+                boxGlow: '0 0 25px rgba(16, 185, 129, 0.3), inset 0 0 14px rgba(244, 63, 94, 0.25)',
+                primaryColor: '#059669',
+                secondaryColor: '#e11d48',
+                accentColor: '#34d399',
+                glowColor: 'rgba(16, 185, 129, 0.55)',
+                orbTop: 'rgba(16, 185, 129, 0.32)',
+                orbBottom: 'rgba(244, 63, 94, 0.28)',
+                icons: {
+                    logoBadge: '🎄',
+                    header: '🎄',
+                    today: '🎁',
+                    settings: '🔔',
+                    filter: '❄️',
+                    festival: '🎅',
+                    bookmark: '🎄',
+                    navRoster: '🗓️',
+                    navRosterDeco: '🎄',
+                    navDaily: '🔔',
+                    navDailyDeco: '❄️',
+                    navEmp: '🎅',
+                    navEmpDeco: '🎁',
+                    empAdd: '⛄',
+                    todayStar: '🌟'
+                },
+                rabbitIcon: '🎅',
+                rabbitMsgs: [
+                    "Merry Christmas! ซานต้ากระต่ายมาส่งความสุขให้ตารางกะแล้วค่า 🎄🎁",
+                    "หิมะตกโปรยปรายในตารางงาน เย็นสบายสุดๆ ไปเลย! ❄️⛄",
+                    "โฮะ โฮะ โฮ่! จัดกะคริสต์มาสเสร็จไว รับของขวัญได้เลยน้า 🔔✨"
+                ]
+            },
+            halloween: {
+                name: 'ฮาโลวีน',
+                emojis: ['🎃', '👻', '🦇', '🕷️', '🕸️', '🍬', '🔮'],
+                animation: 'floatUpFestival',
+                shadow: 'drop-shadow(0 0 10px rgba(249, 115, 22, 0.85)) drop-shadow(0 0 12px rgba(168, 85, 247, 0.7))',
+                borderColor: 'rgba(249, 115, 22, 0.55)',
+                boxGlow: '0 0 28px rgba(249, 115, 22, 0.3), inset 0 0 14px rgba(168, 85, 247, 0.35)',
+                primaryColor: '#ea580c',
+                secondaryColor: '#7e22ce',
+                accentColor: '#fb923c',
+                glowColor: 'rgba(249, 115, 22, 0.55)',
+                orbTop: 'rgba(249, 115, 22, 0.32)',
+                orbBottom: 'rgba(147, 51, 234, 0.32)',
+                icons: {
+                    logoBadge: '🎃',
+                    header: '🎃',
+                    today: '👻',
+                    settings: '🔮',
+                    filter: '🦇',
+                    festival: '🕸️',
+                    bookmark: '🎃',
+                    navRoster: '📅',
+                    navRosterDeco: '🎃',
+                    navDaily: '🕯️',
+                    navDailyDeco: '🦇',
+                    navEmp: '👻',
+                    navEmpDeco: '🍬',
+                    empAdd: '🧙',
+                    todayStar: '🎃'
+                },
+                rabbitIcon: '🎃',
+                rabbitMsgs: [
+                    "Trick or Treat! ผีน้อยกระต่ายมาช่วยเฝ้ากะดึกให้แล้วแฮ่! 🎃👻",
+                    "ค้างคาวบินว่อนเต็มแถบกะเลย สนุกสุดๆ คืนฮาโลวีน! 🦇🔮",
+                    "อย่าลืมแจกขนมให้พนักงานเข้ากะด้วยน้า แฮ่ๆ! 🍬🕸️"
+                ]
+            },
+            newyear: {
+                name: 'ปีใหม่',
+                emojis: ['🎆', '🎇', '🎉', '🥂', '✨', '🎊', '⭐'],
+                animation: 'popBurstFestival',
+                shadow: 'drop-shadow(0 0 10px rgba(250, 204, 21, 0.9)) drop-shadow(0 0 12px rgba(236, 72, 153, 0.7))',
+                borderColor: 'rgba(250, 204, 21, 0.55)',
+                boxGlow: '0 0 28px rgba(250, 204, 21, 0.3), inset 0 0 14px rgba(236, 72, 153, 0.3)',
+                primaryColor: '#ca8a04',
+                secondaryColor: '#db2777',
+                accentColor: '#facc15',
+                glowColor: 'rgba(250, 204, 21, 0.55)',
+                orbTop: 'rgba(234, 179, 8, 0.32)',
+                orbBottom: 'rgba(236, 72, 153, 0.28)',
+                icons: {
+                    logoBadge: '🎆',
+                    header: '🎆',
+                    today: '🎉',
+                    settings: '🥂',
+                    filter: '🎇',
+                    festival: '🎊',
+                    bookmark: '🎆',
+                    navRoster: '🗓️',
+                    navRosterDeco: '🎆',
+                    navDaily: '⏳',
+                    navDailyDeco: '✨',
+                    navEmp: '🥳',
+                    navEmpDeco: '🎉',
+                    empAdd: '🎊',
+                    todayStar: '🎆'
+                },
+                rabbitIcon: '🥳',
+                rabbitMsgs: [
+                    "Happy New Year! สวัสดีปีใหม่ ขอให้ตารางกะปังตลอดปีค่า 🎆🎉",
+                    "พลุไฟฉลองปีใหม่แตกกระจายเต็มแถบกะ สวยอลังการสุดๆ! 🎇✨",
+                    "ปีใหม่นี้กระต่ายน้อยพร้อมลุยจัดกะกับทุกคนแล้วค่า! 🎊⭐"
+                ]
+            },
+            songkran: {
+                name: 'สงกรานต์',
+                emojis: ['💦', '🔫', '💧', '🌺', '🪣', '🫧', '☀️'],
+                animation: 'floatUpFestival',
+                shadow: 'drop-shadow(0 0 8px rgba(56, 189, 248, 0.85)) drop-shadow(0 0 10px rgba(34, 211, 238, 0.65))',
+                borderColor: 'rgba(56, 189, 248, 0.55)',
+                boxGlow: '0 0 28px rgba(6, 182, 212, 0.35), inset 0 0 14px rgba(56, 189, 248, 0.3)',
+                primaryColor: '#0284c7',
+                secondaryColor: '#0d9488',
+                accentColor: '#38bdf8',
+                glowColor: 'rgba(56, 189, 248, 0.55)',
+                orbTop: 'rgba(14, 165, 233, 0.32)',
+                orbBottom: 'rgba(20, 184, 166, 0.28)',
+                icons: {
+                    logoBadge: '💦',
+                    header: '💦',
+                    today: '🌺',
+                    settings: '🔫',
+                    filter: '💧',
+                    festival: '🫧',
+                    bookmark: '💦',
+                    navRoster: '📅',
+                    navRosterDeco: '💦',
+                    navDaily: '☀️',
+                    navDailyDeco: '🌺',
+                    navEmp: '🏄',
+                    navEmpDeco: '🔫',
+                    empAdd: '🌺',
+                    todayStar: '💦'
+                },
+                rabbitIcon: '💦',
+                rabbitMsgs: [
+                    "สุขสันต์วันสงกรานต์! สาดความสดชื่นให้ตารางกะชุ่มฉ่ำค่า 💦🔫",
+                    "ฟองสบู่กับละอองน้ำลอยเต็มแถบกะ เย็นฉ่ำชื่นใจสุดๆ! 🫧💧",
+                    "สวัสดีปีใหม่ไทย ขอให้ทำงานราบรื่นเย็นสบายตลอดวันน้า! 🌺✨"
+                ]
+            }
+        };
+
+        let selectedFestivalPref = localStorage.getItem('shift_festival_theme') || 'auto';
+        let activeFestivalKey = 'loykrathong';
+        let currentActiveTab = 'roster';
+
+        function resolveFestivalThemeKey() {
+            if (selectedFestivalPref !== 'auto' && FESTIVAL_THEMES[selectedFestivalPref]) {
+                return selectedFestivalPref;
+            }
+            const monthSelect = document.getElementById('roster-month');
+            const m = monthSelect ? parseInt(monthSelect.value) : new Date().getMonth();
+            if (m === 0) return 'newyear';
+            if (m === 3) return 'songkran';
+            if (m === 9) return 'halloween';
+            if (m === 11) return 'christmas';
+            return 'loykrathong';
+        }
+
+        function changeFestivalTheme(val) {
+            selectedFestivalPref = val;
+            localStorage.setItem('shift_festival_theme', val);
+            applyFestivalTheme();
+            updateRosterView();
+        }
+
+        function applyFestivalTheme() {
+            const newKey = resolveFestivalThemeKey();
+            activeFestivalKey = newKey;
+            const theme = FESTIVAL_THEMES[newKey] || FESTIVAL_THEMES.loykrathong;
+
+            document.documentElement.style.setProperty('--theme-primary', theme.primaryColor);
+            document.documentElement.style.setProperty('--theme-secondary', theme.secondaryColor);
+            document.documentElement.style.setProperty('--theme-accent', theme.accentColor);
+            document.documentElement.style.setProperty('--theme-glow', theme.glowColor);
+
+            const orbTop = document.getElementById('sidebar-orb-top');
+            const orbBottom = document.getElementById('sidebar-orb-bottom');
+            if (orbTop) orbTop.style.backgroundColor = theme.orbTop;
+            if (orbBottom) orbBottom.style.backgroundColor = theme.orbBottom;
+
+            const logoBadge = document.getElementById('sidebar-logo-festival-badge');
+            const splashBadge = document.getElementById('splash-festival-badge');
+            const sidebarSub = document.getElementById('sidebar-festival-subtitle');
+            const sidebar3d = document.getElementById('sidebar-3d-badge');
+            const logoGlow = document.getElementById('sidebar-logo-glow');
+
+            if (logoBadge) logoBadge.innerText = theme.icons.logoBadge;
+            if (splashBadge) splashBadge.innerText = theme.icons.logoBadge;
+            if (sidebarSub) {
+                sidebarSub.innerText = `เทศกาล${theme.name}`;
+                sidebarSub.style.color = theme.accentColor;
+            }
+            if (sidebar3d) {
+                sidebar3d.style.background = `linear-gradient(135deg, ${theme.primaryColor}, ${theme.secondaryColor})`;
+            }
+            if (logoGlow) {
+                logoGlow.style.background = `linear-gradient(135deg, ${theme.primaryColor}, ${theme.secondaryColor})`;
+            }
+
+            const setTxt = (id, txt) => { const el = document.getElementById(id); if (el) el.innerText = txt; };
+            setTxt('nav-icon-roster', theme.icons.navRoster);
+            setTxt('nav-deco-roster', theme.icons.navRosterDeco);
+            setTxt('nav-icon-daily', theme.icons.navDaily);
+            setTxt('nav-deco-daily', theme.icons.navDailyDeco);
+            setTxt('nav-icon-employees', theme.icons.navEmp);
+            setTxt('nav-deco-employees', theme.icons.navEmpDeco);
+
+            setTxt('header-festival-icon', theme.icons.header);
+            setTxt('header-today-icon', theme.icons.today);
+            setTxt('header-settings-icon', theme.icons.settings);
+            setTxt('toolbar-filter-icon', theme.icons.filter);
+            setTxt('toolbar-festival-icon', theme.icons.festival);
+            setTxt('legend-bookmark-icon', theme.icons.bookmark);
+            setTxt('emp-add-emoji', theme.icons.empAdd);
+
+            const headerBar = document.getElementById('header-accent-bar');
+            if (headerBar) {
+                headerBar.style.background = `linear-gradient(to bottom, ${theme.primaryColor}, ${theme.accentColor}, ${theme.secondaryColor})`;
+                headerBar.style.boxShadow = `0 0 15px ${theme.glowColor}`;
+            }
+
+            const box = document.getElementById('shift-legend-box');
+            const container = document.getElementById('legend-particle-container');
+            const avatar = document.getElementById('rabbit-avatar-icon');
+            const greeting = document.getElementById('rabbit-greeting-text');
+
+            if (box) {
+                box.style.borderColor = theme.borderColor;
+                box.style.boxShadow = theme.boxGlow;
+            }
+
+            if (avatar) avatar.innerText = theme.rabbitIcon;
+            if (greeting) greeting.innerText = theme.rabbitMsgs[0];
+
+            if (container) {
+                const positions = [
+                    { left: '3%', top: '20%', dur: '4.5s', delay: '0s', size: 'text-base' },
+                    { left: '13%', top: '55%', dur: '6.0s', delay: '0.8s', size: 'text-xl' },
+                    { left: '24%', top: '25%', dur: '4.8s', delay: '1.2s', size: 'text-sm' },
+                    { left: '36%', top: '52%', dur: '5.2s', delay: '0.3s', size: 'text-lg' },
+                    { left: '49%', top: '28%', dur: '4.4s', delay: '1.8s', size: 'text-base' },
+                    { left: '61%', top: '62%', dur: '6.4s', delay: '0.5s', size: 'text-xl' },
+                    { left: '73%', top: '18%', dur: '4.9s', delay: '2.2s', size: 'text-sm' },
+                    { left: '84%', top: '42%', dur: '5.5s', delay: '1.0s', size: 'text-lg' },
+                    { left: '94%', top: '58%', dur: '5.0s', delay: '0.1s', size: 'text-base' }
+                ];
+
+                container.innerHTML = positions.map((pos, idx) => {
+                    const emoji = theme.emojis[idx % theme.emojis.length];
+                    return `<span class="festival-particle ${pos.size}" style="left: ${pos.left}; top: ${pos.top}; animation-name: ${theme.animation}; animation-duration: ${pos.dur}; animation-delay: ${pos.delay}; filter: ${theme.shadow};">${emoji}</span>`;
+                }).join('');
+            }
+        }
+
+        // --- HELPER FUNCTION: GET ROLE COLOR STYLES ---
+        function getRoleBadgeStyle(role) {
+            const r = (role || '').toLowerCase();
+            if (r.includes('ต้อนรับ') || r.includes('reception')) {
+                return { badgeClass: 'bg-amber-500/20 text-amber-300 border-amber-500/40', textClass: 'text-amber-300' };
+            }
+            if (r.includes('การตลาด') || r.includes('เสมียน') || r.includes('marketing') || r.includes('clerk') || r.includes('admin')) {
+                return { badgeClass: 'bg-sky-500/20 text-sky-300 border-sky-500/40', textClass: 'text-sky-300' };
+            }
+            if (r.includes('เบลบอย') || r.includes('bellboy') || r.includes('porter')) {
+                return { badgeClass: 'bg-purple-500/20 text-purple-300 border-purple-500/40', textClass: 'text-purple-300' };
+            }
+            if (r.includes('แม่บ้าน') || r.includes('housekeeping') || r.includes('maid')) {
+                return { badgeClass: 'bg-pink-500/20 text-pink-300 border-pink-500/40', textClass: 'text-pink-300' };
+            }
+            if (r.includes('รปภ') || r.includes('รักษาความปลอดภัย') || r.includes('security')) {
+                return { badgeClass: 'bg-blue-600/30 text-blue-300 border-blue-500/40', textClass: 'text-blue-300' };
+            }
+            if (r.includes('ช่าง') || r.includes('engineer') || r.includes('maintenance')) {
+                return { badgeClass: 'bg-amber-900/40 text-amber-200 border-amber-700/50', textClass: 'text-amber-300' };
+            }
+            return { badgeClass: 'bg-slate-800 text-slate-300 border-slate-700', textClass: 'text-indigo-300' };
+        }
+
+        // --- DYNAMIC SEASONAL WEATHER CANVAS ANIMATION (FULL BACKGROUND) ---
+        function initBackgroundWeatherParticles() {
+            const canvas = document.getElementById('bg-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            let width = canvas.width = canvas.offsetWidth;
+            let height = canvas.height = canvas.offsetHeight;
+
+            window.addEventListener('resize', () => {
+                width = canvas.width = canvas.offsetWidth;
+                height = canvas.height = canvas.offsetHeight;
+            });
+
+            const winterSnow = Array.from({ length: 55 }, () => ({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                radius: Math.random() * 2.5 + 1,
+                alpha: Math.random() * 0.45 + 0.15,
+                speedY: Math.random() * 0.8 + 0.35,
+                drift: (Math.random() - 0.5) * 0.5,
+                phase: Math.random() * Math.PI * 2
+            }));
+
+            const summerMotes = Array.from({ length: 45 }, () => ({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                radius: Math.random() * 3 + 1,
+                alpha: Math.random() * 0.4 + 0.1,
+                speedX: (Math.random() - 0.5) * 0.35,
+                speedY: -(Math.random() * 0.35 + 0.1),
+                phase: Math.random() * Math.PI * 2
+            }));
+
+            const raindrops = Array.from({ length: 75 }, () => ({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                length: Math.random() * 14 + 8,
+                speedY: Math.random() * 5 + 4.5,
+                speedX: -1.4,
+                alpha: Math.random() * 0.35 + 0.12
+            }));
+
+            function animate(time = 0) {
+                ctx.clearRect(0, 0, width, height);
+
+                if (activeWeatherKey === 'winter') {
+                    winterSnow.forEach(p => {
+                        p.y += p.speedY;
+                        p.x += p.drift + Math.sin(time * 0.002 + p.phase) * 0.3;
+
+                        if (p.y > height + 5) { p.y = -5; p.x = Math.random() * width; }
+                        if (p.x > width) p.x = 0;
+                        if (p.x < 0) p.x = width;
+
+                        ctx.save();
+                        ctx.beginPath();
+                        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                        ctx.fillStyle = '#e0f2fe';
+                        ctx.shadowColor = '#38bdf8';
+                        ctx.shadowBlur = 8;
+                        ctx.globalAlpha = p.alpha;
+                        ctx.fill();
+                        ctx.restore();
+                    });
+
+                } else if (activeWeatherKey === 'summer') {
+                    const sunGrad = ctx.createRadialGradient(width * 0.85, height * 0.08, 10, width * 0.85, height * 0.08, Math.max(width, height) * 0.55);
+                    sunGrad.addColorStop(0, 'rgba(251, 191, 36, 0.12)');
+                    sunGrad.addColorStop(0.5, 'rgba(249, 115, 22, 0.04)');
+                    sunGrad.addColorStop(1, 'transparent');
+                    ctx.fillStyle = sunGrad;
+                    ctx.fillRect(0, 0, width, height);
+
+                    summerMotes.forEach(p => {
+                        p.x += p.speedX + Math.sin(time * 0.002 + p.phase) * 0.2;
+                        p.y += p.speedY;
+
+                        if (p.y < -10) { p.y = height + 10; p.x = Math.random() * width; }
+                        if (p.x > width) p.x = 0;
+                        if (p.x < 0) p.x = width;
+
+                        const twinkle = 0.6 + 0.4 * Math.sin(time * 0.004 + p.phase);
+                        ctx.save();
+                        ctx.beginPath();
+                        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                        ctx.fillStyle = '#fde047';
+                        ctx.shadowColor = '#f59e0b';
+                        ctx.shadowBlur = 10;
+                        ctx.globalAlpha = p.alpha * twinkle;
+                        ctx.fill();
+                        ctx.restore();
+                    });
+
+                } else if (activeWeatherKey === 'rainy') {
+                    raindrops.forEach(r => {
+                        r.x += r.speedX;
+                        r.y += r.speedY;
+
+                        if (r.y > height + 20) {
+                            r.y = -20;
+                            r.x = Math.random() * (width + 100);
+                        }
+                        if (r.x < -20) r.x = width + 20;
+
+                        ctx.save();
+                        ctx.beginPath();
+                        ctx.moveTo(r.x, r.y);
+                        ctx.lineTo(r.x + r.speedX * 1.6, r.y + r.length);
+                        ctx.strokeStyle = '#7dd3fc';
+                        ctx.lineWidth = 1.2;
+                        ctx.globalAlpha = r.alpha;
+                        ctx.stroke();
+                        ctx.restore();
+                    });
+                }
+
+                requestAnimationFrame(animate);
+            }
+            requestAnimationFrame(animate);
+        }
+
+        // --- MULTI-FESTIVAL CANVAS ANIMATION BEHIND SHIFT LEGEND ---
+        function initLegendFestivalCanvas() {
+            const canvas = document.getElementById('legend-festival-canvas');
+            const box = document.getElementById('shift-legend-box');
+            if (!canvas || !box) return;
+            const ctx = canvas.getContext('2d');
+
+            function resizeLegendCanvas() {
+                const rect = box.getBoundingClientRect();
+                canvas.width = Math.max(1, Math.floor(rect.width));
+                canvas.height = Math.max(1, Math.floor(rect.height));
+            }
+            resizeLegendCanvas();
+
+            const resizeObserver = new ResizeObserver(resizeLegendCanvas);
+            resizeObserver.observe(box);
+            window.addEventListener('resize', resizeLegendCanvas);
+
+            const fishPalettes = [
+                { body: '#38bdf8', fin: '#818cf8', glow: 'rgba(56, 189, 248, 0.45)' },
+                { body: '#f472b6', fin: '#e879f9', glow: 'rgba(244, 114, 182, 0.45)' },
+                { body: '#34d399', fin: '#22d3ee', glow: 'rgba(52, 211, 153, 0.45)' },
+                { body: '#fbbf24', fin: '#fb923c', glow: 'rgba(251, 191, 36, 0.45)' },
+                { body: '#a78bfa', fin: '#f472b6', glow: 'rgba(167, 139, 250, 0.45)' }
+            ];
+            const fishes = Array.from({ length: 6 }, (_, i) => {
+                const dir = i % 2 === 0 ? 1 : -1;
+                return {
+                    x: Math.random() * (canvas.width || 600),
+                    y: 12 + Math.random() * Math.max(20, (canvas.height || 64) - 24),
+                    size: 7 + Math.random() * 5,
+                    speedX: dir * (0.4 + Math.random() * 0.45),
+                    waveFreq: 0.025 + Math.random() * 0.015,
+                    phase: Math.random() * Math.PI * 2,
+                    tailPhase: Math.random() * Math.PI * 2,
+                    alpha: 0.36 + Math.random() * 0.16,
+                    palette: fishPalettes[i % fishPalettes.length]
+                };
+            });
+
+            const snowflakes = Array.from({ length: 24 }, () => ({
+                x: Math.random() * 800,
+                y: Math.random() * 80,
+                r: 1.5 + Math.random() * 2.5,
+                speedY: 0.35 + Math.random() * 0.55,
+                drift: (Math.random() - 0.5) * 0.4,
+                alpha: 0.4 + Math.random() * 0.45
+            }));
+
+            const bats = Array.from({ length: 5 }, (_, i) => ({
+                x: Math.random() * 800,
+                y: 15 + Math.random() * 40,
+                size: 6 + Math.random() * 4,
+                speedX: (i % 2 === 0 ? 1 : -1) * (0.7 + Math.random() * 0.6),
+                phase: Math.random() * Math.PI * 2
+            }));
+
+            let fireworks = [];
+            function spawnFirework() {
+                const colors = ['#facc15', '#f472b6', '#38bdf8', '#a78bfa', '#34d399', '#fb923c'];
+                const cx = 40 + Math.random() * Math.max(100, canvas.width - 80);
+                const cy = 12 + Math.random() * Math.max(20, canvas.height - 24);
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                const sparks = Array.from({ length: 14 }, (_, k) => {
+                    const angle = (Math.PI * 2 * k) / 14;
+                    const speed = 0.6 + Math.random() * 0.9;
+                    return { x: cx, y: cy, vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed };
+                });
+                fireworks.push({ sparks, color, life: 1.0 });
+            }
+
+            const waterBubbles = Array.from({ length: 22 }, () => ({
+                x: Math.random() * 800,
+                y: Math.random() * 80,
+                r: 2 + Math.random() * 4.5,
+                speedY: -(0.35 + Math.random() * 0.5),
+                wobble: Math.random() * Math.PI * 2,
+                alpha: 0.3 + Math.random() * 0.35
+            }));
+
+            function drawFish(fish, time) {
+                const dir = fish.speedX >= 0 ? 1 : -1;
+                const s = fish.size;
+                const tailWag = Math.sin(time * 0.011 + fish.tailPhase) * (s * 0.38);
+
+                ctx.save();
+                ctx.translate(fish.x, fish.y);
+                ctx.scale(dir, 1);
+                ctx.globalAlpha = fish.alpha;
+                ctx.shadowColor = fish.palette.glow;
+                ctx.shadowBlur = 10;
+
+                ctx.beginPath();
+                ctx.moveTo(-s * 0.85, 0);
+                ctx.quadraticCurveTo(-s * 1.45, -s * 0.55 + tailWag, -s * 1.55, -s * 0.12 + tailWag * 0.6);
+                ctx.quadraticCurveTo(-s * 1.25, tailWag * 0.3, -s * 1.5, s * 0.22 + tailWag * 0.6);
+                ctx.quadraticCurveTo(-s * 1.35, s * 0.55 + tailWag, -s * 0.85, 0);
+                ctx.closePath();
+                ctx.fillStyle = fish.palette.fin;
+                ctx.fill();
+
+                ctx.beginPath();
+                ctx.moveTo(s, 0);
+                ctx.quadraticCurveTo(s * 0.2, -s * 0.65, -s * 0.9, 0);
+                ctx.quadraticCurveTo(s * 0.2, s * 0.65, s, 0);
+                ctx.closePath();
+                ctx.fillStyle = fish.palette.body;
+                ctx.fill();
+
+                ctx.beginPath();
+                ctx.arc(s * 0.55, -s * 0.12, Math.max(1.2, s * 0.11), 0, Math.PI * 2);
+                ctx.fillStyle = '#ffffff';
+                ctx.fill();
+
+                ctx.restore();
+            }
+
+            function drawBat(bat, time) {
+                const flap = Math.sin(time * 0.018 + bat.phase) * (bat.size * 0.65);
+                const s = bat.size;
+                ctx.save();
+                ctx.translate(bat.x, bat.y);
+                ctx.globalAlpha = 0.45;
+                ctx.fillStyle = '#c084fc';
+                ctx.shadowColor = 'rgba(249, 115, 22, 0.6)';
+                ctx.shadowBlur = 8;
+
+                ctx.beginPath();
+                ctx.moveTo(0, 0);
+                ctx.quadraticCurveTo(-s * 0.9, -s * 0.9 + flap, -s * 1.8, flap * 0.5);
+                ctx.quadraticCurveTo(-s * 0.9, s * 0.3, 0, s * 0.2);
+                ctx.quadraticCurveTo(s * 0.9, s * 0.3, s * 1.8, flap * 0.5);
+                ctx.quadraticCurveTo(s * 0.9, -s * 0.9 + flap, 0, 0);
+                ctx.fill();
+                ctx.restore();
+            }
+
+            function animate(time = 0) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                if (activeFestivalKey === 'loykrathong') {
+                    const minY = 12;
+                    const maxY = Math.max(minY + 8, canvas.height - 12);
+                    fishes.forEach(fish => {
+                        fish.x += fish.speedX;
+                        fish.y += Math.sin(fish.x * fish.waveFreq + fish.phase) * 0.22;
+                        const margin = fish.size * 2.2;
+                        if (fish.speedX > 0 && fish.x > canvas.width + margin) {
+                            fish.x = -margin;
+                            fish.y = minY + Math.random() * (maxY - minY);
+                        } else if (fish.speedX < 0 && fish.x < -margin) {
+                            fish.x = canvas.width + margin;
+                            fish.y = minY + Math.random() * (maxY - minY);
+                        }
+                        fish.y = Math.max(minY, Math.min(maxY, fish.y));
+                        drawFish(fish, time);
+                    });
+
+                } else if (activeFestivalKey === 'christmas') {
+                    snowflakes.forEach(s => {
+                        s.y += s.speedY;
+                        s.x += s.drift + Math.sin(time * 0.003 + s.y * 0.05) * 0.2;
+                        if (s.y > canvas.height + 5) {
+                            s.y = -5;
+                            s.x = Math.random() * canvas.width;
+                        }
+                        ctx.save();
+                        ctx.beginPath();
+                        ctx.arc(s.x % canvas.width, s.y, s.r, 0, Math.PI * 2);
+                        ctx.fillStyle = '#ffffff';
+                        ctx.globalAlpha = s.alpha;
+                        ctx.shadowColor = '#38bdf8';
+                        ctx.shadowBlur = 6;
+                        ctx.fill();
+                        ctx.restore();
+                    });
+
+                } else if (activeFestivalKey === 'halloween') {
+                    bats.forEach(b => {
+                        b.x += b.speedX;
+                        b.y += Math.sin(time * 0.005 + b.phase) * 0.35;
+                        if (b.speedX > 0 && b.x > canvas.width + 20) b.x = -20;
+                        if (b.speedX < 0 && b.x < -20) b.x = canvas.width + 20;
+                        drawBat(b, time);
+                    });
+
+                } else if (activeFestivalKey === 'newyear') {
+                    if (Math.random() < 0.035 && fireworks.length < 4) {
+                        spawnFirework();
+                    }
+                    fireworks.forEach(fw => {
+                        fw.life -= 0.018;
+                        fw.sparks.forEach(sp => {
+                            sp.x += sp.vx;
+                            sp.y += sp.vy;
+                            sp.vy += 0.012;
+                            ctx.save();
+                            ctx.beginPath();
+                            ctx.arc(sp.x, sp.y, 1.8, 0, Math.PI * 2);
+                            ctx.fillStyle = fw.color;
+                            ctx.globalAlpha = Math.max(0, fw.life);
+                            ctx.shadowColor = fw.color;
+                            ctx.shadowBlur = 8;
+                            ctx.fill();
+                            ctx.restore();
+                        });
+                    });
+                    fireworks = fireworks.filter(fw => fw.life > 0);
+
+                } else if (activeFestivalKey === 'songkran') {
+                    waterBubbles.forEach(b => {
+                        b.y += b.speedY;
+                        b.x += Math.sin(time * 0.004 + b.wobble) * 0.3;
+                        if (b.y < -10) {
+                            b.y = canvas.height + 10;
+                            b.x = Math.random() * canvas.width;
+                        }
+                        ctx.save();
+                        ctx.beginPath();
+                        ctx.arc(b.x % canvas.width, b.y, b.r, 0, Math.PI * 2);
+                        ctx.strokeStyle = '#38bdf8';
+                        ctx.lineWidth = 1.2;
+                        ctx.fillStyle = 'rgba(56, 189, 248, 0.15)';
+                        ctx.globalAlpha = b.alpha;
+                        ctx.shadowColor = '#22d3ee';
+                        ctx.shadowBlur = 6;
+                        ctx.fill();
+                        ctx.stroke();
+                        ctx.restore();
+                    });
+                }
+
+                requestAnimationFrame(animate);
+            }
+            requestAnimationFrame(animate);
+        }
+
+        // --- PET THE RABBIT INTERACTION ---
+        function petTheRabbit() {
+            const theme = FESTIVAL_THEMES[activeFestivalKey] || FESTIVAL_THEMES.loykrathong;
+            const weather = WEATHER_SEASONS[activeWeatherKey] || WEATHER_SEASONS.winter;
+            const msgs = theme.rabbitMsgs;
+            const randomMsg = msgs[Math.floor(Math.random() * msgs.length)];
+            document.getElementById('rabbit-greeting-text').innerText = randomMsg;
+            showModal(`${theme.icons.header} เทศกาล${theme.name} • ${weather.icon} ${weather.name}`, randomMsg);
+        }
+
+        // --- FIREBASE CONFIG ---
+        const firebaseConfig = {
+            apiKey: "AIzaSyCGUrUodL8btfwYECGfE6FtdFDz2uoqDaI",
+            authDomain: "work-schedule-fbdee.firebaseapp.com",
+            databaseURL: "https://work-schedule-fbdee-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "work-schedule-fbdee",
+            storageBucket: "work-schedule-fbdee.firebasestorage.app",
+            messagingSenderId: "935130124839",
+            appId: "1:935130124839:web:78cb9af3e898077eea7402",
+            measurementId: "G-VXTMXJV5G2"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        const monthNamesTH = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
+        const dayNamesTH = ['อาทิตย์', 'จันทร์', 'อังคาร', 'พุธ', 'พฤหัสบดี', 'ศุกร์', 'เสาร์'];
+        const dayShortNamesTH = ['อา', 'จ', 'อ', 'พ', 'พฤ', 'ศ', 'ส'];
+
+        let hasInitialAutoScrolled = false;
+        let saveTimeout = null;
+
+        const DEFAULT_EMPLOYEES = [
+            { id: 'EMP001', name: 'กัญญา ต้อนรับดี', role: 'พนักงานต้อนรับ (Reception)' },
+            { id: 'EMP002', name: 'สมชาย ใจดี', role: 'การตลาด / เสมียน' },
+            { id: 'EMP003', name: 'วิชัย มั่นคง', role: 'ช่างเทคนิค' },
+            { id: 'EMP004', name: 'สุดา สุขสบาย', role: 'แม่บ้าน' }
+        ];
+
+        const DEFAULT_SHIFTS = [
+            { code: 'OFF', name: 'หยุด', start: '-', end: '-', bg: '#f1f5f9', text: '#64748b' },
+            { code: 'M', name: 'กะเช้า', start: '07:00', end: '15:00', bg: '#dbeafe', text: '#1e40af' },
+            { code: 'A', name: 'กะบ่าย', start: '15:00', end: '23:00', bg: '#ffedd5', text: '#c2410c' },
+            { code: 'N', name: 'กะดึก', start: '23:00', end: '07:00', bg: '#e0e7ff', text: '#3730a3' },
+            { code: '12H', name: 'กะเต็มวัน', start: '08:00', end: '20:00', bg: '#dcfce7', text: '#166534' }
+        ];
+
+        let employees = JSON.parse(localStorage.getItem('shift_employees')) || DEFAULT_EMPLOYEES;
+        let shifts = JSON.parse(localStorage.getItem('shift_types')) || DEFAULT_SHIFTS;
+        let scheduleData = JSON.parse(localStorage.getItem('shift_schedule')) || {};
+
+        function displayTodayInfo() {
+            const today = new Date();
+            document.getElementById('today-text-display').innerText = `วันนี้: วัน${dayNamesTH[today.getDay()]}ที่ ${today.getDate()} ${monthNamesTH[today.getMonth()]} ${today.getFullYear() + 543}`;
+        }
+
+        function initRealtimeSync() {
+            db.ref('employees').on('value', (snapshot) => {
+                const data = snapshot.val();
+                if (data) {
+                    employees = Array.isArray(data) ? data.filter(Boolean) : Object.values(data);
+                }
+                localStorage.setItem('shift_employees', JSON.stringify(employees));
+                updateRosterView();
+                if (!document.getElementById('tab-employees').classList.contains('hidden')) renderEmployeeTable();
+            });
+
+            db.ref('shifts').on('value', (snapshot) => {
+                const data = snapshot.val();
+                if (data) {
+                    shifts = Array.isArray(data) ? data.filter(Boolean) : Object.values(data);
+                } else {
+                    db.ref('shifts').set(DEFAULT_SHIFTS);
+                    shifts = DEFAULT_SHIFTS;
+                }
+                localStorage.setItem('shift_types', JSON.stringify(shifts));
+                updateRosterView();
+            });
+
+            db.ref('scheduleData').on('value', (snapshot) => {
+                scheduleData = snapshot.val() || {};
+                localStorage.setItem('shift_schedule', JSON.stringify(scheduleData));
+                updateRosterView();
+                if (!document.getElementById('tab-daily').classList.contains('hidden')) renderDailyOverview();
+            });
+        }
+
+        function saveData() {
+            db.ref('employees').set(employees);
+            const shiftObj = {};
+            shifts.forEach(s => { if (s && s.code) shiftObj[s.code] = s; });
+            db.ref('shifts').set(shiftObj);
+            localStorage.setItem('shift_employees', JSON.stringify(employees));
+            localStorage.setItem('shift_types', JSON.stringify(shifts));
+        }
+
+        function saveScheduleOnly() {
+            localStorage.setItem('shift_schedule', JSON.stringify(scheduleData));
+            if (saveTimeout) clearTimeout(saveTimeout);
+            saveTimeout = setTimeout(() => {
+                db.ref('scheduleData').set(scheduleData);
+            }, 300);
+        }
+
+        function showModal(title, message, onConfirm = null) {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-message').innerText = message;
+            const actions = document.getElementById('modal-actions');
+            if (onConfirm) {
+                actions.innerHTML = `
+                    <button onclick="closeModal()" class="btn-space-3d px-4 py-2 text-slate-300 rounded-xl text-xs font-bold border-slate-600">ยกเลิก</button>
+                    <button id="modal-confirm-btn" class="btn-space-3d px-4 py-2 bg-rose-600 hover:bg-rose-500 text-white rounded-xl text-xs font-bold shadow-glow-rose border-rose-400/50">ยืนยัน</button>
+                `;
+                document.getElementById('modal-confirm-btn').onclick = () => { onConfirm(); closeModal(); };
+            } else {
+                actions.innerHTML = `<button onclick="closeModal()" class="btn-space-3d nav-btn-theme-active px-5 py-2 text-white rounded-xl text-xs font-bold">ตกลง</button>`;
+            }
+            document.getElementById('app-modal').classList.remove('hidden');
+        }
+
+        function closeModal() { document.getElementById('app-modal').classList.add('hidden'); }
+        function openShiftSettingsModal() { renderShiftModalList(); document.getElementById('shift-settings-modal').classList.remove('hidden'); lucide.createIcons(); }
+        function closeShiftSettingsModal() { document.getElementById('shift-settings-modal').classList.add('hidden'); updateRosterView(); }
+
+        function switchTab(tabId) {
+            currentActiveTab = tabId;
+            ['roster', 'daily', 'employees'].forEach(t => {
+                document.getElementById(`tab-${t}`).classList.add('hidden');
+                document.getElementById(`nav-${t}`).className = "btn-space-3d w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all text-slate-300 hover:text-white border-slate-700/80";
+            });
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+            document.getElementById(`nav-${tabId}`).className = "btn-space-3d nav-btn-theme-active w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all";
+
+            const titles = { roster: 'ตารางงานรายเดือน', daily: 'สรุปรายวัน', employees: 'จัดการพนักงาน' };
+            document.getElementById('page-title').innerText = titles[tabId];
+
+            if (tabId === 'roster') updateRosterView();
+            if (tabId === 'daily') renderDailyOverview();
+            if (tabId === 'employees') renderEmployeeTable();
+        }
+
+        function initRosterSelectors() {
+            const monthSelect = document.getElementById('roster-month');
+            const yearSelect = document.getElementById('roster-year');
+            const festivalSelect = document.getElementById('festival-theme-select');
+            const weatherSelect = document.getElementById('weather-season-select');
+            const now = new Date();
+            monthSelect.value = now.getMonth();
+            if (festivalSelect) festivalSelect.value = selectedFestivalPref;
+            if (weatherSelect) weatherSelect.value = selectedWeatherPref;
+            yearSelect.innerHTML = '';
+            for (let y = now.getFullYear() - 2; y <= now.getFullYear() + 2; y++) {
+                const opt = document.createElement('option');
+                opt.value = y;
+                opt.innerText = y + 543;
+                opt.className = "bg-slate-900";
+                if (y === now.getFullYear()) opt.selected = true;
+                yearSelect.appendChild(opt);
+            }
+        }
+
+        function jumpToToday() {
+            const now = new Date();
+            document.getElementById('roster-month').value = now.getMonth();
+            document.getElementById('roster-year').value = now.getFullYear();
+            updateRosterView();
+            
+            requestAnimationFrame(() => {
+                setTimeout(() => scrollToTodayColumn(), 50);
+            });
+        }
+
+        function scrollToTodayColumn() {
+            const todayCol = document.getElementById('today-col-header');
+            const container = document.getElementById('roster-table-container');
+            const stickyCol = document.querySelector('.emp-dark-col');
+            
+            if (todayCol && container) {
+                const stickyWidth = stickyCol ? stickyCol.offsetWidth : 200;
+                const targetLeft = todayCol.offsetLeft - stickyWidth;
+                
+                container.scrollTo({ 
+                    left: Math.max(0, targetLeft), 
+                    behavior: 'smooth' 
+                });
+            }
+        }
+
+        function autoScrollToTodayOnLoad() {
+            if (hasInitialAutoScrolled) return;
+            const month = parseInt(document.getElementById('roster-month').value);
+            const year = parseInt(document.getElementById('roster-year').value);
+            const today = new Date();
+            if (today.getFullYear() === year && today.getMonth() === month) {
+                setTimeout(() => { scrollToTodayColumn(); hasInitialAutoScrolled = true; }, 150);
+            }
+        }
+
+        function updateRosterView() {
+            if (selectedFestivalPref === 'auto') {
+                applyFestivalTheme();
+            }
+            if (selectedWeatherPref === 'auto') {
+                applyWeatherSeason();
+            }
+
+            const theme = FESTIVAL_THEMES[activeFestivalKey] || FESTIVAL_THEMES.loykrathong;
+            const month = parseInt(document.getElementById('roster-month').value);
+            const year = parseInt(document.getElementById('roster-year').value);
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const today = new Date();
+            const isCurrentMonthYear = (today.getFullYear() === year && today.getMonth() === month);
+            const todayDate = today.getDate();
+
+            document.getElementById('print-header-title').innerText = `ตารางปฏิบัติงานพนักงาน ประจำเดือน ${monthNamesTH[month]} พ.ศ. ${year + 543}`;
+
+            document.getElementById('roster-legend').innerHTML = shifts.map(s => `
+                <span class="inline-flex items-center px-2.5 py-1 rounded-xl text-[10px] font-extrabold shadow-3d-sm transition-all hover:scale-105 cursor-pointer border border-white/20" style="background-color: ${s.bg}; color: ${s.text};">
+                    ${s.code}: ${s.name} (${s.start !== '-' ? s.start + '-' + s.end : 'หยุด'})
+                </span>
+            `).join('');
+
+            let headHTML = `<tr><th class="py-2.5 px-3 emp-dark-col min-w-[200px] text-xs font-extrabold border-r border-slate-700">${theme.icons.header} รหัสและรายชื่อพนักงาน</th>`;
+            for (let d = 1; d <= daysInMonth; d++) {
+                const dateObj = new Date(year, month, d);
+                const isWeekend = dateObj.getDay() === 0 || dateObj.getDay() === 6;
+                const isToday = isCurrentMonthYear && (d === todayDate);
+                let bgClass = isWeekend ? 'bg-rose-950/40 text-rose-300 font-semibold' : 'bg-slate-900 text-slate-300';
+                if (isToday) bgClass = 'today-laser-column text-white font-extrabold';
+
+                headHTML += `<th ${isToday ? 'id="today-col-header"' : ''} class="py-1.5 px-0 text-center border-r border-slate-800 w-[42px] min-w-[42px] max-w-[42px] ${bgClass}">
+                    <div class="text-[9px] ${isToday ? 'text-indigo-200 font-extrabold' : 'text-slate-400'} leading-none mb-0.5">${dayShortNamesTH[dateObj.getDay()]}</div>
+                    <div class="font-extrabold text-xs leading-none">${d}</div>
+                    ${isToday ? `<div class="text-[8px] leading-none mt-0.5 text-amber-300 font-extrabold no-print flex items-center justify-center gap-0.5"><span class="animate-star-twinkle">${theme.icons.todayStar}</span> วันนี้</div>` : ''}
+                </th>`;
+            }
+            headHTML += `<th class="py-2.5 px-2 text-center min-w-[60px] text-xs font-extrabold bg-slate-900 text-slate-200">รวมวัน</th></tr>`;
+            document.getElementById('roster-thead').innerHTML = headHTML;
+
+            const tbody = document.getElementById('roster-tbody');
+            if (!employees || employees.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="${daysInMonth + 2}" class="p-8 text-center text-slate-400">ยังไม่มีข้อมูลพนักงาน กรุณาเพิ่มพนักงานในเมนู "จัดการพนักงาน"</td></tr>`;
+                return;
+            }
+
+            let bodyHTML = '';
+            employees.forEach((emp, index) => {
+                if (!emp) return;
+                let workDaysCount = 0;
+                const roleStyle = getRoleBadgeStyle(emp.role);
+
+                bodyHTML += `<tr class="hover:bg-indigo-950/30 transition-colors">`;
+                bodyHTML += `<td class="py-2 px-3 emp-dark-col border-r border-slate-800">
+                    <div class="flex items-center justify-between gap-1">
+                        <div class="flex items-center space-x-2 overflow-hidden">
+                            <span class="text-[9.5px] font-extrabold border px-1.5 py-0.5 rounded-md shrink-0 shadow-sm ${roleStyle.badgeClass}">[${emp.id}]</span>
+                            <div class="overflow-hidden leading-tight">
+                                <div class="text-slate-100 text-xs font-bold truncate max-w-[105px]" title="${emp.name}">${emp.name}</div>
+                                <div class="text-[9.5px] font-medium truncate max-w-[105px] ${roleStyle.textClass}" title="${emp.role}">${emp.role}</div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col shrink-0 gap-0.5 no-print">
+                            <button onclick="moveEmployee(${index}, -1)" ${index === 0 ? 'disabled class="opacity-30 cursor-not-allowed"' : ''} class="text-[9px] bg-slate-800 hover:bg-slate-700 text-indigo-300 px-1 rounded transition" title="เลื่อนขึ้น">▲</button>
+                            <button onclick="moveEmployee(${index}, 1)" ${index === employees.length - 1 ? 'disabled class="opacity-30 cursor-not-allowed"' : ''} class="text-[9px] bg-slate-800 hover:bg-slate-700 text-indigo-300 px-1 rounded transition" title="เลื่อนลง">▼</button>
+                        </div>
+                    </div>
+                </td>`;
+
+                for (let d = 1; d <= daysInMonth; d++) {
+                    const currentShiftCode = scheduleData[`${year}_${month}_${emp.id}_${d}`] || 'OFF';
+                    const shiftObj = shifts.find(s => s.code === currentShiftCode) || shifts[0];
+                    if (currentShiftCode !== 'OFF') workDaysCount++;
+                    const isToday = isCurrentMonthYear && (d === todayDate);
+
+                    bodyHTML += `<td class="p-0.5 text-center border-r border-slate-800/80 h-[40px] ${isToday ? 'today-laser-column' : ''}">
+                        <select onchange="handleShiftChange('${emp.id}', ${year}, ${month}, ${d}, this)" 
+                            class="shift-select-badge-3d w-full h-[34px] text-center text-xs font-extrabold py-0 px-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer appearance-none shadow-3d-sm"
+                            style="background-color: ${shiftObj.bg}; color: ${shiftObj.text};">
+                            ${shifts.map(s => `<option value="${s.code}" ${s.code === currentShiftCode ? 'selected' : ''} style="background: #0f172a; color: white; font-size: 12px; font-weight: 700;">${s.code}</option>`).join('')}
+                        </select>
+                    </td>`;
+                }
+                bodyHTML += `<td class="py-2 px-2 text-center font-extrabold text-white bg-slate-900/60 text-xs">${workDaysCount} วัน</td>`;
+                bodyHTML += `</tr>`;
+            });
+            tbody.innerHTML = bodyHTML;
+            autoScrollToTodayOnLoad();
+        }
+
+        function moveEmployee(index, direction) {
+            const newIndex = index + direction;
+            if (newIndex < 0 || newIndex >= employees.length) return;
+            
+            const temp = employees[index];
+            employees[index] = employees[newIndex];
+            employees[newIndex] = temp;
+            
+            saveData(); 
+            updateRosterView();
+            if (!document.getElementById('tab-employees').classList.contains('hidden')) {
+                renderEmployeeTable();
+            }
+        }
+
+        function handleShiftChange(empId, year, month, day, selectElement) {
+            scheduleData[`${year}_${month}_${empId}_${day}`] = selectElement.value;
+            const shiftObj = shifts.find(s => s.code === selectElement.value) || shifts[0];
+            selectElement.style.backgroundColor = shiftObj.bg;
+            selectElement.style.color = shiftObj.text;
+            saveScheduleOnly();
+        }
+
+        function printRosterPDF() { window.print(); }
+
+        function resetMonthSchedule() {
+            showModal('ยืนยันการล้างข้อมูล', 'คุณต้องการล้างตารางกะของเดือนนี้ทั้งหมดใช่หรือไม่?', () => {
+                const month = parseInt(document.getElementById('roster-month').value);
+                const year = parseInt(document.getElementById('roster-year').value);
+                Object.keys(scheduleData).forEach(k => { if (k.startsWith(`${year}_${month}_`)) delete scheduleData[k]; });
+                saveScheduleOnly();
+                updateRosterView();
+            });
+        }
+
+        function exportRosterExcel() {
+            const month = parseInt(document.getElementById('roster-month').value);
+            const year = parseInt(document.getElementById('roster-year').value);
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            let headerRow = ["รหัสพนักงาน", "ชื่อพนักงาน", "ตำแหน่ง"];
+            for (let d = 1; d <= daysInMonth; d++) headerRow.push(`${dayShortNamesTH[new Date(year, month, d).getDay()]} ${d}`);
+            headerRow.push("รวมวันปฏิบัติงาน");
+
+            let excelData = [headerRow];
+            employees.forEach(emp => {
+                if (!emp) return;
+                let row = [`[${emp.id}]`, emp.name, emp.role];
+                let workDaysCount = 0;
+                for (let d = 1; d <= daysInMonth; d++) {
+                    const code = scheduleData[`${year}_${month}_${emp.id}_${d}`] || 'OFF';
+                    row.push(code);
+                    if (code !== 'OFF') workDaysCount++;
+                }
+                row.push(workDaysCount);
+                excelData.push(row);
+            });
+
+            const ws = XLSX.utils.aoa_to_sheet(excelData);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "ตารางกะพนักงาน");
+            XLSX.writeFile(wb, `ShiftRoster_${monthNamesTH[month]}_${year + 543}.xlsx`);
+        }
+
+        function initDailyPicker() {
+            document.getElementById('daily-date-picker').value = new Date().toISOString().split('T')[0];
+            renderDailyOverview();
+        }
+
+        function setDailyPickerToToday() {
+            document.getElementById('daily-date-picker').value = new Date().toISOString().split('T')[0];
+            renderDailyOverview();
+        }
+
+        function renderDailyOverview() {
+            const dateVal = document.getElementById('daily-date-picker').value;
+            if (!dateVal) return;
+            const dateObj = new Date(dateVal);
+            const year = dateObj.getFullYear();
+            const month = dateObj.getMonth();
+            const day = dateObj.getDate();
+
+            let html = '';
+            let totalAssigned = 0;
+
+            shifts.forEach(shift => {
+                const assignedEmps = employees.filter(emp => emp && (scheduleData[`${year}_${month}_${emp.id}_${day}`] || 'OFF') === shift.code);
+                if (shift.code !== 'OFF') totalAssigned += assignedEmps.length;
+
+                html += `
+                    <div class="glass-panel-3d rounded-2xl overflow-hidden flex flex-col transition-all hover:scale-[1.01] shadow-3d-md border border-white/10">
+                        <div class="p-3 border-b border-white/10 flex items-center justify-between shadow-sm" style="background-color: ${shift.bg}; color: ${shift.text};">
+                            <div class="font-bold flex items-center space-x-2 text-xs">
+                                <span class="px-2.5 py-0.5 rounded-lg bg-white/90 text-xs font-extrabold shadow-3d-sm">${shift.code}</span>
+                                <span class="text-xs tracking-tight font-extrabold">${shift.name}</span>
+                            </div>
+                            <span class="text-xs font-extrabold px-2.5 py-0.5 rounded-full bg-white/90 shadow-3d-sm">${assignedEmps.length} คน</span>
+                        </div>
+                        <div class="px-3 py-1.5 bg-slate-950/60 border-b border-slate-800 text-[10.5px] text-indigo-300 font-bold">
+                            เวลาปฏิบัติงาน: ${shift.start !== '-' ? shift.start + ' - ' + shift.end : 'วันหยุด'}
+                        </div>
+                        <div class="p-3 flex-1 space-y-2" style="max-height: 280px; overflow-y: auto;">
+                            ${assignedEmps.length === 0 ? `<p class="text-xs text-slate-500 italic text-center py-6">ไม่มีพนักงานในกะนี้</p>` : ''}
+                            ${assignedEmps.map(emp => {
+                                const roleStyle = getRoleBadgeStyle(emp.role);
+                                return `
+                                    <div class="flex items-center justify-between p-2.5 bg-slate-900/90 rounded-xl border border-slate-800 shadow-3d-sm">
+                                        <div>
+                                            <div class="text-[10.5px] font-extrabold ${roleStyle.textClass}">[${emp.id}]</div>
+                                            <div class="text-xs font-bold text-white">${emp.name}</div>
+                                        </div>
+                                        <span class="text-[9.5px] font-bold border px-2 py-0.5 rounded-lg ${roleStyle.badgeClass}">${emp.role}</span>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+            document.getElementById('daily-shift-cards').innerHTML = html;
+            document.getElementById('daily-stats-summary').innerHTML = `<span class="bg-indigo-950/80 text-indigo-300 px-3.5 py-1.5 rounded-xl border border-indigo-700/50 font-extrabold text-xs shadow-3d-sm">ปฏิบัติงานรวม: ${totalAssigned} คน / ทั้งหมด ${employees.length} คน</span>`;
+        }
+
+        function handleAddEmployee(e) {
+            e.preventDefault();
+            const id = document.getElementById('emp-id').value.trim();
+            const name = document.getElementById('emp-name').value.trim();
+            const role = document.getElementById('emp-role').value.trim();
+            if (employees.some(emp => emp && emp.id === id)) { showModal('ข้อผิดพลาด', 'รหัสพนักงานนี้มีอยู่ในระบบแล้ว'); return; }
+            employees.push({ id, name, role });
+            saveData();
+            document.getElementById('add-employee-form').reset();
+            renderEmployeeTable();
+            showModal('สำเร็จ', 'เพิ่มพนักงานเรียบร้อยแล้ว');
+        }
+
+        function deleteEmployee(id) {
+            showModal('ยืนยันการลบ', 'คุณต้องการลบพนักงานรายนี้ออกจากระบบใช่หรือไม่?', () => {
+                employees = employees.filter(emp => emp && emp.id !== id);
+                saveData();
+                renderEmployeeTable();
+                updateRosterView();
+            });
+        }
+
+        function renderEmployeeTable() {
+            const tbody = document.getElementById('employee-table-body');
+            document.getElementById('emp-count').innerText = employees.length;
+            if (!employees || employees.length === 0) { tbody.innerHTML = `<tr><td colspan="6" class="p-6 text-center text-slate-400">ยังไม่มีข้อมูลพนักงาน</td></tr>`; return; }
+
+            tbody.innerHTML = employees.map((emp, index) => {
+                if (!emp) return '';
+                const roleStyle = getRoleBadgeStyle(emp.role);
+                return `
+                    <tr class="hover:bg-indigo-950/30 transition-colors">
+                        <td class="p-3 text-center font-bold text-indigo-300">${index + 1}</td>
+                        <td class="p-3 font-extrabold ${roleStyle.textClass}">[${emp.id}]</td>
+                        <td class="p-3 font-bold text-white">${emp.name}</td>
+                        <td class="p-3 font-semibold"><span class="px-2 py-0.5 rounded-lg border ${roleStyle.badgeClass}">${emp.role}</span></td>
+                        <td class="p-3 text-center space-x-1">
+                            <button onclick="moveEmployee(${index}, -1)" ${index === 0 ? 'disabled class="opacity-30 cursor-not-allowed"' : ''} class="btn-space-3d px-2 py-1 text-xs bg-slate-800 text-indigo-300 rounded font-bold">▲ เลื่อนขึ้น</button>
+                            <button onclick="moveEmployee(${index}, 1)" ${index === employees.length - 1 ? 'disabled class="opacity-30 cursor-not-allowed"' : ''} class="btn-space-3d px-2 py-1 text-xs bg-slate-800 text-indigo-300 rounded font-bold">▼ เลื่อนลง</button>
+                        </td>
+                        <td class="p-3 text-center">
+                            <button onclick="deleteEmployee('${emp.id}')" class="btn-space-3d p-1.5 text-rose-400 hover:bg-rose-950/60 rounded-lg transition-all border-rose-500/30" title="ลบพนักงาน">
+                                <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+            lucide.createIcons();
+        }
+
+        function handleSaveShift(e) {
+            e.preventDefault();
+            const code = document.getElementById('shift-code').value.trim().toUpperCase();
+            const name = document.getElementById('shift-name').value.trim();
+            const start = document.getElementById('shift-start').value;
+            const end = document.getElementById('shift-end').value;
+            const bg = document.getElementById('shift-bg-color').value;
+            const text = document.getElementById('shift-text-color').value;
+            const editCode = document.getElementById('shift-edit-code').value;
+
+            if (editCode) {
+                const idx = shifts.findIndex(s => s.code === editCode);
+                if (idx !== -1) shifts[idx] = { code, name, start, end, bg, text };
+            } else {
+                if (shifts.some(s => s.code === code)) { showModal('ข้อผิดพลาด', 'รหัสกะเวลานี้มีอยู่ในระบบแล้ว'); return; }
+                shifts.push({ code, name, start, end, bg, text });
+            }
+            saveData();
+            resetShiftForm();
+            renderShiftModalList();
+            showModal('สำเร็จ', 'บันทึกข้อมูลกะเวลาเรียบร้อยแล้ว');
+        }
+
+        function editShift(code) {
+            const shift = shifts.find(s => s.code === code);
+            if (!shift) return;
+            document.getElementById('shift-code').value = shift.code;
+            document.getElementById('shift-code').disabled = true;
+            document.getElementById('shift-name').value = shift.name;
+            document.getElementById('shift-start').value = shift.start;
+            document.getElementById('shift-end').value = shift.end;
+            document.getElementById('shift-bg-color').value = shift.bg;
+            document.getElementById('shift-text-color').value = shift.text;
+            document.getElementById('shift-edit-code').value = shift.code;
+            document.getElementById('shift-form-title').innerText = 'แก้ไขกะเวลา';
+            document.getElementById('shift-submit-btn').innerText = 'อัปเดตกะ';
+            document.getElementById('shift-cancel-btn').classList.remove('hidden');
+        }
+
+        function resetShiftForm() {
+            document.getElementById('add-shift-form').reset();
+            document.getElementById('shift-code').disabled = false;
+            document.getElementById('shift-edit-code').value = '';
+            document.getElementById('shift-form-title').innerText = 'เพิ่มกะเวลาใหม่';
+            document.getElementById('shift-submit-btn').innerText = 'บันทึกกะ';
+            document.getElementById('shift-cancel-btn').classList.add('hidden');
+        }
+
+        function deleteShift(code) {
+            if (code === 'OFF') { showModal('ไม่สามารถลบได้', 'กะหยุด (OFF) เป็นค่าพื้นฐานของระบบ'); return; }
+            showModal('ยืนยันการลบ', 'คุณต้องการลบกะเวลานี้ใช่หรือไม่?', () => {
+                shifts = shifts.filter(s => s.code !== code);
+                saveData();
+                renderShiftModalList();
+            });
+        }
+
+        function renderShiftModalList() {
+            document.getElementById('shift-count').innerText = shifts.length;
+            document.getElementById('shift-modal-list').innerHTML = shifts.map(shift => `
+                <div class="flex items-center justify-between p-2.5 bg-slate-900 rounded-xl border border-slate-800 shadow-3d-sm">
+                    <div>
+                        <div class="flex items-center space-x-2">
+                            <span class="px-2 py-0.5 rounded-lg text-xs font-extrabold shadow-3d-sm border border-white/20" style="background-color: ${shift.bg}; color: ${shift.text};">${shift.code}</span>
+                            <span class="text-xs font-bold text-white">${shift.name}</span>
+                        </div>
+                        <div class="text-[10px] text-slate-400 font-semibold mt-0.5">${shift.start !== '-' ? shift.start + ' - ' + shift.end : 'วันหยุด'}</div>
+                    </div>
+                    <div class="flex items-center space-x-1">
+                        <button onclick="editShift('${shift.code}')" class="btn-space-3d p-1 text-indigo-400 hover:bg-indigo-950 rounded-lg border-indigo-500/30" title="แก้ไข"><i data-lucide="edit-3" class="w-3.5 h-3.5"></i></button>
+                        ${shift.code !== 'OFF' ? `<button onclick="deleteShift('${shift.code}')" class="btn-space-3d p-1 text-rose-400 hover:bg-rose-950 rounded-lg border-rose-500/30" title="ลบ"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>` : ''}
+                    </div>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        // Initialize App & Smooth Transitions
+        window.onload = function() {
+            initBackgroundWeatherParticles();
+            initLegendFestivalCanvas();
+            displayTodayInfo();
+            initRosterSelectors();
+            applyFestivalTheme();
+            applyWeatherSeason();
             initDailyPicker();
             updateRosterView();
             initRealtimeSync();
