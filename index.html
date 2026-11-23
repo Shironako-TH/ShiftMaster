@@ -47,8 +47,8 @@
             --theme-secondary: #a855f7;
             --theme-accent: #fbbf24;
             --theme-glow: rgba(99, 102, 241, 0.55);
-            --weather-tint-1: rgba(99, 102, 241, 0.16);
-            --weather-tint-2: rgba(168, 85, 247, 0.12);
+            --festival-tint-1: rgba(99, 102, 241, 0.16);
+            --festival-tint-2: rgba(168, 85, 247, 0.12);
         }
 
         body { 
@@ -56,19 +56,19 @@
             background: #090d16;
         }
 
-        /* Background Grid + Dynamic Weather Tint */
+        /* Background Grid + Dynamic Festival Tint */
         .dashboard-bg-pattern {
             background-color: #090d16;
             background-image: 
-                radial-gradient(at 15% 15%, var(--weather-tint-1) 0px, transparent 55%),
-                radial-gradient(at 85% 85%, var(--weather-tint-2) 0px, transparent 55%),
+                radial-gradient(at 15% 15%, var(--festival-tint-1) 0px, transparent 55%),
+                radial-gradient(at 85% 85%, var(--festival-tint-2) 0px, transparent 55%),
                 linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
                 linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
             background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;
             transition: background-image 0.8s ease;
         }
 
-        /* Ambient Dynamic Weather Canvas */
+        /* Ambient Festival Canvas */
         #bg-canvas {
             position: absolute;
             top: 0;
@@ -385,7 +385,7 @@
         <!-- Sidebar Footer -->
         <div class="p-3 border-t border-white/10 bg-slate-950/80 relative z-10">
             <div class="flex items-center justify-between text-[9.5px] font-semibold">
-                <span id="sidebar-version-text" class="text-indigo-300/90">v6.0 Festival & Weather</span>
+                <span id="sidebar-version-text" class="text-indigo-300/90">v6.5 Festival Edition</span>
                 <span id="sync-status" class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[8.5px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-glow-emerald">
                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
                     เชื่อมต่อแล้ว
@@ -396,7 +396,7 @@
 
     <!-- Main Content Area -->
     <main class="flex-1 flex flex-col h-full overflow-hidden dashboard-bg-pattern relative">
-        <!-- Canvas Animated Seasonal Weather Background -->
+        <!-- Canvas Animated Festival Background -->
         <canvas id="bg-canvas"></canvas>
 
         <!-- Top Header Bar -->
@@ -463,23 +463,14 @@
                             <label class="text-[11px] font-bold text-indigo-200">เทศกาล:</label>
                             <select id="festival-theme-select" onchange="changeFestivalTheme(this.value)" class="bg-transparent text-[11px] font-extrabold text-amber-300 focus:outline-none cursor-pointer">
                                 <option value="auto" class="bg-slate-900 text-white">✨ อัตโนมัติ (ตามเดือน)</option>
+                                <option value="newyear" class="bg-slate-900 text-white">🎆 ปีใหม่</option>
+                                <option value="valentine" class="bg-slate-900 text-white">💝 วาเลนไทน์</option>
+                                <option value="chinesenewyear" class="bg-slate-900 text-white">🧧 ตรุษจีน</option>
+                                <option value="songkran" class="bg-slate-900 text-white">💦 สงกรานต์</option>
+                                <option value="mothersday" class="bg-slate-900 text-white">💐 วันแม่</option>
+                                <option value="halloween" class="bg-slate-900 text-white">🎃 ฮาโลวีน</option>
                                 <option value="loykrathong" class="bg-slate-900 text-white">🪷 ลอยกระทง</option>
                                 <option value="christmas" class="bg-slate-900 text-white">🎄 คริสต์มาส</option>
-                                <option value="halloween" class="bg-slate-900 text-white">🎃 ฮาโลวีน</option>
-                                <option value="newyear" class="bg-slate-900 text-white">🎆 ปีใหม่</option>
-                                <option value="songkran" class="bg-slate-900 text-white">💦 สงกรานต์</option>
-                            </select>
-                        </div>
-
-                        <!-- SEASONAL WEATHER SELECTOR -->
-                        <div class="flex items-center space-x-1.5 bg-gradient-to-r from-sky-950/90 to-slate-900/90 px-3 py-1 rounded-xl border border-sky-500/50 shadow-3d-sm">
-                            <span id="toolbar-weather-icon" class="text-xs">🌤️</span>
-                            <label class="text-[11px] font-bold text-sky-200">ฤดูกาล:</label>
-                            <select id="weather-season-select" onchange="changeWeatherSeason(this.value)" class="bg-transparent text-[11px] font-extrabold text-sky-300 focus:outline-none cursor-pointer">
-                                <option value="auto" class="bg-slate-900 text-white">🌤️ อัตโนมัติ (ตามฤดู)</option>
-                                <option value="winter" class="bg-slate-900 text-white">❄️ ฤดูหนาว (หิมะ/ลมหนาว)</option>
-                                <option value="summer" class="bg-slate-900 text-white">☀️ ฤดูร้อน (แดดอบอุ่น)</option>
-                                <option value="rainy" class="bg-slate-900 text-white">🌧️ ฤดูฝน (สายฝนโปรยปราย)</option>
                             </select>
                         </div>
                     </div>
@@ -743,62 +734,242 @@
 
     <!-- Application Script Logic -->
     <script>
-        // --- SEASONAL WEATHER CONFIGURATIONS (THAILAND SEASONS) ---
-        const WEATHER_SEASONS = {
-            winter: {
-                name: 'ฤดูหนาว',
-                icon: '❄️',
-                tint1: 'rgba(56, 189, 248, 0.22)',
-                tint2: 'rgba(129, 140, 248, 0.16)'
-            },
-            summer: {
-                name: 'ฤดูร้อน',
-                icon: '☀️',
-                tint1: 'rgba(251, 191, 36, 0.22)',
-                tint2: 'rgba(249, 115, 22, 0.15)'
-            },
-            rainy: {
-                name: 'ฤดูฝน',
-                icon: '🌧️',
-                tint1: 'rgba(20, 184, 166, 0.20)',
-                tint2: 'rgba(59, 130, 246, 0.16)'
-            }
-        };
-
-        let selectedWeatherPref = localStorage.getItem('shift_weather_season') || 'auto';
-        let activeWeatherKey = 'winter';
-
-        function resolveWeatherSeasonKey() {
-            if (selectedWeatherPref !== 'auto' && WEATHER_SEASONS[selectedWeatherPref]) {
-                return selectedWeatherPref;
-            }
-            const monthSelect = document.getElementById('roster-month');
-            const m = monthSelect ? parseInt(monthSelect.value) : new Date().getMonth();
-            if (m === 10 || m === 11 || m === 0 || m === 1) return 'winter';
-            if (m >= 2 && m <= 4) return 'summer';
-            return 'rainy';
-        }
-
-        function changeWeatherSeason(val) {
-            selectedWeatherPref = val;
-            localStorage.setItem('shift_weather_season', val);
-            applyWeatherSeason();
-        }
-
-        function applyWeatherSeason() {
-            const newKey = resolveWeatherSeasonKey();
-            activeWeatherKey = newKey;
-            const weather = WEATHER_SEASONS[newKey] || WEATHER_SEASONS.winter;
-
-            document.documentElement.style.setProperty('--weather-tint-1', weather.tint1);
-            document.documentElement.style.setProperty('--weather-tint-2', weather.tint2);
-
-            const toolbarIcon = document.getElementById('toolbar-weather-icon');
-            if (toolbarIcon) toolbarIcon.innerText = weather.icon;
-        }
-
         // --- FESTIVAL THEME CONFIGURATIONS & GLOBAL UI ICONS ---
         const FESTIVAL_THEMES = {
+            newyear: {
+                name: 'ปีใหม่',
+                emojis: ['🎆', '🎇', '🎉', '🥂', '✨', '🎊', '⭐'],
+                animation: 'popBurstFestival',
+                shadow: 'drop-shadow(0 0 10px rgba(250, 204, 21, 0.9)) drop-shadow(0 0 12px rgba(236, 72, 153, 0.7))',
+                borderColor: 'rgba(250, 204, 21, 0.55)',
+                boxGlow: '0 0 28px rgba(250, 204, 21, 0.3), inset 0 0 14px rgba(236, 72, 153, 0.3)',
+                tint1: 'rgba(250, 204, 21, 0.16)',
+                tint2: 'rgba(236, 72, 153, 0.14)',
+                primaryColor: '#ca8a04',
+                secondaryColor: '#db2777',
+                accentColor: '#facc15',
+                glowColor: 'rgba(250, 204, 21, 0.55)',
+                orbTop: 'rgba(234, 179, 8, 0.32)',
+                orbBottom: 'rgba(236, 72, 153, 0.28)',
+                icons: {
+                    logoBadge: '🎆',
+                    header: '🎆',
+                    today: '🎉',
+                    settings: '🥂',
+                    filter: '🎇',
+                    festival: '🎊',
+                    bookmark: '🎆',
+                    navRoster: '🗓️',
+                    navRosterDeco: '🎆',
+                    navDaily: '⏳',
+                    navDailyDeco: '✨',
+                    navEmp: '🥳',
+                    navEmpDeco: '🎉',
+                    empAdd: '🎊',
+                    todayStar: '🎆'
+                },
+                rabbitIcon: '🥳',
+                rabbitMsgs: [
+                    "Happy New Year! สวัสดีปีใหม่ ขอให้ตารางกะปังตลอดปีค่า 🎆🎉",
+                    "พลุไฟฉลองปีใหม่แตกกระจายเต็มแถบกะ สวยอลังการสุดๆ! 🎇✨",
+                    "ปีใหม่นี้กระต่ายน้อยพร้อมลุยจัดกะกับทุกคนแล้วค่า! 🎊⭐"
+                ]
+            },
+            valentine: {
+                name: 'วาเลนไทน์',
+                emojis: ['💝', '💖', '💘', '🌹', '🧸', '💌', '✨'],
+                animation: 'floatUpFestival',
+                shadow: 'drop-shadow(0 0 10px rgba(244, 63, 94, 0.85)) drop-shadow(0 0 12px rgba(236, 72, 153, 0.65))',
+                borderColor: 'rgba(251, 113, 133, 0.55)',
+                boxGlow: '0 0 28px rgba(244, 63, 94, 0.28), inset 0 0 14px rgba(236, 72, 153, 0.28)',
+                tint1: 'rgba(244, 63, 94, 0.17)',
+                tint2: 'rgba(236, 72, 153, 0.14)',
+                primaryColor: '#e11d48',
+                secondaryColor: '#db2777',
+                accentColor: '#fb7185',
+                glowColor: 'rgba(244, 63, 94, 0.55)',
+                orbTop: 'rgba(244, 63, 94, 0.30)',
+                orbBottom: 'rgba(236, 72, 153, 0.28)',
+                icons: {
+                    logoBadge: '💝',
+                    header: '💝',
+                    today: '💖',
+                    settings: '💌',
+                    filter: '🌹',
+                    festival: '💘',
+                    bookmark: '💖',
+                    navRoster: '📅',
+                    navRosterDeco: '💝',
+                    navDaily: '⏰',
+                    navDailyDeco: '💖',
+                    navEmp: '👥',
+                    navEmpDeco: '🌹',
+                    empAdd: '💘',
+                    todayStar: '💖'
+                },
+                rabbitIcon: '💘',
+                rabbitMsgs: [
+                    "Happy Valentine's Day! ส่งหัวใจดวงโตให้ทีมงานจัดกะทุกคนค่า 💝💖",
+                    "หัวใจลอยฟรุ้งฟริ้งเต็มแถบกะเลย ทำงานด้วยรอยยิ้มน้า! 🌹✨",
+                    "กระต่ายน้อยแจกความรักและความสดใสให้ทุกกะเลยค่า 🧸💌"
+                ]
+            },
+            chinesenewyear: {
+                name: 'ตรุษจีน',
+                emojis: ['🧧', '🏮', '🐉', '🪙', '🍊', '🧨', '✨'],
+                animation: 'floatUpFestival',
+                shadow: 'drop-shadow(0 0 10px rgba(239, 68, 68, 0.85)) drop-shadow(0 0 12px rgba(250, 204, 21, 0.75))',
+                borderColor: 'rgba(250, 204, 21, 0.6)',
+                boxGlow: '0 0 28px rgba(239, 68, 68, 0.32), inset 0 0 14px rgba(250, 204, 21, 0.28)',
+                tint1: 'rgba(239, 68, 68, 0.18)',
+                tint2: 'rgba(250, 204, 21, 0.15)',
+                primaryColor: '#dc2626',
+                secondaryColor: '#d97706',
+                accentColor: '#facc15',
+                glowColor: 'rgba(239, 68, 68, 0.55)',
+                orbTop: 'rgba(220, 38, 38, 0.32)',
+                orbBottom: 'rgba(245, 158, 11, 0.30)',
+                icons: {
+                    logoBadge: '🧧',
+                    header: '🏮',
+                    today: '🪙',
+                    settings: '🧨',
+                    filter: '🍊',
+                    festival: '🧧',
+                    bookmark: '🏮',
+                    navRoster: '📅',
+                    navRosterDeco: '🧧',
+                    navDaily: '⏰',
+                    navDailyDeco: '🪙',
+                    navEmp: '👥',
+                    navEmpDeco: '🏮',
+                    empAdd: '🧧',
+                    todayStar: '🪙'
+                },
+                rabbitIcon: '🧧',
+                rabbitMsgs: [
+                    "ซินเจียยู่อี่ ซินนี้ฮวดใช้! เฮงๆ ปังๆ ตลอดทั้งปีค่า 🧧🪙",
+                    "โคมแดงกับอั่งเปาลอยเต็มแถบกะ โชคลาภเข้ารัวๆ แน่นอน! 🏮✨",
+                    "กระต่ายน้อยขอให้จัดกะราบรื่น ไม่มีสะดุดเลยน้า 🍊🐉"
+                ]
+            },
+            songkran: {
+                name: 'สงกรานต์',
+                emojis: ['💦', '🔫', '💧', '🌺', '🪣', '🫧', '☀️'],
+                animation: 'floatUpFestival',
+                shadow: 'drop-shadow(0 0 8px rgba(56, 189, 248, 0.85)) drop-shadow(0 0 10px rgba(34, 211, 238, 0.65))',
+                borderColor: 'rgba(56, 189, 248, 0.55)',
+                boxGlow: '0 0 28px rgba(6, 182, 212, 0.35), inset 0 0 14px rgba(56, 189, 248, 0.3)',
+                tint1: 'rgba(14, 165, 233, 0.18)',
+                tint2: 'rgba(20, 184, 166, 0.14)',
+                primaryColor: '#0284c7',
+                secondaryColor: '#0d9488',
+                accentColor: '#38bdf8',
+                glowColor: 'rgba(56, 189, 248, 0.55)',
+                orbTop: 'rgba(14, 165, 233, 0.32)',
+                orbBottom: 'rgba(20, 184, 166, 0.28)',
+                icons: {
+                    logoBadge: '💦',
+                    header: '💦',
+                    today: '🌺',
+                    settings: '🔫',
+                    filter: '💧',
+                    festival: '🫧',
+                    bookmark: '💦',
+                    navRoster: '📅',
+                    navRosterDeco: '💦',
+                    navDaily: '⏰',
+                    navDailyDeco: '🌺',
+                    navEmp: '👥',
+                    navEmpDeco: '🔫',
+                    empAdd: '🌺',
+                    todayStar: '💦'
+                },
+                rabbitIcon: '💦',
+                rabbitMsgs: [
+                    "สุขสันต์วันสงกรานต์! สาดความสดชื่นให้ตารางกะชุ่มฉ่ำค่า 💦🔫",
+                    "ฟองสบู่กับละอองน้ำลอยเต็มแถบกะ เย็นฉ่ำชื่นใจสุดๆ! 🫧💧",
+                    "สวัสดีปีใหม่ไทย ขอให้ทำงานราบรื่นเย็นสบายตลอดวันน้า! 🌺✨"
+                ]
+            },
+            mothersday: {
+                name: 'วันแม่',
+                emojis: ['💐', '🌸', '💙', '💖', '✨', '🌷'],
+                animation: 'floatUpFestival',
+                shadow: 'drop-shadow(0 0 9px rgba(56, 189, 248, 0.8)) drop-shadow(0 0 10px rgba(244, 114, 182, 0.6))',
+                borderColor: 'rgba(125, 211, 252, 0.55)',
+                boxGlow: '0 0 28px rgba(56, 189, 248, 0.28), inset 0 0 14px rgba(244, 114, 182, 0.22)',
+                tint1: 'rgba(56, 189, 248, 0.17)',
+                tint2: 'rgba(244, 114, 182, 0.13)',
+                primaryColor: '#0284c7',
+                secondaryColor: '#ec4899',
+                accentColor: '#7dd3fc',
+                glowColor: 'rgba(56, 189, 248, 0.5)',
+                orbTop: 'rgba(56, 189, 248, 0.30)',
+                orbBottom: 'rgba(244, 114, 182, 0.24)',
+                icons: {
+                    logoBadge: '💐',
+                    header: '💐',
+                    today: '🌸',
+                    settings: '💙',
+                    filter: '🌸',
+                    festival: '💐',
+                    bookmark: '💐',
+                    navRoster: '📅',
+                    navRosterDeco: '💐',
+                    navDaily: '⏰',
+                    navDailyDeco: '🌸',
+                    navEmp: '👥',
+                    navEmpDeco: '💙',
+                    empAdd: '🌸',
+                    todayStar: '🌸'
+                },
+                rabbitIcon: '💐',
+                rabbitMsgs: [
+                    "สุขสันต์วันแม่แห่งชาติ! ส่งช่อดอกไม้หอมๆ ให้ทุกคนค่า 💐🌸",
+                    "ดอกไม้บานสะพรั่งเต็มแถบกะเลย อ่อนโยนและอบอุ่นสุดๆ! 🌸✨",
+                    "อย่าลืมดูแลสุขภาพและส่งกำลังใจให้ครอบครัวด้วยน้า 💙💖"
+                ]
+            },
+            halloween: {
+                name: 'ฮาโลวีน',
+                emojis: ['🎃', '👻', '🦇', '🕷️', '🕸️', '🍬', '🔮'],
+                animation: 'floatUpFestival',
+                shadow: 'drop-shadow(0 0 10px rgba(249, 115, 22, 0.85)) drop-shadow(0 0 12px rgba(168, 85, 247, 0.7))',
+                borderColor: 'rgba(249, 115, 22, 0.55)',
+                boxGlow: '0 0 28px rgba(249, 115, 22, 0.3), inset 0 0 14px rgba(168, 85, 247, 0.35)',
+                tint1: 'rgba(249, 115, 22, 0.17)',
+                tint2: 'rgba(147, 51, 234, 0.16)',
+                primaryColor: '#ea580c',
+                secondaryColor: '#7e22ce',
+                accentColor: '#fb923c',
+                glowColor: 'rgba(249, 115, 22, 0.55)',
+                orbTop: 'rgba(249, 115, 22, 0.32)',
+                orbBottom: 'rgba(147, 51, 234, 0.32)',
+                icons: {
+                    logoBadge: '🎃',
+                    header: '🎃',
+                    today: '👻',
+                    settings: '🔮',
+                    filter: '🦇',
+                    festival: '🕸️',
+                    bookmark: '🎃',
+                    navRoster: '📅',
+                    navRosterDeco: '🎃',
+                    navDaily: '🕯️',
+                    navDailyDeco: '🦇',
+                    navEmp: '👻',
+                    navEmpDeco: '🍬',
+                    empAdd: '🧙',
+                    todayStar: '🎃'
+                },
+                rabbitIcon: '🎃',
+                rabbitMsgs: [
+                    "Trick or Treat! ผีน้อยกระต่ายมาช่วยเฝ้ากะดึกให้แล้วแฮ่! 🎃👻",
+                    "ค้างคาวบินว่อนเต็มแถบกะเลย สนุกสุดๆ คืนฮาโลวีน! 🦇🔮",
+                    "อย่าลืมแจกขนมให้พนักงานเข้ากะด้วยน้า แฮ่ๆ! 🍬🕸️"
+                ]
+            },
             loykrathong: {
                 name: 'ลอยกระทง',
                 emojis: ['🪷', '🪷', '✨', '🏮', '🌕', '🪷'],
@@ -806,6 +977,8 @@
                 shadow: 'drop-shadow(0 0 8px rgba(251, 191, 36, 0.75)) drop-shadow(0 4px 10px rgba(99, 102, 241, 0.45))',
                 borderColor: 'rgba(251, 191, 36, 0.45)',
                 boxGlow: '0 0 25px rgba(251, 191, 36, 0.25), inset 0 0 12px rgba(99, 102, 241, 0.35)',
+                tint1: 'rgba(99, 102, 241, 0.16)',
+                tint2: 'rgba(245, 158, 11, 0.13)',
                 primaryColor: '#6366f1',
                 secondaryColor: '#d97706',
                 accentColor: '#fbbf24',
@@ -843,6 +1016,8 @@
                 shadow: 'drop-shadow(0 0 8px rgba(52, 211, 153, 0.8)) drop-shadow(0 0 10px rgba(244, 63, 94, 0.6))',
                 borderColor: 'rgba(52, 211, 153, 0.55)',
                 boxGlow: '0 0 25px rgba(16, 185, 129, 0.3), inset 0 0 14px rgba(244, 63, 94, 0.25)',
+                tint1: 'rgba(16, 185, 129, 0.17)',
+                tint2: 'rgba(244, 63, 94, 0.14)',
                 primaryColor: '#059669',
                 secondaryColor: '#e11d48',
                 accentColor: '#34d399',
@@ -872,117 +1047,6 @@
                     "หิมะตกโปรยปรายในตารางงาน เย็นสบายสุดๆ ไปเลย! ❄️⛄",
                     "โฮะ โฮะ โฮ่! จัดกะคริสต์มาสเสร็จไว รับของขวัญได้เลยน้า 🔔✨"
                 ]
-            },
-            halloween: {
-                name: 'ฮาโลวีน',
-                emojis: ['🎃', '👻', '🦇', '🕷️', '🕸️', '🍬', '🔮'],
-                animation: 'floatUpFestival',
-                shadow: 'drop-shadow(0 0 10px rgba(249, 115, 22, 0.85)) drop-shadow(0 0 12px rgba(168, 85, 247, 0.7))',
-                borderColor: 'rgba(249, 115, 22, 0.55)',
-                boxGlow: '0 0 28px rgba(249, 115, 22, 0.3), inset 0 0 14px rgba(168, 85, 247, 0.35)',
-                primaryColor: '#ea580c',
-                secondaryColor: '#7e22ce',
-                accentColor: '#fb923c',
-                glowColor: 'rgba(249, 115, 22, 0.55)',
-                orbTop: 'rgba(249, 115, 22, 0.32)',
-                orbBottom: 'rgba(147, 51, 234, 0.32)',
-                icons: {
-                    logoBadge: '🎃',
-                    header: '🎃',
-                    today: '👻',
-                    settings: '🔮',
-                    filter: '🦇',
-                    festival: '🕸️',
-                    bookmark: '🎃',
-                    navRoster: '📅',
-                    navRosterDeco: '🎃',
-                    navDaily: '🕯️',
-                    navDailyDeco: '🦇',
-                    navEmp: '👻',
-                    navEmpDeco: '🍬',
-                    empAdd: '🧙',
-                    todayStar: '🎃'
-                },
-                rabbitIcon: '🎃',
-                rabbitMsgs: [
-                    "Trick or Treat! ผีน้อยกระต่ายมาช่วยเฝ้ากะดึกให้แล้วแฮ่! 🎃👻",
-                    "ค้างคาวบินว่อนเต็มแถบกะเลย สนุกสุดๆ คืนฮาโลวีน! 🦇🔮",
-                    "อย่าลืมแจกขนมให้พนักงานเข้ากะด้วยน้า แฮ่ๆ! 🍬🕸️"
-                ]
-            },
-            newyear: {
-                name: 'ปีใหม่',
-                emojis: ['🎆', '🎇', '🎉', '🥂', '✨', '🎊', '⭐'],
-                animation: 'popBurstFestival',
-                shadow: 'drop-shadow(0 0 10px rgba(250, 204, 21, 0.9)) drop-shadow(0 0 12px rgba(236, 72, 153, 0.7))',
-                borderColor: 'rgba(250, 204, 21, 0.55)',
-                boxGlow: '0 0 28px rgba(250, 204, 21, 0.3), inset 0 0 14px rgba(236, 72, 153, 0.3)',
-                primaryColor: '#ca8a04',
-                secondaryColor: '#db2777',
-                accentColor: '#facc15',
-                glowColor: 'rgba(250, 204, 21, 0.55)',
-                orbTop: 'rgba(234, 179, 8, 0.32)',
-                orbBottom: 'rgba(236, 72, 153, 0.28)',
-                icons: {
-                    logoBadge: '🎆',
-                    header: '🎆',
-                    today: '🎉',
-                    settings: '🥂',
-                    filter: '🎇',
-                    festival: '🎊',
-                    bookmark: '🎆',
-                    navRoster: '🗓️',
-                    navRosterDeco: '🎆',
-                    navDaily: '⏳',
-                    navDailyDeco: '✨',
-                    navEmp: '🥳',
-                    navEmpDeco: '🎉',
-                    empAdd: '🎊',
-                    todayStar: '🎆'
-                },
-                rabbitIcon: '🥳',
-                rabbitMsgs: [
-                    "Happy New Year! สวัสดีปีใหม่ ขอให้ตารางกะปังตลอดปีค่า 🎆🎉",
-                    "พลุไฟฉลองปีใหม่แตกกระจายเต็มแถบกะ สวยอลังการสุดๆ! 🎇✨",
-                    "ปีใหม่นี้กระต่ายน้อยพร้อมลุยจัดกะกับทุกคนแล้วค่า! 🎊⭐"
-                ]
-            },
-            songkran: {
-                name: 'สงกรานต์',
-                emojis: ['💦', '🔫', '💧', '🌺', '🪣', '🫧', '☀️'],
-                animation: 'floatUpFestival',
-                shadow: 'drop-shadow(0 0 8px rgba(56, 189, 248, 0.85)) drop-shadow(0 0 10px rgba(34, 211, 238, 0.65))',
-                borderColor: 'rgba(56, 189, 248, 0.55)',
-                boxGlow: '0 0 28px rgba(6, 182, 212, 0.35), inset 0 0 14px rgba(56, 189, 248, 0.3)',
-                primaryColor: '#0284c7',
-                secondaryColor: '#0d9488',
-                accentColor: '#38bdf8',
-                glowColor: 'rgba(56, 189, 248, 0.55)',
-                orbTop: 'rgba(14, 165, 233, 0.32)',
-                orbBottom: 'rgba(20, 184, 166, 0.28)',
-                icons: {
-                    logoBadge: '💦',
-                    header: '💦',
-                    today: '🌺',
-                    settings: '🔫',
-                    filter: '💧',
-                    festival: '🫧',
-                    bookmark: '💦',
-                    navRoster: '📅',
-                    navRosterDeco: '💦',
-                    navDaily: '☀️',
-                    navDailyDeco: '🌺',
-                    navEmp: '🏄',
-                    navEmpDeco: '🔫',
-                    empAdd: '🌺',
-                    todayStar: '💦'
-                },
-                rabbitIcon: '💦',
-                rabbitMsgs: [
-                    "สุขสันต์วันสงกรานต์! สาดความสดชื่นให้ตารางกะชุ่มฉ่ำค่า 💦🔫",
-                    "ฟองสบู่กับละอองน้ำลอยเต็มแถบกะ เย็นฉ่ำชื่นใจสุดๆ! 🫧💧",
-                    "สวัสดีปีใหม่ไทย ขอให้ทำงานราบรื่นเย็นสบายตลอดวันน้า! 🌺✨"
-                ]
             }
         };
 
@@ -997,8 +1061,11 @@
             const monthSelect = document.getElementById('roster-month');
             const m = monthSelect ? parseInt(monthSelect.value) : new Date().getMonth();
             if (m === 0) return 'newyear';
+            if (m === 1) return 'valentine';
             if (m === 3) return 'songkran';
+            if (m === 7) return 'mothersday';
             if (m === 9) return 'halloween';
+            if (m === 10) return 'loykrathong';
             if (m === 11) return 'christmas';
             return 'loykrathong';
         }
@@ -1019,6 +1086,8 @@
             document.documentElement.style.setProperty('--theme-secondary', theme.secondaryColor);
             document.documentElement.style.setProperty('--theme-accent', theme.accentColor);
             document.documentElement.style.setProperty('--theme-glow', theme.glowColor);
+            document.documentElement.style.setProperty('--festival-tint-1', theme.tint1);
+            document.documentElement.style.setProperty('--festival-tint-2', theme.tint2);
 
             const orbTop = document.getElementById('sidebar-orb-top');
             const orbBottom = document.getElementById('sidebar-orb-bottom');
@@ -1123,8 +1192,8 @@
             return { badgeClass: 'bg-slate-800 text-slate-300 border-slate-700', textClass: 'text-indigo-300' };
         }
 
-        // --- DYNAMIC SEASONAL WEATHER CANVAS ANIMATION (FULL BACKGROUND) ---
-        function initBackgroundWeatherParticles() {
+        // --- DYNAMIC FESTIVAL CANVAS ANIMATION (FULL BACKGROUND) ---
+        function initBackgroundParticles() {
             const canvas = document.getElementById('bg-canvas');
             if (!canvas) return;
             const ctx = canvas.getContext('2d');
@@ -1136,108 +1205,44 @@
                 height = canvas.height = canvas.offsetHeight;
             });
 
-            const winterSnow = Array.from({ length: 55 }, () => ({
+            const particles = Array.from({ length: 55 }, () => ({
                 x: Math.random() * width,
                 y: Math.random() * height,
                 radius: Math.random() * 2.5 + 1,
-                alpha: Math.random() * 0.45 + 0.15,
-                speedY: Math.random() * 0.8 + 0.35,
-                drift: (Math.random() - 0.5) * 0.5,
+                alpha: Math.random() * 0.42 + 0.12,
+                speedY: -(Math.random() * 0.45 + 0.15),
+                drift: (Math.random() - 0.5) * 0.4,
                 phase: Math.random() * Math.PI * 2
-            }));
-
-            const summerMotes = Array.from({ length: 45 }, () => ({
-                x: Math.random() * width,
-                y: Math.random() * height,
-                radius: Math.random() * 3 + 1,
-                alpha: Math.random() * 0.4 + 0.1,
-                speedX: (Math.random() - 0.5) * 0.35,
-                speedY: -(Math.random() * 0.35 + 0.1),
-                phase: Math.random() * Math.PI * 2
-            }));
-
-            const raindrops = Array.from({ length: 75 }, () => ({
-                x: Math.random() * width,
-                y: Math.random() * height,
-                length: Math.random() * 14 + 8,
-                speedY: Math.random() * 5 + 4.5,
-                speedX: -1.4,
-                alpha: Math.random() * 0.35 + 0.12
             }));
 
             function animate(time = 0) {
                 ctx.clearRect(0, 0, width, height);
+                const theme = FESTIVAL_THEMES[activeFestivalKey] || FESTIVAL_THEMES.loykrathong;
 
-                if (activeWeatherKey === 'winter') {
-                    winterSnow.forEach(p => {
+                particles.forEach(p => {
+                    if (activeFestivalKey === 'christmas') {
+                        p.y += Math.abs(p.speedY) * 1.6;
+                        if (p.y > height + 8) { p.y = -8; p.x = Math.random() * width; }
+                    } else {
                         p.y += p.speedY;
-                        p.x += p.drift + Math.sin(time * 0.002 + p.phase) * 0.3;
+                        if (p.y < -8) { p.y = height + 8; p.x = Math.random() * width; }
+                    }
 
-                        if (p.y > height + 5) { p.y = -5; p.x = Math.random() * width; }
-                        if (p.x > width) p.x = 0;
-                        if (p.x < 0) p.x = width;
+                    p.x += p.drift + Math.sin(time * 0.002 + p.phase) * 0.25;
+                    if (p.x > width) p.x = 0;
+                    if (p.x < 0) p.x = width;
 
-                        ctx.save();
-                        ctx.beginPath();
-                        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                        ctx.fillStyle = '#e0f2fe';
-                        ctx.shadowColor = '#38bdf8';
-                        ctx.shadowBlur = 8;
-                        ctx.globalAlpha = p.alpha;
-                        ctx.fill();
-                        ctx.restore();
-                    });
-
-                } else if (activeWeatherKey === 'summer') {
-                    const sunGrad = ctx.createRadialGradient(width * 0.85, height * 0.08, 10, width * 0.85, height * 0.08, Math.max(width, height) * 0.55);
-                    sunGrad.addColorStop(0, 'rgba(251, 191, 36, 0.12)');
-                    sunGrad.addColorStop(0.5, 'rgba(249, 115, 22, 0.04)');
-                    sunGrad.addColorStop(1, 'transparent');
-                    ctx.fillStyle = sunGrad;
-                    ctx.fillRect(0, 0, width, height);
-
-                    summerMotes.forEach(p => {
-                        p.x += p.speedX + Math.sin(time * 0.002 + p.phase) * 0.2;
-                        p.y += p.speedY;
-
-                        if (p.y < -10) { p.y = height + 10; p.x = Math.random() * width; }
-                        if (p.x > width) p.x = 0;
-                        if (p.x < 0) p.x = width;
-
-                        const twinkle = 0.6 + 0.4 * Math.sin(time * 0.004 + p.phase);
-                        ctx.save();
-                        ctx.beginPath();
-                        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                        ctx.fillStyle = '#fde047';
-                        ctx.shadowColor = '#f59e0b';
-                        ctx.shadowBlur = 10;
-                        ctx.globalAlpha = p.alpha * twinkle;
-                        ctx.fill();
-                        ctx.restore();
-                    });
-
-                } else if (activeWeatherKey === 'rainy') {
-                    raindrops.forEach(r => {
-                        r.x += r.speedX;
-                        r.y += r.speedY;
-
-                        if (r.y > height + 20) {
-                            r.y = -20;
-                            r.x = Math.random() * (width + 100);
-                        }
-                        if (r.x < -20) r.x = width + 20;
-
-                        ctx.save();
-                        ctx.beginPath();
-                        ctx.moveTo(r.x, r.y);
-                        ctx.lineTo(r.x + r.speedX * 1.6, r.y + r.length);
-                        ctx.strokeStyle = '#7dd3fc';
-                        ctx.lineWidth = 1.2;
-                        ctx.globalAlpha = r.alpha;
-                        ctx.stroke();
-                        ctx.restore();
-                    });
-                }
+                    const pulse = 0.65 + 0.35 * Math.sin(time * 0.003 + p.phase);
+                    ctx.save();
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = theme.accentColor;
+                    ctx.shadowColor = theme.accentColor;
+                    ctx.shadowBlur = 9;
+                    ctx.globalAlpha = p.alpha * pulse;
+                    ctx.fill();
+                    ctx.restore();
+                });
 
                 requestAnimationFrame(animate);
             }
@@ -1430,8 +1435,8 @@
                         drawBat(b, time);
                     });
 
-                } else if (activeFestivalKey === 'newyear') {
-                    if (Math.random() < 0.035 && fireworks.length < 4) {
+                } else if (activeFestivalKey === 'newyear' || activeFestivalKey === 'chinesenewyear') {
+                    if (Math.random() < 0.04 && fireworks.length < 4) {
                         spawnFirework();
                     }
                     fireworks.forEach(fw => {
@@ -1453,7 +1458,7 @@
                     });
                     fireworks = fireworks.filter(fw => fw.life > 0);
 
-                } else if (activeFestivalKey === 'songkran') {
+                } else if (activeFestivalKey === 'songkran' || activeFestivalKey === 'valentine' || activeFestivalKey === 'mothersday') {
                     waterBubbles.forEach(b => {
                         b.y += b.speedY;
                         b.x += Math.sin(time * 0.004 + b.wobble) * 0.3;
@@ -1461,14 +1466,15 @@
                             b.y = canvas.height + 10;
                             b.x = Math.random() * canvas.width;
                         }
+                        const theme = FESTIVAL_THEMES[activeFestivalKey];
                         ctx.save();
                         ctx.beginPath();
                         ctx.arc(b.x % canvas.width, b.y, b.r, 0, Math.PI * 2);
-                        ctx.strokeStyle = '#38bdf8';
+                        ctx.strokeStyle = theme.accentColor;
                         ctx.lineWidth = 1.2;
-                        ctx.fillStyle = 'rgba(56, 189, 248, 0.15)';
+                        ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
                         ctx.globalAlpha = b.alpha;
-                        ctx.shadowColor = '#22d3ee';
+                        ctx.shadowColor = theme.accentColor;
                         ctx.shadowBlur = 6;
                         ctx.fill();
                         ctx.stroke();
@@ -1484,11 +1490,10 @@
         // --- PET THE RABBIT INTERACTION ---
         function petTheRabbit() {
             const theme = FESTIVAL_THEMES[activeFestivalKey] || FESTIVAL_THEMES.loykrathong;
-            const weather = WEATHER_SEASONS[activeWeatherKey] || WEATHER_SEASONS.winter;
             const msgs = theme.rabbitMsgs;
             const randomMsg = msgs[Math.floor(Math.random() * msgs.length)];
             document.getElementById('rabbit-greeting-text').innerText = randomMsg;
-            showModal(`${theme.icons.header} เทศกาล${theme.name} • ${weather.icon} ${weather.name}`, randomMsg);
+            showModal(`${theme.icons.header} เทศกาล${theme.name}`, randomMsg);
         }
 
         // --- FIREBASE CONFIG ---
@@ -1626,11 +1631,9 @@
             const monthSelect = document.getElementById('roster-month');
             const yearSelect = document.getElementById('roster-year');
             const festivalSelect = document.getElementById('festival-theme-select');
-            const weatherSelect = document.getElementById('weather-season-select');
             const now = new Date();
             monthSelect.value = now.getMonth();
             if (festivalSelect) festivalSelect.value = selectedFestivalPref;
-            if (weatherSelect) weatherSelect.value = selectedWeatherPref;
             yearSelect.innerHTML = '';
             for (let y = now.getFullYear() - 2; y <= now.getFullYear() + 2; y++) {
                 const opt = document.createElement('option');
@@ -1682,9 +1685,6 @@
         function updateRosterView() {
             if (selectedFestivalPref === 'auto') {
                 applyFestivalTheme();
-            }
-            if (selectedWeatherPref === 'auto') {
-                applyWeatherSeason();
             }
 
             const theme = FESTIVAL_THEMES[activeFestivalKey] || FESTIVAL_THEMES.loykrathong;
@@ -2022,12 +2022,11 @@
 
         // Initialize App & Smooth Transitions
         window.onload = function() {
-            initBackgroundWeatherParticles();
+            initBackgroundParticles();
             initLegendFestivalCanvas();
             displayTodayInfo();
             initRosterSelectors();
             applyFestivalTheme();
-            applyWeatherSeason();
             initDailyPicker();
             updateRosterView();
             initRealtimeSync();
