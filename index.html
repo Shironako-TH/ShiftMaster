@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ระบบจัดการตารางกะพนักงาน (ShiftMaster Real-time 3D Ultra)</title>
+    <title>ระบบจัดการตารางกะพนักงาน (ShiftMaster กนก 3D Ultra)</title>
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#090d16">
     
@@ -17,14 +17,12 @@
                         sans: ['Prompt', 'sans-serif'],
                     },
                     boxShadow: {
-                        '3d-sm': '0 4px 14px -2px rgba(0, 0, 0, 0.4), inset 0 1px 1px 0 rgba(255, 255, 255, 0.4), inset 0 -2px 4px 0 rgba(0, 0, 0, 0.4)',
-                        '3d-md': '0 12px 32px -6px rgba(0, 0, 0, 0.6), inset 0 2px 2px 0 rgba(255, 255, 255, 0.5), inset 0 -3px 6px 0 rgba(0, 0, 0, 0.5)',
-                        '3d-lg': '0 24px 48px -12px rgba(0, 0, 0, 0.7), inset 0 2px 3px 0 rgba(255, 255, 255, 0.6)',
-                        'glow-indigo': '0 0 25px rgba(99, 102, 241, 0.8), inset 0 0 10px rgba(129, 140, 248, 0.6)',
-                        'glow-violet': '0 0 25px rgba(139, 92, 246, 0.8), inset 0 0 10px rgba(167, 139, 250, 0.6)',
-                        'glow-emerald': '0 0 25px rgba(16, 185, 129, 0.8), inset 0 0 10px rgba(52, 211, 153, 0.6)',
-                        'glow-rose': '0 0 25px rgba(244, 63, 94, 0.8), inset 0 0 10px rgba(251, 113, 133, 0.6)',
-                        'glow-cyan': '0 0 25px rgba(6, 182, 212, 0.8), inset 0 0 10px rgba(56, 189, 248, 0.6)',
+                        '3d-sm': '0 4px 14px -2px rgba(0, 0, 0, 0.45), inset 0 1px 1px 0 rgba(255, 215, 115, 0.35), inset 0 -2px 4px 0 rgba(0, 0, 0, 0.45)',
+                        '3d-md': '0 12px 32px -6px rgba(0, 0, 0, 0.65), inset 0 2px 2px 0 rgba(251, 191, 36, 0.25), inset 0 -3px 6px 0 rgba(0, 0, 0, 0.5)',
+                        '3d-lg': '0 24px 48px -12px rgba(0, 0, 0, 0.75), inset 0 2px 3px 0 rgba(251, 191, 36, 0.3)',
+                        'glow-kanok': '0 0 24px rgba(245, 158, 11, 0.45), inset 0 0 12px rgba(251, 191, 36, 0.25)',
+                        'glow-emerald': '0 0 25px rgba(16, 185, 129, 0.75), inset 0 0 10px rgba(52, 211, 153, 0.5)',
+                        'glow-rose': '0 0 25px rgba(244, 63, 94, 0.75), inset 0 0 10px rgba(251, 113, 133, 0.5)',
                     }
                 }
             }
@@ -35,20 +33,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <!-- SheetJS (xlsx) for Excel Export -->
-    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
     <!-- Firebase SDK Compat -->
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
 
     <style>
         :root {
-            --theme-primary: #6366f1;
-            --theme-secondary: #a855f7;
+            --theme-primary: #d97706;
+            --theme-secondary: #991b1b;
             --theme-accent: #fbbf24;
-            --theme-glow: rgba(99, 102, 241, 0.55);
-            --festival-tint-1: rgba(99, 102, 241, 0.16);
-            --festival-tint-2: rgba(168, 85, 247, 0.12);
+            --theme-glow: rgba(245, 158, 11, 0.5);
+            --festival-tint-1: rgba(217, 119, 6, 0.16);
+            --festival-tint-2: rgba(153, 27, 27, 0.15);
+            --kanok-gold: rgba(251, 191, 36, 0.14);
+            --kanok-gold-strong: rgba(245, 158, 11, 0.28);
         }
 
         body { 
@@ -56,19 +54,110 @@
             background: #090d16;
         }
 
-        /* Background Grid + Dynamic Festival Tint */
+        /* Thai Kanok Pattern Background + Dynamic Festival Tint */
         .dashboard-bg-pattern {
             background-color: #090d16;
             background-image: 
                 radial-gradient(at 15% 15%, var(--festival-tint-1) 0px, transparent 55%),
                 radial-gradient(at 85% 85%, var(--festival-tint-2) 0px, transparent 55%),
-                linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-            background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96' viewBox='0 0 96 96'%3E%3Cg fill='none' stroke='%23fbbf24' stroke-opacity='0.09' stroke-width='1.15'%3E%3Cpath d='M48 8 C38 22, 36 34, 48 44 C60 34, 58 22, 48 8 Z'/%3E%3Cpath d='M48 44 C32 36, 20 40, 14 52 C26 52, 38 50, 48 44 Z'/%3E%3Cpath d='M48 44 C64 36, 76 40, 82 52 C70 52, 58 50, 48 44 Z'/%3E%3Cpath d='M48 44 C40 58, 44 72, 56 80 C56 66, 54 54, 48 44 Z'/%3E%3Cpath d='M48 44 C56 58, 52 72, 40 80 C40 66, 42 54, 48 44 Z'/%3E%3Ccircle cx='48' cy='44' r='3' fill='%23fbbf24' fill-opacity='0.12'/%3E%3Cpath d='M0 0 Q24 12 48 0 T96 0 M0 96 Q24 84 48 96 T96 96' stroke-dasharray='3 3'/%3E%3C/g%3E%3C/svg%3E");
+            background-size: 100% 100%, 100% 100%, 96px 96px;
             transition: background-image 0.8s ease;
         }
 
-        /* Ambient Festival Canvas */
+        /* Thai Kanok Border & Corner Ornament for Panels */
+        .kanok-panel {
+            position: relative;
+            background: linear-gradient(155deg, rgba(24, 24, 38, 0.92) 0%, rgba(13, 17, 29, 0.96) 100%);
+            border: 1px solid rgba(251, 191, 36, 0.28);
+            box-shadow:
+                0 16px 32px -12px rgba(0, 0, 0, 0.65),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.06),
+                inset 0 1px 0 0 rgba(253, 224, 71, 0.25);
+            transition: border-color 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .kanok-panel::before {
+            content: '';
+            position: absolute;
+            inset: 4px;
+            border-radius: 12px;
+            pointer-events: none;
+            z-index: 0;
+            background-image:
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M2 22 C2 10, 10 2, 22 2 C14 5, 8 11, 5 19 C9 15, 14 13, 19 13 C12 15, 7 18, 2 22 Z' fill='%23fbbf24' fill-opacity='0.22'/%3E%3C/svg%3E"),
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M22 22 C22 10, 14 2, 2 2 C10 5, 16 11, 19 19 C15 15, 10 13, 5 13 C12 15, 17 18, 22 22 Z' fill='%23fbbf24' fill-opacity='0.22'/%3E%3C/svg%3E"),
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M2 2 C2 14, 10 22, 22 22 C14 19, 8 13, 5 5 C9 9, 14 11, 19 11 C12 9, 7 6, 2 2 Z' fill='%23fbbf24' fill-opacity='0.22'/%3E%3C/svg%3E"),
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M22 2 C22 14, 14 22, 2 22 C10 19, 16 13, 19 5 C15 9, 10 11, 5 11 C12 9, 17 6, 22 2 Z' fill='%23fbbf24' fill-opacity='0.22'/%3E%3C/svg%3E");
+            background-position: top left, top right, bottom left, bottom right;
+            background-repeat: no-repeat;
+            background-size: 20px 20px;
+        }
+
+        .kanok-panel > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Kanok Divider Bar */
+        .kanok-divider {
+            height: 6px;
+            width: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='6' viewBox='0 0 48 6'%3E%3Cpath d='M0 3 Q12 0 24 3 T48 3' fill='none' stroke='%23fbbf24' stroke-opacity='0.35' stroke-width='1.2'/%3E%3Cpath d='M24 0.5 L27 3 L24 5.5 L21 3 Z' fill='%23fbbf24' fill-opacity='0.55'/%3E%3C/svg%3E");
+            background-repeat: repeat-x;
+            background-position: center;
+        }
+
+        /* --- THAI KANOK ICON FRAME (กรอบไอคอนลายไทยเท่ๆ) --- */
+        .kanok-icon-frame {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(145deg, rgba(45, 27, 14, 0.92) 0%, rgba(15, 20, 36, 0.96) 100%);
+            border: 1.5px solid rgba(251, 191, 36, 0.65);
+            box-shadow:
+                0 0 12px rgba(251, 191, 36, 0.22),
+                inset 0 0 0 1px rgba(254, 240, 138, 0.25),
+                inset 0 2px 4px rgba(255, 255, 255, 0.14);
+            transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .kanok-icon-frame::before,
+        .kanok-icon-frame::after {
+            content: '❖';
+            position: absolute;
+            font-size: 7px;
+            line-height: 1;
+            color: var(--theme-accent, #fbbf24);
+            text-shadow: 0 0 6px var(--theme-glow, rgba(251, 191, 36, 0.7));
+            pointer-events: none;
+            opacity: 0.9;
+        }
+
+        .kanok-icon-frame::before {
+            top: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .kanok-icon-frame::after {
+            bottom: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .kanok-icon-frame:hover,
+        .group:hover .kanok-icon-frame,
+        .btn-space-3d:hover .kanok-icon-frame {
+            transform: scale(1.08) rotate(3deg);
+            border-color: var(--theme-accent, #fde047);
+            box-shadow:
+                0 0 16px var(--theme-glow, rgba(251, 191, 36, 0.55)),
+                inset 0 0 8px rgba(251, 191, 36, 0.35);
+        }
+
+        /* Ambient Festival & Kanok Canvas */
         #bg-canvas {
             position: absolute;
             top: 0;
@@ -142,28 +231,47 @@
         .animate-rabbit-float { animation: floatRabbit 2s ease-in-out infinite; }
         .animate-star-twinkle { animation: starTwinkle 1.5s ease-in-out infinite; }
 
-        /* --- SPACE HOLOGRAPHIC 3D BUTTONS --- */
+        /* --- SPACE HOLOGRAPHIC 3D BUTTONS WITH THAI KANOK FRAME --- */
         .btn-space-3d {
             position: relative;
-            background: linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%);
-            border: 1px solid rgba(129, 140, 248, 0.4);
+            background: linear-gradient(135deg, rgba(30, 34, 54, 0.92) 0%, rgba(14, 18, 32, 0.96) 100%);
+            border: 1.5px solid rgba(251, 191, 36, 0.45);
             box-shadow: 
-                0 6px 20px -2px rgba(0, 0, 0, 0.5),
-                inset 0 1px 1px 0 rgba(255, 255, 255, 0.4),
+                0 6px 20px -2px rgba(0, 0, 0, 0.55),
+                inset 0 0 0 1px rgba(254, 240, 138, 0.14),
+                inset 0 1px 1px 0 rgba(253, 224, 71, 0.32),
                 inset 0 -2px 4px 0 rgba(0, 0, 0, 0.6);
             transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-            overflow: hidden;
+            overflow: visible;
+        }
+
+        /* Corner Kanok Flame Accents on Buttons */
+        .btn-space-3d::after {
+            content: '';
+            position: absolute;
+            inset: 2px;
+            border-radius: 9px;
+            pointer-events: none;
+            background-image:
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M1 11 C1 5, 5 1, 11 1 C6 3, 4 5, 3 9 C5 7, 7 6, 10 6 C6 7, 3 9, 1 11 Z' fill='%23fbbf24' fill-opacity='0.35'/%3E%3C/svg%3E"),
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M11 1 C11 7, 7 11, 1 11 C6 9, 8 7, 9 3 C7 5, 5 6, 2 6 C6 5, 9 3, 11 1 Z' fill='%23fbbf24' fill-opacity='0.35'/%3E%3C/svg%3E");
+            background-position: top left, bottom right;
+            background-repeat: no-repeat;
+            background-size: 10px 10px;
         }
 
         .btn-space-3d::before {
             content: '';
             position: absolute;
+            inset: 0;
+            border-radius: inherit;
             top: 0;
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+            background: linear-gradient(90deg, transparent, rgba(251, 191, 36, 0.18), transparent);
             transition: 0.5s;
+            pointer-events: none;
         }
 
         .btn-space-3d:hover::before { left: 100%; }
@@ -173,7 +281,7 @@
             border-color: var(--theme-accent);
             box-shadow: 
                 0 10px 25px -4px var(--theme-glow),
-                inset 0 2px 2px 0 rgba(255, 255, 255, 0.6),
+                inset 0 2px 2px 0 rgba(255, 255, 255, 0.45),
                 inset 0 -2px 4px 0 rgba(0, 0, 0, 0.4);
         }
 
@@ -185,8 +293,8 @@
         /* Dynamic Theme Active Nav Button */
         .nav-btn-theme-active {
             background: linear-gradient(135deg, var(--theme-primary), var(--theme-secondary)) !important;
-            border-color: rgba(255, 255, 255, 0.45) !important;
-            box-shadow: 0 0 22px var(--theme-glow), inset 0 1px 2px rgba(255, 255, 255, 0.5) !important;
+            border-color: rgba(253, 224, 71, 0.8) !important;
+            box-shadow: 0 0 22px var(--theme-glow), inset 0 0 0 1px rgba(254, 240, 138, 0.35), inset 0 1px 2px rgba(255, 255, 255, 0.45) !important;
             color: #ffffff !important;
         }
 
@@ -208,17 +316,21 @@
 
         .today-laser-column {
             position: relative;
-            background: linear-gradient(135deg, rgba(49, 46, 129, 0.9) 0%, rgba(30, 27, 75, 0.95) 100%) !important;
+            background: linear-gradient(135deg, rgba(120, 53, 15, 0.72) 0%, rgba(30, 27, 75, 0.92) 100%) !important;
             animation: laserGlow3D 2s infinite ease-in-out;
         }
 
-        /* Header Glass */
+        /* Header Glass with Kanok Gold Accent */
         .header-glass-bg {
-            background: rgba(15, 23, 42, 0.92);
-            background-image: radial-gradient(rgba(99, 102, 241, 0.2) 1px, transparent 0);
-            background-size: 16px 16px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-            box-shadow: 0 6px 20px -5px rgba(0, 0, 0, 0.5);
+            background: rgba(15, 20, 36, 0.94);
+            background-image:
+                linear-gradient(to right, rgba(251, 191, 36, 0.3), rgba(251, 191, 36, 0.06) 50%, rgba(251, 191, 36, 0.3)),
+                radial-gradient(rgba(251, 191, 36, 0.14) 1px, transparent 0);
+            background-size: 100% 1.5px, 18px 18px;
+            background-position: bottom, top left;
+            background-repeat: no-repeat, repeat;
+            border-bottom: 1px solid rgba(251, 191, 36, 0.35);
+            box-shadow: 0 6px 20px -5px rgba(0, 0, 0, 0.55);
         }
 
         /* Splash Screen */
@@ -227,8 +339,8 @@
             inset: 0;
             background: #090d16 !important;
             background-image: 
-                radial-gradient(at 50% 30%, rgba(99, 102, 241, 0.25) 0px, transparent 60%),
-                radial-gradient(at 80% 80%, rgba(168, 85, 247, 0.2) 0px, transparent 50%),
+                radial-gradient(at 50% 30%, rgba(245, 158, 11, 0.22) 0px, transparent 60%),
+                radial-gradient(at 80% 80%, rgba(153, 27, 27, 0.22) 0px, transparent 50%),
                 radial-gradient(circle at 50% 50%, #1e1b4b 0%, #090d16 100%) !important;
             z-index: 9999;
             display: flex;
@@ -239,17 +351,9 @@
         }
         #splash-screen.fade-out { opacity: 0; visibility: hidden; }
 
-        /* 3D Glass Panels */
-        .glass-panel-3d {
-            background: rgba(30, 41, 59, 0.85);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            box-shadow: 0 16px 32px -12px rgba(0, 0, 0, 0.6), inset 0 1px 0 0 rgba(255, 255, 255, 0.15);
-            transition: border-color 0.4s ease, box-shadow 0.4s ease;
-        }
-
         .glass-sidebar-pattern {
-            background: linear-gradient(180deg, rgba(15, 23, 42, 0.98) 0%, rgba(9, 13, 22, 0.98) 100%);
-            box-shadow: 10px 0 30px rgba(0, 0, 0, 0.5);
+            background: linear-gradient(180deg, rgba(16, 20, 36, 0.98) 0%, rgba(9, 13, 22, 0.99) 100%);
+            box-shadow: 10px 0 30px rgba(0, 0, 0, 0.55);
         }
 
         /* Shift Badge inside Table */
@@ -280,112 +384,115 @@
             position: sticky !important;
             left: 0 !important;
             z-index: 30 !important;
-            box-shadow: 4px 0 12px rgba(0, 0, 0, 0.5);
+            box-shadow: 4px 0 12px rgba(0, 0, 0, 0.55);
         }
         
         thead th.emp-dark-col {
             z-index: 50 !important;
-            background-color: #030712 !important;
+            background-color: #050914 !important;
         }
-
-        /* Print Style */
-        @media print {
-            @page { size: A4 landscape; margin: 3mm; }
-            html, body { background: white !important; color: black !important; overflow: visible !important; height: auto !important; width: 100% !important; margin: 0 !important; padding: 0 !important; }
-            aside, header, .no-print, button, input, select option, #splash-screen, #bg-canvas, #legend-festival-canvas { display: none !important; }
-            main { padding: 0 !important; margin: 0 !important; overflow: visible !important; width: 100% !important; display: block !important; }
-            .overflow-x-auto, .overflow-auto, .overflow-y-auto { overflow: visible !important; box-shadow: none !important; border: none !important; background: white !important; }
-            #tab-roster { display: block !important; }
-            #roster-table { width: 100% !important; table-layout: fixed !important; font-size: 7px !important; border-collapse: collapse !important; color: black !important; }
-            #roster-table th, #roster-table td { padding: 1px 0px !important; border: 0.5pt solid #64748b !important; text-align: center !important; height: 22px !important; background: white !important; color: black !important; }
-            .emp-dark-col { background-color: #f1f5f9 !important; color: #0f172a !important; text-align: left !important; padding-left: 3px !important; width: 125px !important; }
-            .print-title { display: block !important; text-align: center; font-size: 11px; font-weight: bold; margin-bottom: 4px; color: #0f172a; }
-        }
-        .print-title { display: none; }
 
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.6); }
-        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 999px; }
-        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+        ::-webkit-scrollbar-thumb { background: rgba(217, 119, 6, 0.55); border-radius: 999px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(251, 191, 36, 0.8); }
     </style>
 </head>
-<body class="h-full text-slate-100 flex flex-col md:flex-row overflow-hidden m-0 p-0 antialiased selection:bg-indigo-500 selection:text-white">
+<body class="h-full text-slate-100 flex flex-col md:flex-row overflow-hidden m-0 p-0 antialiased selection:bg-amber-500 selection:text-slate-950">
 
     <!-- SPLASH SCREEN -->
     <div id="splash-screen">
         <div class="flex flex-col items-center space-y-4 animate-in fade-in zoom-in duration-700">
             <div class="relative group animate-cute-float">
-                <div id="splash-logo-glow" class="absolute -inset-2 bg-gradient-to-r from-indigo-500 via-purple-600 to-pink-500 rounded-3xl blur-xl opacity-75 animate-pulse"></div>
-                <img src="icon-512.png" alt="ShiftMaster Logo" class="relative w-24 h-24 rounded-3xl shadow-glow-indigo object-cover border-2 border-indigo-400/50">
-                <span id="splash-festival-badge" class="absolute -top-3 -right-3 w-10 h-10 rounded-2xl bg-slate-900/95 border-2 border-amber-400/70 flex items-center justify-center text-xl shadow-lg">🪷</span>
+                <div id="splash-logo-glow" class="absolute -inset-2 bg-gradient-to-r from-amber-500 via-red-600 to-amber-400 rounded-3xl blur-xl opacity-75 animate-pulse"></div>
+                <img src="icon-512.png" alt="ShiftMaster Logo" class="relative w-24 h-24 rounded-3xl shadow-glow-kanok object-cover border-2 border-amber-400/80">
+                <span id="splash-festival-badge" class="kanok-icon-frame absolute -top-3 -right-3 w-10 h-10 rounded-2xl text-xl shadow-lg">🪷</span>
             </div>
             <div class="text-center space-y-1">
                 <h1 class="text-2xl font-extrabold text-white tracking-wider flex items-center justify-center gap-2 drop-shadow-md">
                     ShiftMaster
-                    <span id="splash-3d-tag" class="text-[9px] font-extrabold px-2.5 py-0.5 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-glow-indigo border border-indigo-300/40">3D ULTRA</span>
+                    <span id="splash-3d-tag" class="text-[9px] font-extrabold px-2.5 py-0.5 rounded-full bg-gradient-to-r from-amber-500 to-red-700 text-white shadow-glow-kanok border border-amber-300/60">กนก 3D ULTRA</span>
                 </h1>
-                <p class="text-xs text-indigo-300 font-medium tracking-wide">ระบบจัดการกะพนักงานอัจฉริยะแบบเรียลไทม์</p>
+                <p class="text-xs text-amber-300 font-medium tracking-wide">ระบบจัดการกะพนักงานลายกนกแบบเรียลไทม์</p>
             </div>
             <div class="w-32 h-1 bg-slate-900 rounded-full overflow-hidden mt-2 shadow-inner">
-                <div class="w-full h-full bg-gradient-to-r from-indigo-500 via-pink-500 to-purple-500 animate-[pulse_1s_infinite]"></div>
+                <div class="w-full h-full bg-gradient-to-r from-amber-400 via-red-500 to-amber-300 animate-[pulse_1s_infinite]"></div>
             </div>
         </div>
     </div>
 
     <!-- Sidebar Navigation -->
-    <aside class="w-full md:w-60 glass-sidebar-pattern text-slate-300 flex flex-col justify-between shrink-0 z-25 no-print border-r border-indigo-500/20 relative overflow-hidden">
+    <aside class="w-full md:w-60 glass-sidebar-pattern text-slate-300 flex flex-col justify-between shrink-0 z-25 border-r border-amber-500/25 relative overflow-hidden">
         
         <!-- Ambient Glow Orbs (Dynamic Theme Color) -->
-        <div id="sidebar-orb-top" class="absolute -top-16 -left-16 w-48 h-48 bg-indigo-600/30 rounded-full blur-3xl pointer-events-none transition-colors duration-700"></div>
-        <div id="sidebar-orb-bottom" class="absolute bottom-10 -right-10 w-48 h-48 bg-purple-600/25 rounded-full blur-3xl pointer-events-none transition-colors duration-700"></div>
+        <div id="sidebar-orb-top" class="absolute -top-16 -left-16 w-48 h-48 bg-amber-600/25 rounded-full blur-3xl pointer-events-none transition-colors duration-700"></div>
+        <div id="sidebar-orb-bottom" class="absolute bottom-10 -right-10 w-48 h-48 bg-red-800/25 rounded-full blur-3xl pointer-events-none transition-colors duration-700"></div>
+
+        <!-- Subtle Vertical Kanok Strip on Right Edge of Sidebar -->
+        <div class="hidden md:block absolute top-0 right-0 w-2 h-full opacity-35 pointer-events-none" style="background-image: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%228%22 height=%2232%22 viewBox=%220 0 8 32%22%3E%3Cpath d=%22M4 2 C1 8, 7 12, 4 16 C1 20, 7 24, 4 30%22 fill=%22none%22 stroke=%22%23fbbf24%22 stroke-width=%221.2%22/%3E%3Ccircle cx=%224%22 cy=%2216%22 r=%221.4%22 fill=%22%23fbbf24%22/%3E%3C/svg%3E'); background-repeat: repeat-y;"></div>
 
         <div class="relative z-10">
             <!-- App Branding & Dynamic Festival Badge -->
-            <div class="px-3.5 py-3.5 flex items-center space-x-2.5 border-b border-white/10 bg-slate-950/60 shadow-md">
+            <div class="px-3.5 py-3.5 flex items-center space-x-3 border-b border-amber-500/20 bg-slate-950/65 shadow-md">
                 <div class="relative group shrink-0 animate-cute-float">
-                    <div id="sidebar-logo-glow" class="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl blur-md opacity-70 group-hover:opacity-100 transition duration-300"></div>
-                    <img src="icon-192.png" alt="Logo" class="relative w-9 h-9 rounded-xl object-cover border border-white/40 transition-all duration-300 group-hover:rotate-6 group-hover:scale-110 shadow-3d-sm">
-                    <span id="sidebar-logo-festival-badge" class="absolute -bottom-1.5 -right-1.5 w-5 h-5 rounded-lg bg-slate-950 border border-amber-400/70 flex items-center justify-center text-[11px] shadow-md select-none">🪷</span>
+                    <div id="sidebar-logo-glow" class="absolute -inset-1 bg-gradient-to-r from-amber-500 to-red-700 rounded-2xl blur-md opacity-70 group-hover:opacity-100 transition duration-300"></div>
+                    <div class="kanok-icon-frame p-0.5 rounded-xl">
+                        <img src="icon-192.png" alt="Logo" class="relative w-8 h-8 rounded-lg object-cover transition-all duration-300 group-hover:rotate-6 group-hover:scale-105">
+                    </div>
+                    <span id="sidebar-logo-festival-badge" class="kanok-icon-frame absolute -bottom-1.5 -right-1.5 w-5 h-5 rounded-lg text-[10px] shadow-md select-none">🪷</span>
                 </div>
                 <div>
                     <h1 class="font-extrabold text-white text-xs tracking-wide flex items-center gap-1">
                         ShiftMaster
-                        <span id="sidebar-3d-badge" class="text-[7.5px] font-extrabold px-1.5 py-0.2 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white border border-white/20">3D</span>
+                        <span id="sidebar-3d-badge" class="text-[7.5px] font-extrabold px-1.5 py-0.2 rounded-full bg-gradient-to-r from-amber-500 to-red-700 text-white border border-amber-300/50">กนก 3D</span>
                     </h1>
                     <p id="sidebar-festival-subtitle" class="text-[9px] text-amber-300 font-bold leading-none mt-0.5">เทศกาลลอยกระทง</p>
                 </div>
             </div>
 
-            <!-- Navigation Links (Dynamic Theme Icons) -->
+            <!-- Navigation Links (Dynamic Theme Icons + Kanok Icon Frames) -->
             <nav class="p-2.5 space-y-2 mt-1">
-                <button onclick="switchTab('roster')" id="nav-roster" class="btn-space-3d nav-btn-theme-active w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all">
+                <button onclick="switchTab('roster')" id="nav-roster" class="btn-space-3d nav-btn-theme-active w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold transition-all">
                     <div class="flex items-center space-x-2.5">
-                        <span id="nav-icon-roster" class="text-sm leading-none">📅</span>
+                        <span class="kanok-icon-frame w-6 h-6 rounded-lg shrink-0">
+                            <span id="nav-icon-roster" class="text-xs leading-none">📅</span>
+                        </span>
                         <span>ตารางงานรายเดือน</span>
                     </div>
-                    <span id="nav-deco-roster" class="text-[11px] opacity-90">🪷</span>
+                    <span class="kanok-icon-frame w-5 h-5 rounded-md shrink-0">
+                        <span id="nav-deco-roster" class="text-[10px] leading-none">🪷</span>
+                    </span>
                 </button>
-                <button onclick="switchTab('daily')" id="nav-daily" class="btn-space-3d w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all text-slate-300 hover:text-white border-slate-700/80">
+                <button onclick="switchTab('daily')" id="nav-daily" class="btn-space-3d w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium transition-all text-slate-300 hover:text-white border-amber-500/35">
                     <div class="flex items-center space-x-2.5">
-                        <span id="nav-icon-daily" class="text-sm leading-none">⏰</span>
+                        <span class="kanok-icon-frame w-6 h-6 rounded-lg shrink-0">
+                            <span id="nav-icon-daily" class="text-xs leading-none">⏰</span>
+                        </span>
                         <span>สรุปรายวัน</span>
                     </div>
-                    <span id="nav-deco-daily" class="text-[11px] opacity-75">✨</span>
+                    <span class="kanok-icon-frame w-5 h-5 rounded-md shrink-0">
+                        <span id="nav-deco-daily" class="text-[10px] leading-none">✨</span>
+                    </span>
                 </button>
-                <button onclick="switchTab('employees')" id="nav-employees" class="btn-space-3d w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all text-slate-300 hover:text-white border-slate-700/80">
+                <button onclick="switchTab('employees')" id="nav-employees" class="btn-space-3d w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium transition-all text-slate-300 hover:text-white border-amber-500/35">
                     <div class="flex items-center space-x-2.5">
-                        <span id="nav-icon-employees" class="text-sm leading-none">👥</span>
+                        <span class="kanok-icon-frame w-6 h-6 rounded-lg shrink-0">
+                            <span id="nav-icon-employees" class="text-xs leading-none">👥</span>
+                        </span>
                         <span>จัดการพนักงาน</span>
                     </div>
-                    <span id="nav-deco-employees" class="text-[11px] opacity-75">🏮</span>
+                    <span class="kanok-icon-frame w-5 h-5 rounded-md shrink-0">
+                        <span id="nav-deco-employees" class="text-[10px] leading-none">🏮</span>
+                    </span>
                 </button>
             </nav>
         </div>
 
         <!-- Sidebar Footer -->
-        <div class="p-3 border-t border-white/10 bg-slate-950/80 relative z-10">
+        <div class="p-3 border-t border-amber-500/20 bg-slate-950/85 relative z-10">
+            <div class="kanok-divider mb-2"></div>
             <div class="flex items-center justify-between text-[9.5px] font-semibold">
-                <span id="sidebar-version-text" class="text-indigo-300/90">v6.5 Festival Edition</span>
+                <span id="sidebar-version-text" class="text-amber-300/90">v6.7 Kanok Frame</span>
                 <span id="sync-status" class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[8.5px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-glow-emerald">
                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
                     เชื่อมต่อแล้ว
@@ -396,32 +503,33 @@
 
     <!-- Main Content Area -->
     <main class="flex-1 flex flex-col h-full overflow-hidden dashboard-bg-pattern relative">
-        <!-- Canvas Animated Festival Background -->
+        <!-- Canvas Animated Festival & Kanok Background -->
         <canvas id="bg-canvas"></canvas>
 
         <!-- Top Header Bar -->
         <header class="header-glass-bg px-4 py-1.5 flex flex-wrap items-center justify-between gap-2 shrink-0 z-20 relative">
             <div class="flex items-center space-x-2.5">
-                <div id="header-accent-bar" class="w-2 h-5 bg-gradient-to-b from-indigo-500 via-purple-500 to-pink-500 rounded-full shadow-glow-indigo"></div>
-                <span id="header-festival-icon" class="text-sm">🪷</span>
+                <div id="header-accent-bar" class="w-2 h-5 bg-gradient-to-b from-amber-400 via-amber-600 to-red-700 rounded-full shadow-glow-kanok"></div>
+                <span class="kanok-icon-frame w-6 h-6 rounded-lg shrink-0">
+                    <span id="header-festival-icon" class="text-xs leading-none">🪷</span>
+                </span>
                 <h2 id="page-title" class="text-xs font-extrabold text-white tracking-tight drop-shadow">ตารางงานรายเดือน</h2>
             </div>
             <div class="flex flex-wrap items-center space-x-2">
-                <button onclick="jumpToToday()" title="คลิกเพื่อไปยังวันปัจจุบัน" class="btn-space-3d text-[11px] font-bold text-indigo-200 px-3 py-1.5 rounded-xl flex items-center space-x-1.5 cursor-pointer shadow-3d-sm">
-                    <span id="header-today-icon" class="text-xs">📅</span>
+                <button onclick="jumpToToday()" title="คลิกเพื่อไปยังวันปัจจุบัน" class="btn-space-3d text-[11px] font-bold text-amber-200 px-3 py-1 rounded-xl flex items-center space-x-2 cursor-pointer shadow-3d-sm">
+                    <span class="kanok-icon-frame w-5 h-5 rounded-md shrink-0">
+                        <span id="header-today-icon" class="text-[11px] leading-none">📅</span>
+                    </span>
                     <span id="today-text-display">กำลังโหลด...</span>
                 </button>
-                <button onclick="openShiftSettingsModal()" id="header-settings-btn" class="btn-space-3d nav-btn-theme-active flex items-center space-x-1.5 px-3 py-1.5 text-white rounded-xl text-[11px] font-bold">
-                    <span id="header-settings-icon" class="text-xs">⚙️</span>
+                <button onclick="openShiftSettingsModal()" id="header-settings-btn" class="btn-space-3d nav-btn-theme-active flex items-center space-x-2 px-3 py-1 text-white rounded-xl text-[11px] font-bold">
+                    <span class="kanok-icon-frame w-5 h-5 rounded-md shrink-0">
+                        <span id="header-settings-icon" class="text-[11px] leading-none">⚙️</span>
+                    </span>
                     <span>จัดการกะและสีกะ</span>
                 </button>
             </div>
         </header>
-
-        <!-- Printable Title -->
-        <div class="print-title" id="print-header-title">
-            ตารางปฏิบัติงานพนักงาน
-        </div>
 
         <!-- Viewport Scroll Container -->
         <div class="flex-1 overflow-auto p-2.5 md:p-3 flex flex-col space-y-2.5 z-10">
@@ -429,10 +537,12 @@
             <!-- TAB 1: MONTHLY ROSTER -->
             <section id="tab-roster" class="space-y-2 flex-1 flex flex-col">
                 <!-- Toolbar Area -->
-                <div class="glass-panel-3d p-2 rounded-2xl flex flex-wrap items-center justify-between gap-2 shrink-0 no-print">
+                <div class="kanok-panel p-2 rounded-2xl flex flex-wrap items-center justify-between gap-2 shrink-0">
                     <div class="flex flex-wrap items-center space-x-2 gap-y-1.5">
-                        <div class="flex items-center space-x-1.5 bg-slate-900/80 px-3 py-1 rounded-xl border border-slate-700/80 shadow-inner">
-                            <span id="toolbar-filter-icon" class="text-xs">🗓️</span>
+                        <div class="flex items-center space-x-2 bg-slate-900/85 px-2.5 py-1 rounded-xl border border-amber-500/30 shadow-inner">
+                            <span class="kanok-icon-frame w-5 h-5 rounded-md shrink-0">
+                                <span id="toolbar-filter-icon" class="text-[11px] leading-none">🗓️</span>
+                            </span>
                             <label class="text-[11px] font-bold text-slate-300">เดือน:</label>
                             <select id="roster-month" onchange="updateRosterView()" class="bg-transparent text-[11px] font-extrabold text-white focus:outline-none cursor-pointer">
                                 <option value="0" class="bg-slate-900">มกราคม</option>
@@ -450,7 +560,7 @@
                             </select>
                         </div>
                         
-                        <div class="flex items-center space-x-1.5 bg-slate-900/80 px-3 py-1 rounded-xl border border-slate-700/80 shadow-inner">
+                        <div class="flex items-center space-x-1.5 bg-slate-900/85 px-3 py-1 rounded-xl border border-amber-500/30 shadow-inner">
                             <label class="text-[11px] font-bold text-slate-300">ปี:</label>
                             <select id="roster-year" onchange="updateRosterView()" class="bg-transparent text-[11px] font-extrabold text-white focus:outline-none cursor-pointer">
                                 <!-- Populated via JS -->
@@ -458,9 +568,11 @@
                         </div>
 
                         <!-- FESTIVAL THEME SELECTOR -->
-                        <div class="flex items-center space-x-1.5 bg-gradient-to-r from-indigo-950/90 to-purple-950/90 px-3 py-1 rounded-xl border border-indigo-500/50 shadow-3d-sm">
-                            <span id="toolbar-festival-icon" class="text-xs">✨</span>
-                            <label class="text-[11px] font-bold text-indigo-200">เทศกาล:</label>
+                        <div class="flex items-center space-x-2 bg-gradient-to-r from-amber-950/80 to-red-950/75 px-2.5 py-1 rounded-xl border border-amber-500/45 shadow-3d-sm">
+                            <span class="kanok-icon-frame w-5 h-5 rounded-md shrink-0">
+                                <span id="toolbar-festival-icon" class="text-[11px] leading-none">✨</span>
+                            </span>
+                            <label class="text-[11px] font-bold text-amber-200">เทศกาล:</label>
                             <select id="festival-theme-select" onchange="changeFestivalTheme(this.value)" class="bg-transparent text-[11px] font-extrabold text-amber-300 focus:outline-none cursor-pointer">
                                 <option value="auto" class="bg-slate-900 text-white">✨ อัตโนมัติ (ตามเดือน)</option>
                                 <option value="newyear" class="bg-slate-900 text-white">🎆 ปีใหม่</option>
@@ -476,23 +588,17 @@
                     </div>
 
                     <div class="flex items-center space-x-2">
-                        <button onclick="resetMonthSchedule()" class="btn-space-3d flex items-center space-x-1 px-3 py-1.5 bg-rose-950/80 hover:bg-rose-900 text-rose-300 text-[11px] font-bold rounded-xl border-rose-700/50 shadow-3d-sm">
-                            <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+                        <button onclick="resetMonthSchedule()" class="btn-space-3d flex items-center space-x-1.5 px-3 py-1 bg-rose-950/80 hover:bg-rose-900 text-rose-300 text-[11px] font-bold rounded-xl border-rose-500/50 shadow-3d-sm">
+                            <span class="kanok-icon-frame w-5 h-5 rounded-md shrink-0 border-rose-400/60">
+                                <i data-lucide="rotate-ccw" class="w-3 h-3 text-rose-300"></i>
+                            </span>
                             <span>ล้างกะเดือนนี้</span>
-                        </button>
-                        <button onclick="printRosterPDF()" class="btn-space-3d flex items-center space-x-1 px-3.5 py-1.5 text-white text-[11px] font-bold rounded-xl border-slate-600/60 shadow-3d-sm">
-                            <i data-lucide="printer" class="w-3.5 h-3.5 text-slate-300"></i>
-                            <span>พิมพ์ / PDF</span>
-                        </button>
-                        <button onclick="exportRosterExcel()" class="btn-space-3d flex items-center space-x-1 px-3.5 py-1.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-[11px] font-bold rounded-xl shadow-glow-emerald border-emerald-400/50">
-                            <i data-lucide="file-spreadsheet" class="w-3.5 h-3.5"></i>
-                            <span>ดาวน์โหลด Excel</span>
                         </button>
                     </div>
                 </div>
 
-                <!-- Shift Legend Quick Reference + Role Color Guide (DYNAMIC FESTIVAL BACKGROUND) -->
-                <div id="shift-legend-box" class="glass-panel-3d px-4 py-3 rounded-2xl flex flex-wrap items-center justify-between gap-3 shrink-0 no-print border border-indigo-500/40 relative overflow-hidden shadow-glow-indigo">
+                <!-- Shift Legend Quick Reference + Role Color Guide (DYNAMIC FESTIVAL BACKGROUND + KANOK) -->
+                <div id="shift-legend-box" class="kanok-panel px-4 py-3 rounded-2xl flex flex-wrap items-center justify-between gap-3 shrink-0 border border-amber-500/40 relative overflow-hidden shadow-glow-kanok">
                     
                     <!-- DYNAMIC CANVAS EFFECT BEHIND LEGEND -->
                     <canvas id="legend-festival-canvas"></canvas>
@@ -503,8 +609,10 @@
                     </div>
 
                     <div class="flex flex-wrap items-center gap-2 relative z-10">
-                        <span class="text-[10px] font-extrabold text-indigo-200 uppercase tracking-wider mr-1 flex items-center gap-1.5 bg-indigo-950/60 px-2.5 py-1 rounded-xl border border-indigo-500/40 shadow-3d-sm">
-                            <span id="legend-bookmark-icon" class="text-xs">🪷</span>
+                        <span class="text-[10px] font-extrabold text-amber-200 uppercase tracking-wider mr-1 flex items-center gap-1.5 bg-amber-950/65 px-2.5 py-1 rounded-xl border border-amber-500/40 shadow-3d-sm">
+                            <span class="kanok-icon-frame w-5 h-5 rounded-md shrink-0">
+                                <span id="legend-bookmark-icon" class="text-[11px] leading-none">🪷</span>
+                            </span>
                             ประเภทกะ:
                         </span>
                         <div id="roster-legend" class="flex flex-wrap gap-2">
@@ -513,8 +621,8 @@
                     </div>
 
                     <!-- Role Badge Color Legend -->
-                    <div class="flex flex-wrap items-center gap-1.5 text-[9.5px] font-extrabold border-l border-indigo-500/30 pl-3 my-0.5 relative z-10 bg-slate-950/50 px-3 py-1.5 rounded-xl border border-white/5">
-                        <span class="text-indigo-300 mr-1">สีกะพนักงาน:</span>
+                    <div class="flex flex-wrap items-center gap-1.5 text-[9.5px] font-extrabold border-l border-amber-500/30 pl-3 my-0.5 relative z-10 bg-slate-950/55 px-3 py-1.5 rounded-xl border border-amber-500/20">
+                        <span class="text-amber-300 mr-1">สีกะพนักงาน:</span>
                         <span class="px-2 py-0.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/40 shadow-sm">ต้อนรับ</span>
                         <span class="px-2 py-0.5 rounded-lg bg-sky-500/20 text-sky-300 border border-sky-500/40 shadow-sm">ตลาด/เสมียน</span>
                         <span class="px-2 py-0.5 rounded-lg bg-purple-500/20 text-purple-300 border border-purple-500/40 shadow-sm">เบลบอย</span>
@@ -523,25 +631,25 @@
                         <span class="px-2 py-0.5 rounded-lg bg-amber-900/40 text-amber-200 border border-amber-700/50 shadow-sm">ช่าง</span>
                     </div>
 
-                    <!-- 3D Cute Mascot Card -->
-                    <div onclick="petTheRabbit()" class="btn-space-3d flex items-center space-x-2 px-3.5 py-1.5 rounded-xl cursor-pointer transition group shrink-0 relative z-10" title="คลิกทักทายน้องมาสคอต!">
+                    <!-- 3D Cute Mascot Card with Kanok Icon Frame -->
+                    <div onclick="petTheRabbit()" class="btn-space-3d flex items-center space-x-2.5 px-3 py-1.5 rounded-xl cursor-pointer transition group shrink-0 relative z-10" title="คลิกทักทายน้องมาสคอต!">
                         <div class="relative animate-rabbit-float shrink-0">
-                            <div class="absolute -inset-1 bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 rounded-lg blur-xs opacity-75 group-hover:opacity-100"></div>
-                            <div id="rabbit-avatar-icon" class="relative w-7 h-7 bg-slate-950 rounded-lg border border-pink-400/70 flex items-center justify-center text-sm shadow-glow-rose select-none">
+                            <div class="absolute -inset-1 bg-gradient-to-r from-amber-400 via-pink-500 to-amber-500 rounded-lg blur-xs opacity-75 group-hover:opacity-100"></div>
+                            <div id="rabbit-avatar-icon" class="kanok-icon-frame relative w-8 h-8 rounded-lg text-sm shadow-glow-rose select-none">
                                 🐰
                             </div>
                         </div>
-                        <div class="text-[10px] font-bold text-pink-200 truncate max-w-[210px]">
+                        <div class="text-[10px] font-bold text-amber-200 truncate max-w-[210px]">
                             <span id="rabbit-greeting-text">กระต่ายน้อยช่วยดูแลกะให้แล้วค่า! ✨</span>
                         </div>
                     </div>
                 </div>
 
                 <!-- Roster Grid Table Container -->
-                <div class="glass-panel-3d rounded-2xl flex-1 flex flex-col overflow-hidden border border-white/10 shadow-3d-lg">
+                <div class="kanok-panel rounded-2xl flex-1 flex flex-col overflow-hidden border border-amber-500/30 shadow-3d-lg">
                     <div id="roster-table-container" class="flex-1 relative rounded-2xl">
                         <table id="roster-table" class="w-full text-left border-collapse">
-                            <thead id="roster-thead" class="bg-slate-900 text-slate-300 text-[10px] uppercase tracking-wider sticky top-0 z-40 border-b border-slate-700/80 shadow-3d-sm">
+                            <thead id="roster-thead" class="bg-slate-900 text-slate-300 text-[10px] uppercase tracking-wider sticky top-0 z-40 border-b border-amber-500/30 shadow-3d-sm">
                                 <!-- Generated Dynamically -->
                             </thead>
                             <tbody id="roster-tbody" class="divide-y divide-slate-800/60 text-xs">
@@ -554,11 +662,11 @@
 
             <!-- TAB 2: DAILY OVERVIEW -->
             <section id="tab-daily" class="space-y-3 hidden">
-                <div class="glass-panel-3d p-3 rounded-2xl flex flex-wrap items-center justify-between gap-3">
+                <div class="kanok-panel p-3 rounded-2xl flex flex-wrap items-center justify-between gap-3">
                     <div class="flex items-center space-x-3">
-                        <label class="text-xs font-extrabold text-slate-300">เลือกวันที่:</label>
-                        <input type="date" id="daily-date-picker" onchange="renderDailyOverview()" class="bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs font-bold text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-inner">
-                        <button onclick="setDailyPickerToToday()" class="btn-space-3d px-3 py-1.5 text-indigo-300 text-xs font-bold rounded-xl border-indigo-700/50 shadow-3d-sm">
+                        <label class="text-xs font-extrabold text-amber-200">เลือกวันที่:</label>
+                        <input type="date" id="daily-date-picker" onchange="renderDailyOverview()" class="bg-slate-900 border border-amber-500/35 rounded-xl px-3 py-1.5 text-xs font-bold text-white focus:outline-none focus:ring-2 focus:ring-amber-500 shadow-inner">
+                        <button onclick="setDailyPickerToToday()" class="btn-space-3d px-3 py-1.5 text-amber-300 text-xs font-bold rounded-xl border-amber-600/50 shadow-3d-sm">
                             วันนี้
                         </button>
                     </div>
@@ -576,30 +684,32 @@
             <section id="tab-employees" class="space-y-3 hidden">
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
                     <!-- Add Employee Card -->
-                    <div class="glass-panel-3d p-5 rounded-2xl h-fit space-y-3 border border-white/10 shadow-3d-md">
-                        <div class="flex items-center space-x-3 border-b border-slate-800 pb-3">
-                            <div id="emp-add-icon-box" class="p-2 bg-gradient-to-tr from-indigo-600 to-purple-600 text-white rounded-xl shadow-glow-indigo">
-                                <span id="emp-add-emoji" class="text-base">👤</span>
+                    <div class="kanok-panel p-5 rounded-2xl h-fit space-y-3 border border-amber-500/30 shadow-3d-md">
+                        <div class="flex items-center space-x-3 border-b border-amber-500/20 pb-3">
+                            <div id="emp-add-icon-box" class="kanok-icon-frame w-10 h-10 rounded-xl shadow-glow-kanok shrink-0">
+                                <span id="emp-add-emoji" class="text-base leading-none">👤</span>
                             </div>
                             <div>
                                 <h3 class="font-extrabold text-white text-xs">เพิ่มพนักงานใหม่</h3>
-                                <p class="text-[10px] text-indigo-300/80 font-medium">ใส่ข้อมูลพนักงานเพื่อเข้าตารางกะ</p>
+                                <p class="text-[10px] text-amber-300/80 font-medium">ใส่ข้อมูลพนักงานเพื่อเข้าตารางกะ</p>
                             </div>
                         </div>
                         <form id="add-employee-form" onsubmit="handleAddEmployee(event)" class="space-y-3">
                             <div>
                                 <label class="block text-[10px] font-extrabold text-slate-300 uppercase tracking-wider mb-0.5">รหัสพนักงาน (ID)</label>
-                                <input type="text" id="emp-id" required placeholder="เช่น EMP001" class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 font-bold shadow-inner">
+                                <input type="text" id="emp-id" required placeholder="เช่น EMP001" class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-amber-500 font-bold shadow-inner">
                             </div>
                             <div>
                                 <label class="block text-[10px] font-extrabold text-slate-300 uppercase tracking-wider mb-0.5">ชื่อ - นามสกุล</label>
-                                <input type="text" id="emp-name" required placeholder="เช่น สมชาย ใจดี" class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 font-bold shadow-inner">
+                                <input type="text" id="emp-name" required placeholder="เช่น สมชาย ใจดี" class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-amber-500 font-bold shadow-inner">
                             </div>
                             <div>
                                 <label class="block text-[10px] font-extrabold text-slate-300 uppercase tracking-wider mb-0.5">ตำแหน่ง / แผนก</label>
-                                <input type="text" id="emp-role" required placeholder="เช่น พนักงานต้อนรับ, ช่าง, แม่บ้าน, รปภ." class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 font-bold shadow-inner">
+                                <input type="text" id="emp-role" required placeholder="เช่น พนักงานต้อนรับ, ช่าง, แม่บ้าน, รปภ." class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-amber-500 font-bold shadow-inner">
                                 <p class="text-[9.5px] text-amber-300 font-bold mt-1.5 flex items-center gap-1.5 bg-amber-950/40 border border-amber-500/30 p-1.5 rounded-lg">
-                                    <i data-lucide="star" class="w-3.5 h-3.5 text-amber-400 fill-amber-400 shrink-0"></i>
+                                    <span class="kanok-icon-frame w-4 h-4 rounded-sm shrink-0">
+                                        <i data-lucide="star" class="w-2.5 h-2.5 text-amber-400 fill-amber-400"></i>
+                                    </span>
                                     สามารถจัดลำดับขึ้นลงได้ตามต้องการในตารางพนักงาน
                                 </p>
                             </div>
@@ -610,19 +720,21 @@
                     </div>
 
                     <!-- Employee List Table -->
-                    <div class="lg:col-span-2 glass-panel-3d rounded-2xl border border-white/10 shadow-3d-md overflow-hidden flex flex-col">
-                        <div class="p-3 border-b border-slate-800 flex items-center justify-between bg-slate-900/60">
+                    <div class="lg:col-span-2 kanok-panel rounded-2xl border border-amber-500/30 shadow-3d-md overflow-hidden flex flex-col">
+                        <div class="p-3 border-b border-amber-500/20 flex items-center justify-between bg-slate-900/60">
                             <h3 class="font-extrabold text-white text-xs flex items-center space-x-2">
-                                <i data-lucide="users" class="w-4 h-4 text-indigo-400"></i>
+                                <span class="kanok-icon-frame w-6 h-6 rounded-lg shrink-0">
+                                    <i data-lucide="users" class="w-3.5 h-3.5 text-amber-400"></i>
+                                </span>
                                 <span>รายชื่อพนักงานทั้งหมด (<span id="emp-count">0</span>)</span>
                             </h3>
-                            <span class="text-[9.5px] text-indigo-300 font-extrabold bg-indigo-950/60 border border-indigo-500/40 px-2.5 py-0.5 rounded-full shadow-3d-sm flex items-center gap-1">
+                            <span class="text-[9.5px] text-amber-300 font-extrabold bg-amber-950/60 border border-amber-500/40 px-2.5 py-0.5 rounded-full shadow-3d-sm flex items-center gap-1">
                                 ↕️ จัดลำดับขึ้น/ลง ได้อิสระ
                             </span>
                         </div>
                         <div class="overflow-x-auto flex-1" style="max-height: calc(100vh - 200px);">
                             <table class="w-full text-left border-collapse">
-                                <thead class="bg-slate-900 text-slate-300 text-[10px] uppercase tracking-wider sticky top-0 border-b border-slate-800">
+                                <thead class="bg-slate-900 text-slate-300 text-[10px] uppercase tracking-wider sticky top-0 border-b border-amber-500/20">
                                     <tr>
                                         <th class="p-3 w-16 text-center">ลำดับ</th>
                                         <th class="p-3">รหัสพนักงาน</th>
@@ -645,32 +757,34 @@
     </main>
 
     <!-- POPUP MODAL: SHIFT SETTINGS -->
-    <div id="shift-settings-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center hidden p-4 no-print">
-        <div class="glass-panel-3d bg-slate-900/95 rounded-3xl max-w-2xl w-full p-5 shadow-3d-lg border border-white/20 space-y-4 animate-in fade-in zoom-in duration-200 max-h-[90vh] overflow-y-auto">
-            <div class="flex items-center justify-between border-b border-slate-800 pb-3">
-                <div class="flex items-center space-x-2.5 text-indigo-400">
-                    <div class="p-2 bg-indigo-950 rounded-xl shadow-3d-sm border border-indigo-800/50">
-                        <i data-lucide="sliders" class="w-4 h-4"></i>
+    <div id="shift-settings-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center hidden p-4">
+        <div class="kanok-panel bg-slate-900/95 rounded-3xl max-w-2xl w-full p-5 shadow-3d-lg border border-amber-500/35 space-y-4 animate-in fade-in zoom-in duration-200 max-h-[90vh] overflow-y-auto">
+            <div class="flex items-center justify-between border-b border-amber-500/20 pb-3">
+                <div class="flex items-center space-x-2.5 text-amber-400">
+                    <div class="kanok-icon-frame w-8 h-8 rounded-xl shadow-3d-sm shrink-0">
+                        <i data-lucide="sliders" class="w-4 h-4 text-amber-400"></i>
                     </div>
                     <h3 class="text-sm font-extrabold text-white">จัดการเวลากะและสีแบดจ์</h3>
                 </div>
                 <button onclick="closeShiftSettingsModal()" class="btn-space-3d p-1.5 text-slate-400 hover:text-white rounded-xl transition">
-                    <i data-lucide="x" class="w-4 h-4"></i>
+                    <span class="kanok-icon-frame w-6 h-6 rounded-lg">
+                        <i data-lucide="x" class="w-3.5 h-3.5"></i>
+                    </span>
                 </button>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="bg-slate-950/80 p-3.5 rounded-2xl border border-slate-800 shadow-inner space-y-2.5">
+                <div class="bg-slate-950/80 p-3.5 rounded-2xl border border-amber-500/20 shadow-inner space-y-2.5">
                     <h4 class="font-extrabold text-white text-xs" id="shift-form-title">เพิ่มกะเวลาใหม่</h4>
                     <form id="add-shift-form" onsubmit="handleSaveShift(event)" class="space-y-2">
                         <input type="hidden" id="shift-edit-code" value="">
                         <div>
                             <label class="block text-[10px] font-extrabold text-slate-300 uppercase tracking-wider mb-0.5">รหัสย่อกะ (Code)</label>
-                            <input type="text" id="shift-code" required placeholder="เช่น M, A, N" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs uppercase font-extrabold text-white focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                            <input type="text" id="shift-code" required placeholder="เช่น M, A, N" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs uppercase font-extrabold text-white focus:outline-none focus:ring-2 focus:ring-amber-500">
                         </div>
                         <div>
                             <label class="block text-[10px] font-extrabold text-slate-300 uppercase tracking-wider mb-0.5">ชื่อกะ (Shift Name)</label>
-                            <input type="text" id="shift-name" required placeholder="เช่น กะเช้า" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs font-semibold text-white focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                            <input type="text" id="shift-name" required placeholder="เช่น กะเช้า" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs font-semibold text-white focus:outline-none focus:ring-2 focus:ring-amber-500">
                         </div>
                         <div class="grid grid-cols-2 gap-2">
                             <div>
@@ -703,7 +817,7 @@
                     </form>
                 </div>
 
-                <div class="bg-slate-950/80 rounded-2xl border border-slate-800 overflow-hidden flex flex-col shadow-inner">
+                <div class="bg-slate-950/80 rounded-2xl border border-amber-500/20 overflow-hidden flex flex-col shadow-inner">
                     <div class="p-2.5 bg-slate-900 border-b border-slate-800 font-extrabold text-[10px] uppercase tracking-wider text-slate-300 flex justify-between items-center">
                         <span>รายการกะ (<span id="shift-count">0</span>)</span>
                     </div>
@@ -713,7 +827,7 @@
                 </div>
             </div>
 
-            <div class="flex justify-end pt-2 border-t border-slate-800">
+            <div class="flex justify-end pt-2 border-t border-amber-500/20">
                 <button onclick="closeShiftSettingsModal()" class="btn-space-3d nav-btn-theme-active px-5 py-2 text-white rounded-xl text-xs font-extrabold">
                     เสร็จสิ้น
                 </button>
@@ -722,10 +836,10 @@
     </div>
 
     <!-- General App Alert / Confirmation Modal -->
-    <div id="app-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center hidden p-4 no-print">
-        <div class="glass-panel-3d bg-slate-900/95 rounded-3xl max-w-xs w-full p-5 shadow-3d-lg border border-white/20 space-y-3.5">
-            <h3 id="modal-title" class="text-xs font-extrabold text-white">แจ้งเตือน</h3>
-            <p id="modal-message" class="text-xs font-medium text-slate-300 leading-relaxed"></p>
+    <div id="app-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center hidden p-4">
+        <div class="kanok-panel bg-slate-900/95 rounded-3xl max-w-xs w-full p-5 shadow-3d-lg border border-amber-500/35 space-y-3.5">
+            <h3 id="modal-title" class="text-xs font-extrabold text-amber-300">แจ้งเตือน</h3>
+            <p id="modal-message" class="text-xs font-medium text-slate-200 leading-relaxed"></p>
             <div id="modal-actions" class="flex justify-end space-x-2 pt-1">
                 <button onclick="closeModal()" class="btn-space-3d nav-btn-theme-active px-4 py-2 text-white rounded-xl text-xs font-bold">ตกลง</button>
             </div>
@@ -746,27 +860,16 @@
                 tint1: 'rgba(250, 204, 21, 0.16)',
                 tint2: 'rgba(236, 72, 153, 0.14)',
                 primaryColor: '#ca8a04',
-                secondaryColor: '#db2777',
+                secondaryColor: '#991b1b',
                 accentColor: '#facc15',
                 glowColor: 'rgba(250, 204, 21, 0.55)',
                 orbTop: 'rgba(234, 179, 8, 0.32)',
                 orbBottom: 'rgba(236, 72, 153, 0.28)',
                 icons: {
-                    logoBadge: '🎆',
-                    header: '🎆',
-                    today: '🎉',
-                    settings: '🥂',
-                    filter: '🎇',
-                    festival: '🎊',
-                    bookmark: '🎆',
-                    navRoster: '🗓️',
-                    navRosterDeco: '🎆',
-                    navDaily: '⏳',
-                    navDailyDeco: '✨',
-                    navEmp: '🥳',
-                    navEmpDeco: '🎉',
-                    empAdd: '🎊',
-                    todayStar: '🎆'
+                    logoBadge: '🎆', header: '🎆', today: '🎉', settings: '🥂',
+                    filter: '🎇', festival: '🎊', bookmark: '🎆', navRoster: '🗓️',
+                    navRosterDeco: '🎆', navDaily: '⏳', navDailyDeco: '✨', navEmp: '🥳',
+                    navEmpDeco: '🎉', empAdd: '🎊', todayStar: '🎆'
                 },
                 rabbitIcon: '🥳',
                 rabbitMsgs: [
@@ -785,27 +888,16 @@
                 tint1: 'rgba(244, 63, 94, 0.17)',
                 tint2: 'rgba(236, 72, 153, 0.14)',
                 primaryColor: '#e11d48',
-                secondaryColor: '#db2777',
+                secondaryColor: '#9d174d',
                 accentColor: '#fb7185',
                 glowColor: 'rgba(244, 63, 94, 0.55)',
                 orbTop: 'rgba(244, 63, 94, 0.30)',
                 orbBottom: 'rgba(236, 72, 153, 0.28)',
                 icons: {
-                    logoBadge: '💝',
-                    header: '💝',
-                    today: '💖',
-                    settings: '💌',
-                    filter: '🌹',
-                    festival: '💘',
-                    bookmark: '💖',
-                    navRoster: '📅',
-                    navRosterDeco: '💝',
-                    navDaily: '⏰',
-                    navDailyDeco: '💖',
-                    navEmp: '👥',
-                    navEmpDeco: '🌹',
-                    empAdd: '💘',
-                    todayStar: '💖'
+                    logoBadge: '💝', header: '💝', today: '💖', settings: '💌',
+                    filter: '🌹', festival: '💘', bookmark: '💖', navRoster: '📅',
+                    navRosterDeco: '💝', navDaily: '⏰', navDailyDeco: '💖', navEmp: '👥',
+                    navEmpDeco: '🌹', empAdd: '💘', todayStar: '💖'
                 },
                 rabbitIcon: '💘',
                 rabbitMsgs: [
@@ -824,27 +916,16 @@
                 tint1: 'rgba(239, 68, 68, 0.18)',
                 tint2: 'rgba(250, 204, 21, 0.15)',
                 primaryColor: '#dc2626',
-                secondaryColor: '#d97706',
+                secondaryColor: '#b45309',
                 accentColor: '#facc15',
                 glowColor: 'rgba(239, 68, 68, 0.55)',
                 orbTop: 'rgba(220, 38, 38, 0.32)',
                 orbBottom: 'rgba(245, 158, 11, 0.30)',
                 icons: {
-                    logoBadge: '🧧',
-                    header: '🏮',
-                    today: '🪙',
-                    settings: '🧨',
-                    filter: '🍊',
-                    festival: '🧧',
-                    bookmark: '🏮',
-                    navRoster: '📅',
-                    navRosterDeco: '🧧',
-                    navDaily: '⏰',
-                    navDailyDeco: '🪙',
-                    navEmp: '👥',
-                    navEmpDeco: '🏮',
-                    empAdd: '🧧',
-                    todayStar: '🪙'
+                    logoBadge: '🧧', header: '🏮', today: '🪙', settings: '🧨',
+                    filter: '🍊', festival: '🧧', bookmark: '🏮', navRoster: '📅',
+                    navRosterDeco: '🧧', navDaily: '⏰', navDailyDeco: '🪙', navEmp: '👥',
+                    navEmpDeco: '🏮', empAdd: '🧧', todayStar: '🪙'
                 },
                 rabbitIcon: '🧧',
                 rabbitMsgs: [
@@ -863,27 +944,16 @@
                 tint1: 'rgba(14, 165, 233, 0.18)',
                 tint2: 'rgba(20, 184, 166, 0.14)',
                 primaryColor: '#0284c7',
-                secondaryColor: '#0d9488',
+                secondaryColor: '#0f766e',
                 accentColor: '#38bdf8',
                 glowColor: 'rgba(56, 189, 248, 0.55)',
                 orbTop: 'rgba(14, 165, 233, 0.32)',
                 orbBottom: 'rgba(20, 184, 166, 0.28)',
                 icons: {
-                    logoBadge: '💦',
-                    header: '💦',
-                    today: '🌺',
-                    settings: '🔫',
-                    filter: '💧',
-                    festival: '🫧',
-                    bookmark: '💦',
-                    navRoster: '📅',
-                    navRosterDeco: '💦',
-                    navDaily: '⏰',
-                    navDailyDeco: '🌺',
-                    navEmp: '👥',
-                    navEmpDeco: '🔫',
-                    empAdd: '🌺',
-                    todayStar: '💦'
+                    logoBadge: '💦', header: '💦', today: '🌺', settings: '🔫',
+                    filter: '💧', festival: '🫧', bookmark: '💦', navRoster: '📅',
+                    navRosterDeco: '💦', navDaily: '⏰', navDailyDeco: '🌺', navEmp: '👥',
+                    navEmpDeco: '🔫', empAdd: '🌺', todayStar: '💦'
                 },
                 rabbitIcon: '💦',
                 rabbitMsgs: [
@@ -902,27 +972,16 @@
                 tint1: 'rgba(56, 189, 248, 0.17)',
                 tint2: 'rgba(244, 114, 182, 0.13)',
                 primaryColor: '#0284c7',
-                secondaryColor: '#ec4899',
+                secondaryColor: '#be185d',
                 accentColor: '#7dd3fc',
                 glowColor: 'rgba(56, 189, 248, 0.5)',
                 orbTop: 'rgba(56, 189, 248, 0.30)',
                 orbBottom: 'rgba(244, 114, 182, 0.24)',
                 icons: {
-                    logoBadge: '💐',
-                    header: '💐',
-                    today: '🌸',
-                    settings: '💙',
-                    filter: '🌸',
-                    festival: '💐',
-                    bookmark: '💐',
-                    navRoster: '📅',
-                    navRosterDeco: '💐',
-                    navDaily: '⏰',
-                    navDailyDeco: '🌸',
-                    navEmp: '👥',
-                    navEmpDeco: '💙',
-                    empAdd: '🌸',
-                    todayStar: '🌸'
+                    logoBadge: '💐', header: '💐', today: '🌸', settings: '💙',
+                    filter: '🌸', festival: '💐', bookmark: '💐', navRoster: '📅',
+                    navRosterDeco: '💐', navDaily: '⏰', navDailyDeco: '🌸', navEmp: '👥',
+                    navEmpDeco: '💙', empAdd: '🌸', todayStar: '🌸'
                 },
                 rabbitIcon: '💐',
                 rabbitMsgs: [
@@ -941,27 +1000,16 @@
                 tint1: 'rgba(249, 115, 22, 0.17)',
                 tint2: 'rgba(147, 51, 234, 0.16)',
                 primaryColor: '#ea580c',
-                secondaryColor: '#7e22ce',
+                secondaryColor: '#6b21a8',
                 accentColor: '#fb923c',
                 glowColor: 'rgba(249, 115, 22, 0.55)',
                 orbTop: 'rgba(249, 115, 22, 0.32)',
                 orbBottom: 'rgba(147, 51, 234, 0.32)',
                 icons: {
-                    logoBadge: '🎃',
-                    header: '🎃',
-                    today: '👻',
-                    settings: '🔮',
-                    filter: '🦇',
-                    festival: '🕸️',
-                    bookmark: '🎃',
-                    navRoster: '📅',
-                    navRosterDeco: '🎃',
-                    navDaily: '🕯️',
-                    navDailyDeco: '🦇',
-                    navEmp: '👻',
-                    navEmpDeco: '🍬',
-                    empAdd: '🧙',
-                    todayStar: '🎃'
+                    logoBadge: '🎃', header: '🎃', today: '👻', settings: '🔮',
+                    filter: '🦇', festival: '🕸️', bookmark: '🎃', navRoster: '📅',
+                    navRosterDeco: '🎃', navDaily: '🕯️', navDailyDeco: '🦇', navEmp: '👻',
+                    navEmpDeco: '🍬', empAdd: '🧙', todayStar: '🎃'
                 },
                 rabbitIcon: '🎃',
                 rabbitMsgs: [
@@ -974,38 +1022,27 @@
                 name: 'ลอยกระทง',
                 emojis: ['🪷', '🪷', '✨', '🏮', '🌕', '🪷'],
                 animation: 'floatUpFestival',
-                shadow: 'drop-shadow(0 0 8px rgba(251, 191, 36, 0.75)) drop-shadow(0 4px 10px rgba(99, 102, 241, 0.45))',
-                borderColor: 'rgba(251, 191, 36, 0.45)',
-                boxGlow: '0 0 25px rgba(251, 191, 36, 0.25), inset 0 0 12px rgba(99, 102, 241, 0.35)',
-                tint1: 'rgba(99, 102, 241, 0.16)',
-                tint2: 'rgba(245, 158, 11, 0.13)',
-                primaryColor: '#6366f1',
-                secondaryColor: '#d97706',
+                shadow: 'drop-shadow(0 0 8px rgba(251, 191, 36, 0.75)) drop-shadow(0 4px 10px rgba(217, 119, 6, 0.45))',
+                borderColor: 'rgba(251, 191, 36, 0.5)',
+                boxGlow: '0 0 25px rgba(251, 191, 36, 0.28), inset 0 0 12px rgba(217, 119, 6, 0.3)',
+                tint1: 'rgba(217, 119, 6, 0.16)',
+                tint2: 'rgba(153, 27, 27, 0.14)',
+                primaryColor: '#d97706',
+                secondaryColor: '#991b1b',
                 accentColor: '#fbbf24',
-                glowColor: 'rgba(251, 191, 36, 0.45)',
+                glowColor: 'rgba(251, 191, 36, 0.5)',
                 orbTop: 'rgba(245, 158, 11, 0.28)',
-                orbBottom: 'rgba(99, 102, 241, 0.28)',
+                orbBottom: 'rgba(153, 27, 27, 0.28)',
                 icons: {
-                    logoBadge: '🪷',
-                    header: '🪷',
-                    today: '🌕',
-                    settings: '🏮',
-                    filter: '🪷',
-                    festival: '✨',
-                    bookmark: '🪷',
-                    navRoster: '📅',
-                    navRosterDeco: '🪷',
-                    navDaily: '⏰',
-                    navDailyDeco: '✨',
-                    navEmp: '👥',
-                    navEmpDeco: '🏮',
-                    empAdd: '🪷',
-                    todayStar: '🌕'
+                    logoBadge: '🪷', header: '🪷', today: '🌕', settings: '🏮',
+                    filter: '🪷', festival: '✨', bookmark: '🪷', navRoster: '📅',
+                    navRosterDeco: '🪷', navDaily: '⏰', navDailyDeco: '✨', navEmp: '👥',
+                    navEmpDeco: '🏮', empAdd: '🪷', todayStar: '🌕'
                 },
                 rabbitIcon: '🐰',
                 rabbitMsgs: [
                     "สุขสันต์วันลอยกระทง! ลอยทุกข์ลอยโศก จัดกะราบรื่นค่า 🪷✨",
-                    "น้องกระต่ายพาลอยกระทงกับฝูงปลาวิบวับในตารางกะแล้วน้า! 🌕",
+                    "น้องกระต่ายพาลอยกระทงกับลายกนกทองวิบวับในตารางกะแล้วน้า! 🌕",
                     "กระทงสวยๆ ลอยเต็มแถบกะเลย เย้ๆ! 🏮💖"
                 ]
             },
@@ -1019,27 +1056,16 @@
                 tint1: 'rgba(16, 185, 129, 0.17)',
                 tint2: 'rgba(244, 63, 94, 0.14)',
                 primaryColor: '#059669',
-                secondaryColor: '#e11d48',
+                secondaryColor: '#991b1b',
                 accentColor: '#34d399',
                 glowColor: 'rgba(16, 185, 129, 0.55)',
                 orbTop: 'rgba(16, 185, 129, 0.32)',
                 orbBottom: 'rgba(244, 63, 94, 0.28)',
                 icons: {
-                    logoBadge: '🎄',
-                    header: '🎄',
-                    today: '🎁',
-                    settings: '🔔',
-                    filter: '❄️',
-                    festival: '🎅',
-                    bookmark: '🎄',
-                    navRoster: '🗓️',
-                    navRosterDeco: '🎄',
-                    navDaily: '🔔',
-                    navDailyDeco: '❄️',
-                    navEmp: '🎅',
-                    navEmpDeco: '🎁',
-                    empAdd: '⛄',
-                    todayStar: '🌟'
+                    logoBadge: '🎄', header: '🎄', today: '🎁', settings: '🔔',
+                    filter: '❄️', festival: '🎅', bookmark: '🎄', navRoster: '🗓️',
+                    navRosterDeco: '🎄', navDaily: '🔔', navDailyDeco: '❄️', navEmp: '🎅',
+                    navEmpDeco: '🎁', empAdd: '⛄', todayStar: '🌟'
                 },
                 rabbitIcon: '🎅',
                 rabbitMsgs: [
@@ -1103,7 +1129,7 @@
             if (logoBadge) logoBadge.innerText = theme.icons.logoBadge;
             if (splashBadge) splashBadge.innerText = theme.icons.logoBadge;
             if (sidebarSub) {
-                sidebarSub.innerText = `เทศกาล${theme.name}`;
+                sidebarSub.innerText = `เทศกาล${theme.name} • ลายกนก`;
                 sidebarSub.style.color = theme.accentColor;
             }
             if (sidebar3d) {
@@ -1131,7 +1157,7 @@
 
             const headerBar = document.getElementById('header-accent-bar');
             if (headerBar) {
-                headerBar.style.background = `linear-gradient(to bottom, ${theme.primaryColor}, ${theme.accentColor}, ${theme.secondaryColor})`;
+                headerBar.style.background = `linear-gradient(to bottom, ${theme.accentColor}, ${theme.primaryColor}, ${theme.secondaryColor})`;
                 headerBar.style.boxShadow = `0 0 15px ${theme.glowColor}`;
             }
 
@@ -1189,10 +1215,10 @@
             if (r.includes('ช่าง') || r.includes('engineer') || r.includes('maintenance')) {
                 return { badgeClass: 'bg-amber-900/40 text-amber-200 border-amber-700/50', textClass: 'text-amber-300' };
             }
-            return { badgeClass: 'bg-slate-800 text-slate-300 border-slate-700', textClass: 'text-indigo-300' };
+            return { badgeClass: 'bg-slate-800 text-slate-300 border-slate-700', textClass: 'text-amber-300' };
         }
 
-        // --- DYNAMIC FESTIVAL CANVAS ANIMATION (FULL BACKGROUND) ---
+        // --- DYNAMIC FESTIVAL + KANOK MOTIF CANVAS ANIMATION (FULL BACKGROUND) ---
         function initBackgroundParticles() {
             const canvas = document.getElementById('bg-canvas');
             if (!canvas) return;
@@ -1205,30 +1231,75 @@
                 height = canvas.height = canvas.offsetHeight;
             });
 
-            const particles = Array.from({ length: 55 }, () => ({
+            const kanokMotifs = Array.from({ length: 14 }, () => ({
                 x: Math.random() * width,
                 y: Math.random() * height,
-                radius: Math.random() * 2.5 + 1,
-                alpha: Math.random() * 0.42 + 0.12,
-                speedY: -(Math.random() * 0.45 + 0.15),
-                drift: (Math.random() - 0.5) * 0.4,
+                scale: 0.55 + Math.random() * 0.65,
+                alpha: 0.08 + Math.random() * 0.12,
+                speedY: -(0.18 + Math.random() * 0.25),
+                sway: Math.random() * Math.PI * 2,
+                tilt: (Math.random() - 0.5) * 0.35
+            }));
+
+            const particles = Array.from({ length: 42 }, () => ({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                radius: Math.random() * 2.2 + 0.9,
+                alpha: Math.random() * 0.38 + 0.1,
+                speedY: -(Math.random() * 0.4 + 0.12),
+                drift: (Math.random() - 0.5) * 0.35,
                 phase: Math.random() * Math.PI * 2
             }));
+
+            function drawKanokFlame(x, y, scale, angle, color, alpha) {
+                ctx.save();
+                ctx.translate(x, y);
+                ctx.rotate(angle);
+                ctx.scale(scale, scale);
+                ctx.globalAlpha = alpha;
+                ctx.strokeStyle = color;
+                ctx.fillStyle = color;
+                ctx.lineWidth = 1.4;
+
+                ctx.beginPath();
+                ctx.moveTo(0, -18);
+                ctx.bezierCurveTo(-11, -7, -13, 6, -3, 14);
+                ctx.bezierCurveTo(-7, 7, -5, 1, 0, -4);
+                ctx.bezierCurveTo(5, 1, 7, 7, 3, 14);
+                ctx.bezierCurveTo(13, 6, 11, -7, 0, -18);
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.arc(0, 3, 2, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
 
             function animate(time = 0) {
                 ctx.clearRect(0, 0, width, height);
                 const theme = FESTIVAL_THEMES[activeFestivalKey] || FESTIVAL_THEMES.loykrathong;
 
+                kanokMotifs.forEach(k => {
+                    k.y += k.speedY;
+                    k.x += Math.sin(time * 0.0015 + k.sway) * 0.25;
+                    if (k.y < -25) {
+                        k.y = height + 25;
+                        k.x = Math.random() * width;
+                    }
+                    const rot = k.tilt + Math.sin(time * 0.002 + k.sway) * 0.08;
+                    drawKanokFlame(k.x, k.y, k.scale, rot, '#fbbf24', k.alpha);
+                });
+
                 particles.forEach(p => {
                     if (activeFestivalKey === 'christmas') {
-                        p.y += Math.abs(p.speedY) * 1.6;
+                        p.y += Math.abs(p.speedY) * 1.5;
                         if (p.y > height + 8) { p.y = -8; p.x = Math.random() * width; }
                     } else {
                         p.y += p.speedY;
                         if (p.y < -8) { p.y = height + 8; p.x = Math.random() * width; }
                     }
 
-                    p.x += p.drift + Math.sin(time * 0.002 + p.phase) * 0.25;
+                    p.x += p.drift + Math.sin(time * 0.002 + p.phase) * 0.22;
                     if (p.x > width) p.x = 0;
                     if (p.x < 0) p.x = width;
 
@@ -1238,7 +1309,7 @@
                     ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
                     ctx.fillStyle = theme.accentColor;
                     ctx.shadowColor = theme.accentColor;
-                    ctx.shadowBlur = 9;
+                    ctx.shadowBlur = 8;
                     ctx.globalAlpha = p.alpha * pulse;
                     ctx.fill();
                     ctx.restore();
@@ -1268,11 +1339,11 @@
             window.addEventListener('resize', resizeLegendCanvas);
 
             const fishPalettes = [
-                { body: '#38bdf8', fin: '#818cf8', glow: 'rgba(56, 189, 248, 0.45)' },
-                { body: '#f472b6', fin: '#e879f9', glow: 'rgba(244, 114, 182, 0.45)' },
-                { body: '#34d399', fin: '#22d3ee', glow: 'rgba(52, 211, 153, 0.45)' },
+                { body: '#38bdf8', fin: '#fbbf24', glow: 'rgba(251, 191, 36, 0.45)' },
+                { body: '#f472b6', fin: '#fbbf24', glow: 'rgba(244, 114, 182, 0.45)' },
+                { body: '#34d399', fin: '#fbbf24', glow: 'rgba(52, 211, 153, 0.45)' },
                 { body: '#fbbf24', fin: '#fb923c', glow: 'rgba(251, 191, 36, 0.45)' },
-                { body: '#a78bfa', fin: '#f472b6', glow: 'rgba(167, 139, 250, 0.45)' }
+                { body: '#a78bfa', fin: '#fbbf24', glow: 'rgba(167, 139, 250, 0.45)' }
             ];
             const fishes = Array.from({ length: 6 }, (_, i) => {
                 const dir = i % 2 === 0 ? 1 : -1;
@@ -1493,7 +1564,7 @@
             const msgs = theme.rabbitMsgs;
             const randomMsg = msgs[Math.floor(Math.random() * msgs.length)];
             document.getElementById('rabbit-greeting-text').innerText = randomMsg;
-            showModal(`${theme.icons.header} เทศกาล${theme.name}`, randomMsg);
+            showModal(`${theme.icons.header} เทศกาล${theme.name} • ลายกนก`, randomMsg);
         }
 
         // --- FIREBASE CONFIG ---
@@ -1614,10 +1685,10 @@
             currentActiveTab = tabId;
             ['roster', 'daily', 'employees'].forEach(t => {
                 document.getElementById(`tab-${t}`).classList.add('hidden');
-                document.getElementById(`nav-${t}`).className = "btn-space-3d w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all text-slate-300 hover:text-white border-slate-700/80";
+                document.getElementById(`nav-${t}`).className = "btn-space-3d w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium transition-all text-slate-300 hover:text-white border-amber-500/35";
             });
             document.getElementById(`tab-${tabId}`).classList.remove('hidden');
-            document.getElementById(`nav-${tabId}`).className = "btn-space-3d nav-btn-theme-active w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all";
+            document.getElementById(`nav-${tabId}`).className = "btn-space-3d nav-btn-theme-active w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold transition-all";
 
             const titles = { roster: 'ตารางงานรายเดือน', daily: 'สรุปรายวัน', employees: 'จัดการพนักงาน' };
             document.getElementById('page-title').innerText = titles[tabId];
@@ -1695,15 +1766,13 @@
             const isCurrentMonthYear = (today.getFullYear() === year && today.getMonth() === month);
             const todayDate = today.getDate();
 
-            document.getElementById('print-header-title').innerText = `ตารางปฏิบัติงานพนักงาน ประจำเดือน ${monthNamesTH[month]} พ.ศ. ${year + 543}`;
-
             document.getElementById('roster-legend').innerHTML = shifts.map(s => `
                 <span class="inline-flex items-center px-2.5 py-1 rounded-xl text-[10px] font-extrabold shadow-3d-sm transition-all hover:scale-105 cursor-pointer border border-white/20" style="background-color: ${s.bg}; color: ${s.text};">
                     ${s.code}: ${s.name} (${s.start !== '-' ? s.start + '-' + s.end : 'หยุด'})
                 </span>
             `).join('');
 
-            let headHTML = `<tr><th class="py-2.5 px-3 emp-dark-col min-w-[200px] text-xs font-extrabold border-r border-slate-700">${theme.icons.header} รหัสและรายชื่อพนักงาน</th>`;
+            let headHTML = `<tr><th class="py-2.5 px-3 emp-dark-col min-w-[200px] text-xs font-extrabold border-r border-amber-500/25 text-amber-200"><span class="kanok-icon-frame w-5 h-5 rounded-md mr-1.5 align-middle"><span class="text-[11px] leading-none">${theme.icons.header}</span></span>รหัสและรายชื่อพนักงาน</th>`;
             for (let d = 1; d <= daysInMonth; d++) {
                 const dateObj = new Date(year, month, d);
                 const isWeekend = dateObj.getDay() === 0 || dateObj.getDay() === 6;
@@ -1712,12 +1781,12 @@
                 if (isToday) bgClass = 'today-laser-column text-white font-extrabold';
 
                 headHTML += `<th ${isToday ? 'id="today-col-header"' : ''} class="py-1.5 px-0 text-center border-r border-slate-800 w-[42px] min-w-[42px] max-w-[42px] ${bgClass}">
-                    <div class="text-[9px] ${isToday ? 'text-indigo-200 font-extrabold' : 'text-slate-400'} leading-none mb-0.5">${dayShortNamesTH[dateObj.getDay()]}</div>
+                    <div class="text-[9px] ${isToday ? 'text-amber-200 font-extrabold' : 'text-slate-400'} leading-none mb-0.5">${dayShortNamesTH[dateObj.getDay()]}</div>
                     <div class="font-extrabold text-xs leading-none">${d}</div>
-                    ${isToday ? `<div class="text-[8px] leading-none mt-0.5 text-amber-300 font-extrabold no-print flex items-center justify-center gap-0.5"><span class="animate-star-twinkle">${theme.icons.todayStar}</span> วันนี้</div>` : ''}
+                    ${isToday ? `<div class="text-[8px] leading-none mt-0.5 text-amber-300 font-extrabold flex items-center justify-center gap-0.5"><span class="animate-star-twinkle">${theme.icons.todayStar}</span> วันนี้</div>` : ''}
                 </th>`;
             }
-            headHTML += `<th class="py-2.5 px-2 text-center min-w-[60px] text-xs font-extrabold bg-slate-900 text-slate-200">รวมวัน</th></tr>`;
+            headHTML += `<th class="py-2.5 px-2 text-center min-w-[60px] text-xs font-extrabold bg-slate-900 text-amber-200">รวมวัน</th></tr>`;
             document.getElementById('roster-thead').innerHTML = headHTML;
 
             const tbody = document.getElementById('roster-tbody');
@@ -1732,19 +1801,19 @@
                 let workDaysCount = 0;
                 const roleStyle = getRoleBadgeStyle(emp.role);
 
-                bodyHTML += `<tr class="hover:bg-indigo-950/30 transition-colors">`;
+                bodyHTML += `<tr class="hover:bg-amber-950/20 transition-colors">`;
                 bodyHTML += `<td class="py-2 px-3 emp-dark-col border-r border-slate-800">
                     <div class="flex items-center justify-between gap-1">
                         <div class="flex items-center space-x-2 overflow-hidden">
-                            <span class="text-[9.5px] font-extrabold border px-1.5 py-0.5 rounded-md shrink-0 shadow-sm ${roleStyle.badgeClass}">[${emp.id}]</span>
+                            <span class="kanok-icon-frame px-1.5 py-0.5 rounded-md text-[9.5px] font-extrabold shrink-0 ${roleStyle.badgeClass}">[${emp.id}]</span>
                             <div class="overflow-hidden leading-tight">
                                 <div class="text-slate-100 text-xs font-bold truncate max-w-[105px]" title="${emp.name}">${emp.name}</div>
                                 <div class="text-[9.5px] font-medium truncate max-w-[105px] ${roleStyle.textClass}" title="${emp.role}">${emp.role}</div>
                             </div>
                         </div>
-                        <div class="flex flex-col shrink-0 gap-0.5 no-print">
-                            <button onclick="moveEmployee(${index}, -1)" ${index === 0 ? 'disabled class="opacity-30 cursor-not-allowed"' : ''} class="text-[9px] bg-slate-800 hover:bg-slate-700 text-indigo-300 px-1 rounded transition" title="เลื่อนขึ้น">▲</button>
-                            <button onclick="moveEmployee(${index}, 1)" ${index === employees.length - 1 ? 'disabled class="opacity-30 cursor-not-allowed"' : ''} class="text-[9px] bg-slate-800 hover:bg-slate-700 text-indigo-300 px-1 rounded transition" title="เลื่อนลง">▼</button>
+                        <div class="flex flex-col shrink-0 gap-0.5">
+                            <button onclick="moveEmployee(${index}, -1)" ${index === 0 ? 'disabled class="opacity-30 cursor-not-allowed"' : ''} class="kanok-icon-frame text-[8.5px] text-amber-300 px-1 py-0.2 rounded transition cursor-pointer" title="เลื่อนขึ้น">▲</button>
+                            <button onclick="moveEmployee(${index}, 1)" ${index === employees.length - 1 ? 'disabled class="opacity-30 cursor-not-allowed"' : ''} class="kanok-icon-frame text-[8.5px] text-amber-300 px-1 py-0.2 rounded transition cursor-pointer" title="เลื่อนลง">▼</button>
                         </div>
                     </div>
                 </td>`;
@@ -1757,13 +1826,13 @@
 
                     bodyHTML += `<td class="p-0.5 text-center border-r border-slate-800/80 h-[40px] ${isToday ? 'today-laser-column' : ''}">
                         <select onchange="handleShiftChange('${emp.id}', ${year}, ${month}, ${d}, this)" 
-                            class="shift-select-badge-3d w-full h-[34px] text-center text-xs font-extrabold py-0 px-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer appearance-none shadow-3d-sm"
+                            class="shift-select-badge-3d w-full h-[34px] text-center text-xs font-extrabold py-0 px-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 cursor-pointer appearance-none shadow-3d-sm"
                             style="background-color: ${shiftObj.bg}; color: ${shiftObj.text};">
                             ${shifts.map(s => `<option value="${s.code}" ${s.code === currentShiftCode ? 'selected' : ''} style="background: #0f172a; color: white; font-size: 12px; font-weight: 700;">${s.code}</option>`).join('')}
                         </select>
                     </td>`;
                 }
-                bodyHTML += `<td class="py-2 px-2 text-center font-extrabold text-white bg-slate-900/60 text-xs">${workDaysCount} วัน</td>`;
+                bodyHTML += `<td class="py-2 px-2 text-center font-extrabold text-amber-200 bg-slate-900/60 text-xs">${workDaysCount} วัน</td>`;
                 bodyHTML += `</tr>`;
             });
             tbody.innerHTML = bodyHTML;
@@ -1793,8 +1862,6 @@
             saveScheduleOnly();
         }
 
-        function printRosterPDF() { window.print(); }
-
         function resetMonthSchedule() {
             showModal('ยืนยันการล้างข้อมูล', 'คุณต้องการล้างตารางกะของเดือนนี้ทั้งหมดใช่หรือไม่?', () => {
                 const month = parseInt(document.getElementById('roster-month').value);
@@ -1803,34 +1870,6 @@
                 saveScheduleOnly();
                 updateRosterView();
             });
-        }
-
-        function exportRosterExcel() {
-            const month = parseInt(document.getElementById('roster-month').value);
-            const year = parseInt(document.getElementById('roster-year').value);
-            const daysInMonth = new Date(year, month + 1, 0).getDate();
-            let headerRow = ["รหัสพนักงาน", "ชื่อพนักงาน", "ตำแหน่ง"];
-            for (let d = 1; d <= daysInMonth; d++) headerRow.push(`${dayShortNamesTH[new Date(year, month, d).getDay()]} ${d}`);
-            headerRow.push("รวมวันปฏิบัติงาน");
-
-            let excelData = [headerRow];
-            employees.forEach(emp => {
-                if (!emp) return;
-                let row = [`[${emp.id}]`, emp.name, emp.role];
-                let workDaysCount = 0;
-                for (let d = 1; d <= daysInMonth; d++) {
-                    const code = scheduleData[`${year}_${month}_${emp.id}_${d}`] || 'OFF';
-                    row.push(code);
-                    if (code !== 'OFF') workDaysCount++;
-                }
-                row.push(workDaysCount);
-                excelData.push(row);
-            });
-
-            const ws = XLSX.utils.aoa_to_sheet(excelData);
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, "ตารางกะพนักงาน");
-            XLSX.writeFile(wb, `ShiftRoster_${monthNamesTH[month]}_${year + 543}.xlsx`);
         }
 
         function initDailyPicker() {
@@ -1859,7 +1898,7 @@
                 if (shift.code !== 'OFF') totalAssigned += assignedEmps.length;
 
                 html += `
-                    <div class="glass-panel-3d rounded-2xl overflow-hidden flex flex-col transition-all hover:scale-[1.01] shadow-3d-md border border-white/10">
+                    <div class="kanok-panel rounded-2xl overflow-hidden flex flex-col transition-all hover:scale-[1.01] shadow-3d-md border border-amber-500/25">
                         <div class="p-3 border-b border-white/10 flex items-center justify-between shadow-sm" style="background-color: ${shift.bg}; color: ${shift.text};">
                             <div class="font-bold flex items-center space-x-2 text-xs">
                                 <span class="px-2.5 py-0.5 rounded-lg bg-white/90 text-xs font-extrabold shadow-3d-sm">${shift.code}</span>
@@ -1867,7 +1906,7 @@
                             </div>
                             <span class="text-xs font-extrabold px-2.5 py-0.5 rounded-full bg-white/90 shadow-3d-sm">${assignedEmps.length} คน</span>
                         </div>
-                        <div class="px-3 py-1.5 bg-slate-950/60 border-b border-slate-800 text-[10.5px] text-indigo-300 font-bold">
+                        <div class="px-3 py-1.5 bg-slate-950/60 border-b border-slate-800 text-[10.5px] text-amber-300 font-bold">
                             เวลาปฏิบัติงาน: ${shift.start !== '-' ? shift.start + ' - ' + shift.end : 'วันหยุด'}
                         </div>
                         <div class="p-3 flex-1 space-y-2" style="max-height: 280px; overflow-y: auto;">
@@ -1889,7 +1928,7 @@
                 `;
             });
             document.getElementById('daily-shift-cards').innerHTML = html;
-            document.getElementById('daily-stats-summary').innerHTML = `<span class="bg-indigo-950/80 text-indigo-300 px-3.5 py-1.5 rounded-xl border border-indigo-700/50 font-extrabold text-xs shadow-3d-sm">ปฏิบัติงานรวม: ${totalAssigned} คน / ทั้งหมด ${employees.length} คน</span>`;
+            document.getElementById('daily-stats-summary').innerHTML = `<span class="bg-amber-950/80 text-amber-300 px-3.5 py-1.5 rounded-xl border border-amber-600/45 font-extrabold text-xs shadow-3d-sm">ปฏิบัติงานรวม: ${totalAssigned} คน / ทั้งหมด ${employees.length} คน</span>`;
         }
 
         function handleAddEmployee(e) {
@@ -1923,18 +1962,20 @@
                 if (!emp) return '';
                 const roleStyle = getRoleBadgeStyle(emp.role);
                 return `
-                    <tr class="hover:bg-indigo-950/30 transition-colors">
-                        <td class="p-3 text-center font-bold text-indigo-300">${index + 1}</td>
+                    <tr class="hover:bg-amber-950/20 transition-colors">
+                        <td class="p-3 text-center font-bold text-amber-300">${index + 1}</td>
                         <td class="p-3 font-extrabold ${roleStyle.textClass}">[${emp.id}]</td>
                         <td class="p-3 font-bold text-white">${emp.name}</td>
                         <td class="p-3 font-semibold"><span class="px-2 py-0.5 rounded-lg border ${roleStyle.badgeClass}">${emp.role}</span></td>
                         <td class="p-3 text-center space-x-1">
-                            <button onclick="moveEmployee(${index}, -1)" ${index === 0 ? 'disabled class="opacity-30 cursor-not-allowed"' : ''} class="btn-space-3d px-2 py-1 text-xs bg-slate-800 text-indigo-300 rounded font-bold">▲ เลื่อนขึ้น</button>
-                            <button onclick="moveEmployee(${index}, 1)" ${index === employees.length - 1 ? 'disabled class="opacity-30 cursor-not-allowed"' : ''} class="btn-space-3d px-2 py-1 text-xs bg-slate-800 text-indigo-300 rounded font-bold">▼ เลื่อนลง</button>
+                            <button onclick="moveEmployee(${index}, -1)" ${index === 0 ? 'disabled class="opacity-30 cursor-not-allowed"' : ''} class="btn-space-3d px-2 py-1 text-xs bg-slate-800 text-amber-300 rounded font-bold">▲ เลื่อนขึ้น</button>
+                            <button onclick="moveEmployee(${index}, 1)" ${index === employees.length - 1 ? 'disabled class="opacity-30 cursor-not-allowed"' : ''} class="btn-space-3d px-2 py-1 text-xs bg-slate-800 text-amber-300 rounded font-bold">▼ เลื่อนลง</button>
                         </td>
                         <td class="p-3 text-center">
-                            <button onclick="deleteEmployee('${emp.id}')" class="btn-space-3d p-1.5 text-rose-400 hover:bg-rose-950/60 rounded-lg transition-all border-rose-500/30" title="ลบพนักงาน">
-                                <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                            <button onclick="deleteEmployee('${emp.id}')" class="btn-space-3d p-1.5 text-rose-400 hover:bg-rose-950/60 rounded-lg transition-all border-rose-500/40" title="ลบพนักงาน">
+                                <span class="kanok-icon-frame w-6 h-6 rounded-md border-rose-400/60">
+                                    <i data-lucide="trash-2" class="w-3.5 h-3.5 text-rose-400"></i>
+                                </span>
                             </button>
                         </td>
                     </tr>
@@ -2012,8 +2053,16 @@
                         <div class="text-[10px] text-slate-400 font-semibold mt-0.5">${shift.start !== '-' ? shift.start + ' - ' + shift.end : 'วันหยุด'}</div>
                     </div>
                     <div class="flex items-center space-x-1">
-                        <button onclick="editShift('${shift.code}')" class="btn-space-3d p-1 text-indigo-400 hover:bg-indigo-950 rounded-lg border-indigo-500/30" title="แก้ไข"><i data-lucide="edit-3" class="w-3.5 h-3.5"></i></button>
-                        ${shift.code !== 'OFF' ? `<button onclick="deleteShift('${shift.code}')" class="btn-space-3d p-1 text-rose-400 hover:bg-rose-950 rounded-lg border-rose-500/30" title="ลบ"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>` : ''}
+                        <button onclick="editShift('${shift.code}')" class="btn-space-3d p-1 text-amber-400 hover:bg-amber-950 rounded-lg border-amber-500/40" title="แก้ไข">
+                            <span class="kanok-icon-frame w-6 h-6 rounded-md">
+                                <i data-lucide="edit-3" class="w-3 h-3 text-amber-400"></i>
+                            </span>
+                        </button>
+                        ${shift.code !== 'OFF' ? `<button onclick="deleteShift('${shift.code}')" class="btn-space-3d p-1 text-rose-400 hover:bg-rose-950 rounded-lg border-rose-500/40" title="ลบ">
+                            <span class="kanok-icon-frame w-6 h-6 rounded-md border-rose-400/60">
+                                <i data-lucide="trash-2" class="w-3 h-3 text-rose-400"></i>
+                            </span>
+                        </button>` : ''}
                     </div>
                 </div>
             `).join('');
