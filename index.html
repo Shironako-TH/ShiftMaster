@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ระบบจัดการตารางกะพนักงาน (ShiftMaster Kanok 3D Ultra)</title>
+    <title>ระบบจัดการตารางกะพนักงาน (Asawann Hotel Kanok 3D Ultra)</title>
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#090d16">
     
@@ -108,7 +108,7 @@
             background-position: center;
         }
 
-        /* --- THAI KANOK ICON FRAME (แสดงแสงเฉพาะตอนกดแตะเท่านั้น) --- */
+        /* --- THAI KANOK ICON FRAME --- */
         .kanok-icon-frame {
             position: relative;
             display: inline-flex;
@@ -117,7 +117,7 @@
             background: linear-gradient(145deg, rgba(45, 27, 14, 0.92) 0%, rgba(15, 20, 36, 0.96) 100%);
             border: 1.5px solid rgba(251, 191, 36, 0.55);
             box-shadow: inset 0 0 0 1px rgba(254, 240, 138, 0.16);
-            transition: transform 0.14s ease, border-color 0.14s ease, box-shadow 0.14s ease;
+            transition: transform 0.16s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.16s ease, box-shadow 0.16s ease;
         }
 
         .kanok-icon-frame::before,
@@ -130,7 +130,7 @@
             text-shadow: none;
             pointer-events: none;
             opacity: 0.85;
-            transition: text-shadow 0.14s ease;
+            transition: transform 0.16s ease, opacity 0.16s ease, text-shadow 0.16s ease;
         }
 
         .kanok-icon-frame::before {
@@ -145,7 +145,19 @@
             transform: translateX(-50%);
         }
 
-        /* แสดงแสงเฉพาะตอนปุ่มถูกกด/แตะจริงๆ */
+        /* ลูกเล่นตอนเอาเมาส์ไปจ่อที่ปุ่มหรือกรอบกนก */
+        .btn-space-3d:hover .kanok-icon-frame,
+        .kanok-icon-frame:hover {
+            transform: scale(1.06) rotate(4deg);
+            border-color: var(--theme-accent, #fde047);
+        }
+
+        .btn-space-3d:hover .kanok-icon-frame::before,
+        .btn-space-3d:hover .kanok-icon-frame::after {
+            opacity: 1;
+        }
+
+        /* แสดงแสงเรืองรองเฉพาะตอนปุ่มถูกกด/แตะจริงๆ */
         .btn-space-3d:active .kanok-icon-frame,
         .btn-space-3d.is-pressed .kanok-icon-frame,
         .kanok-icon-frame:active {
@@ -237,7 +249,7 @@
         .animate-rabbit-float { animation: floatRabbit 2s ease-in-out infinite; }
         .animate-star-twinkle { animation: starTwinkle 1.5s ease-in-out infinite; }
 
-        /* --- SPACE HOLOGRAPHIC 3D BUTTONS (ไม่มีแสงวิ่งหรือแสงฟุ้งก่อนแตะกด) --- */
+        /* --- SPACE HOLOGRAPHIC 3D BUTTONS --- */
         .btn-space-3d {
             position: relative;
             background: linear-gradient(135deg, rgba(30, 34, 54, 0.92) 0%, rgba(14, 18, 32, 0.96) 100%);
@@ -247,7 +259,7 @@
                 inset 0 0 0 1px rgba(254, 240, 138, 0.1),
                 inset 0 1px 1px 0 rgba(253, 224, 71, 0.2),
                 inset 0 -2px 4px 0 rgba(0, 0, 0, 0.6);
-            transition: transform 0.14s ease, border-color 0.14s ease, box-shadow 0.14s ease;
+            transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
             overflow: visible;
             -webkit-tap-highlight-color: transparent;
             user-select: none;
@@ -266,16 +278,22 @@
             background-position: top left, bottom right;
             background-repeat: no-repeat;
             background-size: 10px 10px;
+            transition: opacity 0.15s ease;
         }
 
-        /* ปิดแถบแสง ::before ที่เคยวิ่งเกินก่อนกด */
         .btn-space-3d::before {
             display: none;
         }
 
-        /* ตอนชี้เมาส์: ปรับขอบเล็กน้อยโดยไม่เปิดแสงฟุ้งเกิน */
+        /* ลูกเล่นตอนเอาเมาส์ไปจ่อที่ปุ่ม: ยกขึ้นเล็กน้อย + ขอบกนกคมชัดขึ้นโดยไม่ฟุ้งเกิน */
         .btn-space-3d:hover {
-            border-color: rgba(251, 191, 36, 0.65);
+            transform: translateY(-1.5px);
+            border-color: var(--theme-accent);
+            background: linear-gradient(135deg, rgba(38, 42, 66, 0.95) 0%, rgba(18, 23, 40, 0.98) 100%);
+        }
+
+        .btn-space-3d:hover::after {
+            opacity: 1;
         }
 
         /* ตอนแตะ/กดปุ่มจริง: เปิดแสงเรืองรองชัดเจน */
@@ -296,6 +314,11 @@
             border-color: rgba(253, 224, 71, 0.75) !important;
             box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45), inset 0 0 0 1px rgba(254, 240, 138, 0.25) !important;
             color: #ffffff !important;
+        }
+
+        .nav-btn-theme-active:hover {
+            transform: translateY(-1.5px);
+            border-color: var(--theme-accent) !important;
         }
 
         .nav-btn-theme-active:active,
@@ -363,11 +386,15 @@
 
         /* Shift Badge inside Table */
         .shift-select-badge-3d {
-            transition: transform 0.14s ease, filter 0.14s ease, box-shadow 0.14s ease;
+            transition: transform 0.14s ease, filter 0.14s ease, box-shadow 0.14s ease, border-color 0.14s ease;
             box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.35);
             font-weight: 800;
             letter-spacing: 0.04em;
             border: 1px solid rgba(255, 255, 255, 0.25);
+        }
+        .shift-select-badge-3d:hover {
+            transform: scale(1.03);
+            border-color: rgba(255, 255, 255, 0.55);
         }
         .shift-select-badge-3d:active {
             transform: scale(0.96);
@@ -450,7 +477,7 @@
                 <div>
                     <h1 class="font-extrabold text-white text-xs tracking-wide flex items-center gap-1">
                         ShiftMaster
-                        <span id="sidebar-3d-badge" class="text-[7.5px] font-extrabold px-1.5 py-0.2 rounded-full bg-gradient-to-r from-amber-500 to-red-700 text-white border border-amber-300/50">Konok 3D</span>
+                        <span id="sidebar-3d-badge" class="text-[7.5px] font-extrabold px-1.5 py-0.2 rounded-full bg-gradient-to-r from-amber-500 to-red-700 text-white border border-amber-300/50">กนก 3D</span>
                     </h1>
                     <p id="sidebar-festival-subtitle" class="text-[9px] text-amber-300 font-bold leading-none mt-0.5">เทศกาลลอยกระทง</p>
                 </div>
@@ -498,7 +525,7 @@
         <div class="p-3 border-t border-amber-500/20 bg-slate-950/85 relative z-10">
             <div class="kanok-divider mb-2"></div>
             <div class="flex items-center justify-between text-[9.5px] font-semibold">
-                <span id="sidebar-version-text" class="text-amber-300/90">v6.8 Touch Glow</span>
+                <span id="sidebar-version-text" class="text-amber-300/90">v6.9 Hover & Touch</span>
                 <span id="sync-status" class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[8.5px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-glow-emerald">
                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
                     เชื่อมต่อแล้ว
@@ -1779,7 +1806,7 @@
             const todayDate = today.getDate();
 
             document.getElementById('roster-legend').innerHTML = shifts.map(s => `
-                <span class="inline-flex items-center px-2.5 py-1 rounded-xl text-[10px] font-extrabold shadow-3d-sm transition-transform active:scale-95 cursor-pointer border border-white/20" style="background-color: ${s.bg}; color: ${s.text};">
+                <span class="inline-flex items-center px-2.5 py-1 rounded-xl text-[10px] font-extrabold shadow-3d-sm transition-transform hover:-translate-y-0.5 active:scale-95 cursor-pointer border border-white/20" style="background-color: ${s.bg}; color: ${s.text};">
                     ${s.code}: ${s.name} (${s.start !== '-' ? s.start + '-' + s.end : 'หยุด'})
                 </span>
             `).join('');
