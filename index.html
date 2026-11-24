@@ -17,12 +17,12 @@
                         sans: ['Prompt', 'sans-serif'],
                     },
                     boxShadow: {
-                        '3d-sm': '0 4px 14px -2px rgba(0, 0, 0, 0.45), inset 0 1px 1px 0 rgba(255, 215, 115, 0.35), inset 0 -2px 4px 0 rgba(0, 0, 0, 0.45)',
-                        '3d-md': '0 12px 32px -6px rgba(0, 0, 0, 0.65), inset 0 2px 2px 0 rgba(251, 191, 36, 0.25), inset 0 -3px 6px 0 rgba(0, 0, 0, 0.5)',
-                        '3d-lg': '0 24px 48px -12px rgba(0, 0, 0, 0.75), inset 0 2px 3px 0 rgba(251, 191, 36, 0.3)',
-                        'glow-kanok': '0 0 24px rgba(245, 158, 11, 0.45), inset 0 0 12px rgba(251, 191, 36, 0.25)',
-                        'glow-emerald': '0 0 25px rgba(16, 185, 129, 0.75), inset 0 0 10px rgba(52, 211, 153, 0.5)',
-                        'glow-rose': '0 0 25px rgba(244, 63, 94, 0.75), inset 0 0 10px rgba(251, 113, 133, 0.5)',
+                        '3d-sm': '0 4px 12px -2px rgba(0, 0, 0, 0.45), inset 0 1px 1px 0 rgba(255, 215, 115, 0.22), inset 0 -2px 4px 0 rgba(0, 0, 0, 0.45)',
+                        '3d-md': '0 12px 28px -6px rgba(0, 0, 0, 0.65), inset 0 1px 2px 0 rgba(251, 191, 36, 0.18), inset 0 -3px 6px 0 rgba(0, 0, 0, 0.5)',
+                        '3d-lg': '0 24px 48px -12px rgba(0, 0, 0, 0.75), inset 0 2px 3px 0 rgba(251, 191, 36, 0.22)',
+                        'glow-kanok': '0 0 16px rgba(245, 158, 11, 0.3), inset 0 0 8px rgba(251, 191, 36, 0.15)',
+                        'glow-emerald': '0 0 14px rgba(16, 185, 129, 0.45), inset 0 0 6px rgba(52, 211, 153, 0.3)',
+                        'glow-rose': '0 0 14px rgba(244, 63, 94, 0.45), inset 0 0 6px rgba(251, 113, 133, 0.3)',
                     }
                 }
             }
@@ -43,8 +43,8 @@
             --theme-secondary: #991b1b;
             --theme-accent: #fbbf24;
             --theme-glow: rgba(245, 158, 11, 0.5);
-            --festival-tint-1: rgba(217, 119, 6, 0.16);
-            --festival-tint-2: rgba(153, 27, 27, 0.15);
+            --festival-tint-1: rgba(217, 119, 6, 0.14);
+            --festival-tint-2: rgba(153, 27, 27, 0.13);
             --kanok-gold: rgba(251, 191, 36, 0.14);
             --kanok-gold-strong: rgba(245, 158, 11, 0.28);
         }
@@ -69,11 +69,11 @@
         .kanok-panel {
             position: relative;
             background: linear-gradient(155deg, rgba(24, 24, 38, 0.92) 0%, rgba(13, 17, 29, 0.96) 100%);
-            border: 1px solid rgba(251, 191, 36, 0.28);
+            border: 1px solid rgba(251, 191, 36, 0.25);
             box-shadow:
                 0 16px 32px -12px rgba(0, 0, 0, 0.65),
-                inset 0 0 0 1px rgba(255, 255, 255, 0.06),
-                inset 0 1px 0 0 rgba(253, 224, 71, 0.25);
+                inset 0 0 0 1px rgba(255, 255, 255, 0.05),
+                inset 0 1px 0 0 rgba(253, 224, 71, 0.18);
             transition: border-color 0.4s ease, box-shadow 0.4s ease;
         }
 
@@ -108,19 +108,16 @@
             background-position: center;
         }
 
-        /* --- THAI KANOK ICON FRAME (กรอบไอคอนลายไทยเท่ๆ) --- */
+        /* --- THAI KANOK ICON FRAME (แสดงแสงเฉพาะตอนกดแตะเท่านั้น) --- */
         .kanok-icon-frame {
             position: relative;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             background: linear-gradient(145deg, rgba(45, 27, 14, 0.92) 0%, rgba(15, 20, 36, 0.96) 100%);
-            border: 1.5px solid rgba(251, 191, 36, 0.65);
-            box-shadow:
-                0 0 12px rgba(251, 191, 36, 0.22),
-                inset 0 0 0 1px rgba(254, 240, 138, 0.25),
-                inset 0 2px 4px rgba(255, 255, 255, 0.14);
-            transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.25s ease, box-shadow 0.25s ease;
+            border: 1.5px solid rgba(251, 191, 36, 0.55);
+            box-shadow: inset 0 0 0 1px rgba(254, 240, 138, 0.16);
+            transition: transform 0.14s ease, border-color 0.14s ease, box-shadow 0.14s ease;
         }
 
         .kanok-icon-frame::before,
@@ -130,9 +127,10 @@
             font-size: 7px;
             line-height: 1;
             color: var(--theme-accent, #fbbf24);
-            text-shadow: 0 0 6px var(--theme-glow, rgba(251, 191, 36, 0.7));
+            text-shadow: none;
             pointer-events: none;
-            opacity: 0.9;
+            opacity: 0.85;
+            transition: text-shadow 0.14s ease;
         }
 
         .kanok-icon-frame::before {
@@ -147,14 +145,22 @@
             transform: translateX(-50%);
         }
 
-        .kanok-icon-frame:hover,
-        .group:hover .kanok-icon-frame,
-        .btn-space-3d:hover .kanok-icon-frame {
-            transform: scale(1.08) rotate(3deg);
+        /* แสดงแสงเฉพาะตอนปุ่มถูกกด/แตะจริงๆ */
+        .btn-space-3d:active .kanok-icon-frame,
+        .btn-space-3d.is-pressed .kanok-icon-frame,
+        .kanok-icon-frame:active {
+            transform: scale(0.95);
             border-color: var(--theme-accent, #fde047);
             box-shadow:
-                0 0 16px var(--theme-glow, rgba(251, 191, 36, 0.55)),
-                inset 0 0 8px rgba(251, 191, 36, 0.35);
+                0 0 18px var(--theme-glow, rgba(251, 191, 36, 0.75)),
+                inset 0 0 10px rgba(251, 191, 36, 0.45);
+        }
+
+        .btn-space-3d:active .kanok-icon-frame::before,
+        .btn-space-3d:active .kanok-icon-frame::after,
+        .btn-space-3d.is-pressed .kanok-icon-frame::before,
+        .btn-space-3d.is-pressed .kanok-icon-frame::after {
+            text-shadow: 0 0 10px var(--theme-accent, #fde047);
         }
 
         /* Ambient Festival & Kanok Canvas */
@@ -190,8 +196,8 @@
         }
 
         @keyframes starTwinkle {
-            0%, 100% { transform: scale(1) rotate(0deg); opacity: 1; filter: drop-shadow(0 0 4px rgba(250, 204, 21, 0.9)); }
-            50% { transform: scale(1.25) rotate(15deg); opacity: 0.8; filter: drop-shadow(0 0 10px rgba(250, 204, 21, 1)); }
+            0%, 100% { transform: scale(1) rotate(0deg); opacity: 1; }
+            50% { transform: scale(1.2) rotate(12deg); opacity: 0.85; }
         }
 
         /* --- FESTIVAL FLOATING PARTICLES FOR SHIFT LEGEND --- */
@@ -231,18 +237,20 @@
         .animate-rabbit-float { animation: floatRabbit 2s ease-in-out infinite; }
         .animate-star-twinkle { animation: starTwinkle 1.5s ease-in-out infinite; }
 
-        /* --- SPACE HOLOGRAPHIC 3D BUTTONS WITH THAI KANOK FRAME --- */
+        /* --- SPACE HOLOGRAPHIC 3D BUTTONS (ไม่มีแสงวิ่งหรือแสงฟุ้งก่อนแตะกด) --- */
         .btn-space-3d {
             position: relative;
             background: linear-gradient(135deg, rgba(30, 34, 54, 0.92) 0%, rgba(14, 18, 32, 0.96) 100%);
-            border: 1.5px solid rgba(251, 191, 36, 0.45);
+            border: 1.5px solid rgba(251, 191, 36, 0.4);
             box-shadow: 
-                0 6px 20px -2px rgba(0, 0, 0, 0.55),
-                inset 0 0 0 1px rgba(254, 240, 138, 0.14),
-                inset 0 1px 1px 0 rgba(253, 224, 71, 0.32),
+                0 6px 16px -2px rgba(0, 0, 0, 0.55),
+                inset 0 0 0 1px rgba(254, 240, 138, 0.1),
+                inset 0 1px 1px 0 rgba(253, 224, 71, 0.2),
                 inset 0 -2px 4px 0 rgba(0, 0, 0, 0.6);
-            transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: transform 0.14s ease, border-color 0.14s ease, box-shadow 0.14s ease;
             overflow: visible;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
         }
 
         /* Corner Kanok Flame Accents on Buttons */
@@ -253,63 +261,60 @@
             border-radius: 9px;
             pointer-events: none;
             background-image:
-                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M1 11 C1 5, 5 1, 11 1 C6 3, 4 5, 3 9 C5 7, 7 6, 10 6 C6 7, 3 9, 1 11 Z' fill='%23fbbf24' fill-opacity='0.35'/%3E%3C/svg%3E"),
-                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M11 1 C11 7, 7 11, 1 11 C6 9, 8 7, 9 3 C7 5, 5 6, 2 6 C6 5, 9 3, 11 1 Z' fill='%23fbbf24' fill-opacity='0.35'/%3E%3C/svg%3E");
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M1 11 C1 5, 5 1, 11 1 C6 3, 4 5, 3 9 C5 7, 7 6, 10 6 C6 7, 3 9, 1 11 Z' fill='%23fbbf24' fill-opacity='0.32'/%3E%3C/svg%3E"),
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M11 1 C11 7, 7 11, 1 11 C6 9, 8 7, 9 3 C7 5, 5 6, 2 6 C6 5, 9 3, 11 1 Z' fill='%23fbbf24' fill-opacity='0.32'/%3E%3C/svg%3E");
             background-position: top left, bottom right;
             background-repeat: no-repeat;
             background-size: 10px 10px;
         }
 
+        /* ปิดแถบแสง ::before ที่เคยวิ่งเกินก่อนกด */
         .btn-space-3d::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(251, 191, 36, 0.18), transparent);
-            transition: 0.5s;
-            pointer-events: none;
+            display: none;
         }
 
-        .btn-space-3d:hover::before { left: 100%; }
-
+        /* ตอนชี้เมาส์: ปรับขอบเล็กน้อยโดยไม่เปิดแสงฟุ้งเกิน */
         .btn-space-3d:hover {
-            transform: translateY(-2px) scale(1.02);
-            border-color: var(--theme-accent);
-            box-shadow: 
-                0 10px 25px -4px var(--theme-glow),
-                inset 0 2px 2px 0 rgba(255, 255, 255, 0.45),
-                inset 0 -2px 4px 0 rgba(0, 0, 0, 0.4);
+            border-color: rgba(251, 191, 36, 0.65);
         }
 
-        .btn-space-3d:active {
-            transform: translateY(1px) scale(0.98);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4), inset 0 1px 1px 0 rgba(255, 255, 255, 0.2);
+        /* ตอนแตะ/กดปุ่มจริง: เปิดแสงเรืองรองชัดเจน */
+        .btn-space-3d:active,
+        .btn-space-3d.is-pressed {
+            transform: translateY(1px) scale(0.97) !important;
+            border-color: var(--theme-accent) !important;
+            box-shadow: 
+                0 0 24px var(--theme-glow),
+                0 0 10px var(--theme-accent),
+                inset 0 0 14px rgba(251, 191, 36, 0.35),
+                inset 0 1px 2px 0 rgba(255, 255, 255, 0.45) !important;
         }
 
         /* Dynamic Theme Active Nav Button */
         .nav-btn-theme-active {
             background: linear-gradient(135deg, var(--theme-primary), var(--theme-secondary)) !important;
-            border-color: rgba(253, 224, 71, 0.8) !important;
-            box-shadow: 0 0 22px var(--theme-glow), inset 0 0 0 1px rgba(254, 240, 138, 0.35), inset 0 1px 2px rgba(255, 255, 255, 0.45) !important;
+            border-color: rgba(253, 224, 71, 0.75) !important;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45), inset 0 0 0 1px rgba(254, 240, 138, 0.25) !important;
             color: #ffffff !important;
+        }
+
+        .nav-btn-theme-active:active,
+        .nav-btn-theme-active.is-pressed {
+            box-shadow: 0 0 26px var(--theme-glow), inset 0 0 14px rgba(254, 240, 138, 0.45) !important;
         }
 
         /* --- LASER GLOW 3D ANIMATION FOR "TODAY" COLUMN --- */
         @keyframes laserGlow3D {
             0% {
-                box-shadow: inset 0 0 12px var(--theme-glow), 0 0 20px var(--theme-glow);
+                box-shadow: inset 0 0 10px var(--theme-glow), 0 0 14px var(--theme-glow);
                 border-color: var(--theme-primary);
             }
             50% {
-                box-shadow: inset 0 0 22px var(--theme-glow), 0 0 30px var(--theme-glow);
+                box-shadow: inset 0 0 18px var(--theme-glow), 0 0 22px var(--theme-glow);
                 border-color: var(--theme-accent);
             }
             100% {
-                box-shadow: inset 0 0 12px var(--theme-glow), 0 0 20px var(--theme-glow);
+                box-shadow: inset 0 0 10px var(--theme-glow), 0 0 14px var(--theme-glow);
                 border-color: var(--theme-primary);
             }
         }
@@ -358,15 +363,16 @@
 
         /* Shift Badge inside Table */
         .shift-select-badge-3d {
-            transition: transform 0.15s ease, filter 0.15s ease;
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3), inset 0 1.5px 0 rgba(255, 255, 255, 0.5);
+            transition: transform 0.14s ease, filter 0.14s ease, box-shadow 0.14s ease;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.35);
             font-weight: 800;
             letter-spacing: 0.04em;
             border: 1px solid rgba(255, 255, 255, 0.25);
         }
-        .shift-select-badge-3d:hover {
-            transform: scale(1.04);
+        .shift-select-badge-3d:active {
+            transform: scale(0.96);
             filter: brightness(1.15);
+            box-shadow: 0 0 14px var(--theme-glow);
         }
 
         /* STABILITY & TEXT VISIBILITY FIX FOR SCROLLING */
@@ -435,16 +441,16 @@
             <!-- App Branding & Dynamic Festival Badge -->
             <div class="px-3.5 py-3.5 flex items-center space-x-3 border-b border-amber-500/20 bg-slate-950/65 shadow-md">
                 <div class="relative group shrink-0 animate-cute-float">
-                    <div id="sidebar-logo-glow" class="absolute -inset-1 bg-gradient-to-r from-amber-500 to-red-700 rounded-2xl blur-md opacity-70 group-hover:opacity-100 transition duration-300"></div>
+                    <div id="sidebar-logo-glow" class="absolute -inset-1 bg-gradient-to-r from-amber-500 to-red-700 rounded-2xl blur-md opacity-70 transition duration-300"></div>
                     <div class="kanok-icon-frame p-0.5 rounded-xl">
-                        <img src="icon-192.png" alt="Logo" class="relative w-8 h-8 rounded-lg object-cover transition-all duration-300 group-hover:rotate-6 group-hover:scale-105">
+                        <img src="icon-192.png" alt="Logo" class="relative w-8 h-8 rounded-lg object-cover transition-all duration-300">
                     </div>
                     <span id="sidebar-logo-festival-badge" class="kanok-icon-frame absolute -bottom-1.5 -right-1.5 w-5 h-5 rounded-lg text-[10px] shadow-md select-none">🪷</span>
                 </div>
                 <div>
                     <h1 class="font-extrabold text-white text-xs tracking-wide flex items-center gap-1">
                         ShiftMaster
-                        <span id="sidebar-3d-badge" class="text-[7.5px] font-extrabold px-1.5 py-0.2 rounded-full bg-gradient-to-r from-amber-500 to-red-700 text-white border border-amber-300/50">กนก 3D</span>
+                        <span id="sidebar-3d-badge" class="text-[7.5px] font-extrabold px-1.5 py-0.2 rounded-full bg-gradient-to-r from-amber-500 to-red-700 text-white border border-amber-300/50">Konok 3D</span>
                     </h1>
                     <p id="sidebar-festival-subtitle" class="text-[9px] text-amber-300 font-bold leading-none mt-0.5">เทศกาลลอยกระทง</p>
                 </div>
@@ -492,7 +498,7 @@
         <div class="p-3 border-t border-amber-500/20 bg-slate-950/85 relative z-10">
             <div class="kanok-divider mb-2"></div>
             <div class="flex items-center justify-between text-[9.5px] font-semibold">
-                <span id="sidebar-version-text" class="text-amber-300/90">v6.7 Kanok Frame</span>
+                <span id="sidebar-version-text" class="text-amber-300/90">v6.8 Touch Glow</span>
                 <span id="sync-status" class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[8.5px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-glow-emerald">
                     <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
                     เชื่อมต่อแล้ว
@@ -588,7 +594,7 @@
                     </div>
 
                     <div class="flex items-center space-x-2">
-                        <button onclick="resetMonthSchedule()" class="btn-space-3d flex items-center space-x-1.5 px-3 py-1 bg-rose-950/80 hover:bg-rose-900 text-rose-300 text-[11px] font-bold rounded-xl border-rose-500/50 shadow-3d-sm">
+                        <button onclick="resetMonthSchedule()" class="btn-space-3d flex items-center space-x-1.5 px-3 py-1 bg-rose-950/80 text-rose-300 text-[11px] font-bold rounded-xl border-rose-500/50 shadow-3d-sm">
                             <span class="kanok-icon-frame w-5 h-5 rounded-md shrink-0 border-rose-400/60">
                                 <i data-lucide="rotate-ccw" class="w-3 h-3 text-rose-300"></i>
                             </span>
@@ -632,9 +638,8 @@
                     </div>
 
                     <!-- 3D Cute Mascot Card with Kanok Icon Frame -->
-                    <div onclick="petTheRabbit()" class="btn-space-3d flex items-center space-x-2.5 px-3 py-1.5 rounded-xl cursor-pointer transition group shrink-0 relative z-10" title="คลิกทักทายน้องมาสคอต!">
+                    <div onclick="petTheRabbit()" class="btn-space-3d flex items-center space-x-2.5 px-3 py-1.5 rounded-xl cursor-pointer transition shrink-0 relative z-10" title="คลิกทักทายน้องมาสคอต!">
                         <div class="relative animate-rabbit-float shrink-0">
-                            <div class="absolute -inset-1 bg-gradient-to-r from-amber-400 via-pink-500 to-amber-500 rounded-lg blur-xs opacity-75 group-hover:opacity-100"></div>
                             <div id="rabbit-avatar-icon" class="kanok-icon-frame relative w-8 h-8 rounded-lg text-sm shadow-glow-rose select-none">
                                 🐰
                             </div>
@@ -848,23 +853,43 @@
 
     <!-- Application Script Logic -->
     <script>
+        // --- ควบคุมการแสดงแสงเฉพาะช่วงเวลาที่กด/แตะปุ่มจริงๆ ---
+        function bindPressGlowToButtons() {
+            const clearPressed = () => {
+                document.querySelectorAll('.btn-space-3d.is-pressed').forEach(el => {
+                    el.classList.remove('is-pressed');
+                });
+            };
+
+            document.addEventListener('pointerdown', (e) => {
+                const btn = e.target.closest('.btn-space-3d');
+                if (!btn) return;
+                clearPressed();
+                btn.classList.add('is-pressed');
+            }, { passive: true });
+
+            document.addEventListener('pointerup', clearPressed, { passive: true });
+            document.addEventListener('pointercancel', clearPressed, { passive: true });
+            window.addEventListener('blur', clearPressed);
+        }
+
         // --- FESTIVAL THEME CONFIGURATIONS & GLOBAL UI ICONS ---
         const FESTIVAL_THEMES = {
             newyear: {
                 name: 'ปีใหม่',
                 emojis: ['🎆', '🎇', '🎉', '🥂', '✨', '🎊', '⭐'],
                 animation: 'popBurstFestival',
-                shadow: 'drop-shadow(0 0 10px rgba(250, 204, 21, 0.9)) drop-shadow(0 0 12px rgba(236, 72, 153, 0.7))',
-                borderColor: 'rgba(250, 204, 21, 0.55)',
-                boxGlow: '0 0 28px rgba(250, 204, 21, 0.3), inset 0 0 14px rgba(236, 72, 153, 0.3)',
-                tint1: 'rgba(250, 204, 21, 0.16)',
-                tint2: 'rgba(236, 72, 153, 0.14)',
+                shadow: 'drop-shadow(0 0 6px rgba(250, 204, 21, 0.7))',
+                borderColor: 'rgba(250, 204, 21, 0.45)',
+                boxGlow: '0 10px 24px rgba(0, 0, 0, 0.5)',
+                tint1: 'rgba(250, 204, 21, 0.14)',
+                tint2: 'rgba(236, 72, 153, 0.12)',
                 primaryColor: '#ca8a04',
                 secondaryColor: '#991b1b',
                 accentColor: '#facc15',
-                glowColor: 'rgba(250, 204, 21, 0.55)',
-                orbTop: 'rgba(234, 179, 8, 0.32)',
-                orbBottom: 'rgba(236, 72, 153, 0.28)',
+                glowColor: 'rgba(250, 204, 21, 0.65)',
+                orbTop: 'rgba(234, 179, 8, 0.25)',
+                orbBottom: 'rgba(236, 72, 153, 0.22)',
                 icons: {
                     logoBadge: '🎆', header: '🎆', today: '🎉', settings: '🥂',
                     filter: '🎇', festival: '🎊', bookmark: '🎆', navRoster: '🗓️',
@@ -882,17 +907,17 @@
                 name: 'วาเลนไทน์',
                 emojis: ['💝', '💖', '💘', '🌹', '🧸', '💌', '✨'],
                 animation: 'floatUpFestival',
-                shadow: 'drop-shadow(0 0 10px rgba(244, 63, 94, 0.85)) drop-shadow(0 0 12px rgba(236, 72, 153, 0.65))',
-                borderColor: 'rgba(251, 113, 133, 0.55)',
-                boxGlow: '0 0 28px rgba(244, 63, 94, 0.28), inset 0 0 14px rgba(236, 72, 153, 0.28)',
-                tint1: 'rgba(244, 63, 94, 0.17)',
-                tint2: 'rgba(236, 72, 153, 0.14)',
+                shadow: 'drop-shadow(0 0 6px rgba(244, 63, 94, 0.7))',
+                borderColor: 'rgba(251, 113, 133, 0.45)',
+                boxGlow: '0 10px 24px rgba(0, 0, 0, 0.5)',
+                tint1: 'rgba(244, 63, 94, 0.14)',
+                tint2: 'rgba(236, 72, 153, 0.12)',
                 primaryColor: '#e11d48',
                 secondaryColor: '#9d174d',
                 accentColor: '#fb7185',
-                glowColor: 'rgba(244, 63, 94, 0.55)',
-                orbTop: 'rgba(244, 63, 94, 0.30)',
-                orbBottom: 'rgba(236, 72, 153, 0.28)',
+                glowColor: 'rgba(244, 63, 94, 0.65)',
+                orbTop: 'rgba(244, 63, 94, 0.24)',
+                orbBottom: 'rgba(236, 72, 153, 0.22)',
                 icons: {
                     logoBadge: '💝', header: '💝', today: '💖', settings: '💌',
                     filter: '🌹', festival: '💘', bookmark: '💖', navRoster: '📅',
@@ -910,17 +935,17 @@
                 name: 'ตรุษจีน',
                 emojis: ['🧧', '🏮', '🐉', '🪙', '🍊', '🧨', '✨'],
                 animation: 'floatUpFestival',
-                shadow: 'drop-shadow(0 0 10px rgba(239, 68, 68, 0.85)) drop-shadow(0 0 12px rgba(250, 204, 21, 0.75))',
-                borderColor: 'rgba(250, 204, 21, 0.6)',
-                boxGlow: '0 0 28px rgba(239, 68, 68, 0.32), inset 0 0 14px rgba(250, 204, 21, 0.28)',
-                tint1: 'rgba(239, 68, 68, 0.18)',
-                tint2: 'rgba(250, 204, 21, 0.15)',
+                shadow: 'drop-shadow(0 0 6px rgba(239, 68, 68, 0.7))',
+                borderColor: 'rgba(250, 204, 21, 0.48)',
+                boxGlow: '0 10px 24px rgba(0, 0, 0, 0.5)',
+                tint1: 'rgba(239, 68, 68, 0.15)',
+                tint2: 'rgba(250, 204, 21, 0.12)',
                 primaryColor: '#dc2626',
                 secondaryColor: '#b45309',
                 accentColor: '#facc15',
-                glowColor: 'rgba(239, 68, 68, 0.55)',
-                orbTop: 'rgba(220, 38, 38, 0.32)',
-                orbBottom: 'rgba(245, 158, 11, 0.30)',
+                glowColor: 'rgba(239, 68, 68, 0.65)',
+                orbTop: 'rgba(220, 38, 38, 0.25)',
+                orbBottom: 'rgba(245, 158, 11, 0.24)',
                 icons: {
                     logoBadge: '🧧', header: '🏮', today: '🪙', settings: '🧨',
                     filter: '🍊', festival: '🧧', bookmark: '🏮', navRoster: '📅',
@@ -938,17 +963,17 @@
                 name: 'สงกรานต์',
                 emojis: ['💦', '🔫', '💧', '🌺', '🪣', '🫧', '☀️'],
                 animation: 'floatUpFestival',
-                shadow: 'drop-shadow(0 0 8px rgba(56, 189, 248, 0.85)) drop-shadow(0 0 10px rgba(34, 211, 238, 0.65))',
-                borderColor: 'rgba(56, 189, 248, 0.55)',
-                boxGlow: '0 0 28px rgba(6, 182, 212, 0.35), inset 0 0 14px rgba(56, 189, 248, 0.3)',
-                tint1: 'rgba(14, 165, 233, 0.18)',
-                tint2: 'rgba(20, 184, 166, 0.14)',
+                shadow: 'drop-shadow(0 0 6px rgba(56, 189, 248, 0.7))',
+                borderColor: 'rgba(56, 189, 248, 0.45)',
+                boxGlow: '0 10px 24px rgba(0, 0, 0, 0.5)',
+                tint1: 'rgba(14, 165, 233, 0.15)',
+                tint2: 'rgba(20, 184, 166, 0.12)',
                 primaryColor: '#0284c7',
                 secondaryColor: '#0f766e',
                 accentColor: '#38bdf8',
-                glowColor: 'rgba(56, 189, 248, 0.55)',
-                orbTop: 'rgba(14, 165, 233, 0.32)',
-                orbBottom: 'rgba(20, 184, 166, 0.28)',
+                glowColor: 'rgba(56, 189, 248, 0.65)',
+                orbTop: 'rgba(14, 165, 233, 0.25)',
+                orbBottom: 'rgba(20, 184, 166, 0.22)',
                 icons: {
                     logoBadge: '💦', header: '💦', today: '🌺', settings: '🔫',
                     filter: '💧', festival: '🫧', bookmark: '💦', navRoster: '📅',
@@ -966,17 +991,17 @@
                 name: 'วันแม่',
                 emojis: ['💐', '🌸', '💙', '💖', '✨', '🌷'],
                 animation: 'floatUpFestival',
-                shadow: 'drop-shadow(0 0 9px rgba(56, 189, 248, 0.8)) drop-shadow(0 0 10px rgba(244, 114, 182, 0.6))',
-                borderColor: 'rgba(125, 211, 252, 0.55)',
-                boxGlow: '0 0 28px rgba(56, 189, 248, 0.28), inset 0 0 14px rgba(244, 114, 182, 0.22)',
-                tint1: 'rgba(56, 189, 248, 0.17)',
-                tint2: 'rgba(244, 114, 182, 0.13)',
+                shadow: 'drop-shadow(0 0 6px rgba(56, 189, 248, 0.65))',
+                borderColor: 'rgba(125, 211, 252, 0.45)',
+                boxGlow: '0 10px 24px rgba(0, 0, 0, 0.5)',
+                tint1: 'rgba(56, 189, 248, 0.14)',
+                tint2: 'rgba(244, 114, 182, 0.11)',
                 primaryColor: '#0284c7',
                 secondaryColor: '#be185d',
                 accentColor: '#7dd3fc',
-                glowColor: 'rgba(56, 189, 248, 0.5)',
-                orbTop: 'rgba(56, 189, 248, 0.30)',
-                orbBottom: 'rgba(244, 114, 182, 0.24)',
+                glowColor: 'rgba(56, 189, 248, 0.6)',
+                orbTop: 'rgba(56, 189, 248, 0.24)',
+                orbBottom: 'rgba(244, 114, 182, 0.20)',
                 icons: {
                     logoBadge: '💐', header: '💐', today: '🌸', settings: '💙',
                     filter: '🌸', festival: '💐', bookmark: '💐', navRoster: '📅',
@@ -994,17 +1019,17 @@
                 name: 'ฮาโลวีน',
                 emojis: ['🎃', '👻', '🦇', '🕷️', '🕸️', '🍬', '🔮'],
                 animation: 'floatUpFestival',
-                shadow: 'drop-shadow(0 0 10px rgba(249, 115, 22, 0.85)) drop-shadow(0 0 12px rgba(168, 85, 247, 0.7))',
-                borderColor: 'rgba(249, 115, 22, 0.55)',
-                boxGlow: '0 0 28px rgba(249, 115, 22, 0.3), inset 0 0 14px rgba(168, 85, 247, 0.35)',
-                tint1: 'rgba(249, 115, 22, 0.17)',
-                tint2: 'rgba(147, 51, 234, 0.16)',
+                shadow: 'drop-shadow(0 0 6px rgba(249, 115, 22, 0.7))',
+                borderColor: 'rgba(249, 115, 22, 0.45)',
+                boxGlow: '0 10px 24px rgba(0, 0, 0, 0.5)',
+                tint1: 'rgba(249, 115, 22, 0.14)',
+                tint2: 'rgba(147, 51, 234, 0.14)',
                 primaryColor: '#ea580c',
                 secondaryColor: '#6b21a8',
                 accentColor: '#fb923c',
-                glowColor: 'rgba(249, 115, 22, 0.55)',
-                orbTop: 'rgba(249, 115, 22, 0.32)',
-                orbBottom: 'rgba(147, 51, 234, 0.32)',
+                glowColor: 'rgba(249, 115, 22, 0.65)',
+                orbTop: 'rgba(249, 115, 22, 0.25)',
+                orbBottom: 'rgba(147, 51, 234, 0.25)',
                 icons: {
                     logoBadge: '🎃', header: '🎃', today: '👻', settings: '🔮',
                     filter: '🦇', festival: '🕸️', bookmark: '🎃', navRoster: '📅',
@@ -1022,17 +1047,17 @@
                 name: 'ลอยกระทง',
                 emojis: ['🪷', '🪷', '✨', '🏮', '🌕', '🪷'],
                 animation: 'floatUpFestival',
-                shadow: 'drop-shadow(0 0 8px rgba(251, 191, 36, 0.75)) drop-shadow(0 4px 10px rgba(217, 119, 6, 0.45))',
-                borderColor: 'rgba(251, 191, 36, 0.5)',
-                boxGlow: '0 0 25px rgba(251, 191, 36, 0.28), inset 0 0 12px rgba(217, 119, 6, 0.3)',
-                tint1: 'rgba(217, 119, 6, 0.16)',
-                tint2: 'rgba(153, 27, 27, 0.14)',
+                shadow: 'drop-shadow(0 0 6px rgba(251, 191, 36, 0.65))',
+                borderColor: 'rgba(251, 191, 36, 0.42)',
+                boxGlow: '0 10px 24px rgba(0, 0, 0, 0.5)',
+                tint1: 'rgba(217, 119, 6, 0.14)',
+                tint2: 'rgba(153, 27, 27, 0.12)',
                 primaryColor: '#d97706',
                 secondaryColor: '#991b1b',
                 accentColor: '#fbbf24',
-                glowColor: 'rgba(251, 191, 36, 0.5)',
-                orbTop: 'rgba(245, 158, 11, 0.28)',
-                orbBottom: 'rgba(153, 27, 27, 0.28)',
+                glowColor: 'rgba(251, 191, 36, 0.65)',
+                orbTop: 'rgba(245, 158, 11, 0.22)',
+                orbBottom: 'rgba(153, 27, 27, 0.22)',
                 icons: {
                     logoBadge: '🪷', header: '🪷', today: '🌕', settings: '🏮',
                     filter: '🪷', festival: '✨', bookmark: '🪷', navRoster: '📅',
@@ -1050,17 +1075,17 @@
                 name: 'คริสต์มาส',
                 emojis: ['🎄', '🎅', '🎁', '⛄', '❄️', '🦌', '🔔'],
                 animation: 'fallDownFestival',
-                shadow: 'drop-shadow(0 0 8px rgba(52, 211, 153, 0.8)) drop-shadow(0 0 10px rgba(244, 63, 94, 0.6))',
-                borderColor: 'rgba(52, 211, 153, 0.55)',
-                boxGlow: '0 0 25px rgba(16, 185, 129, 0.3), inset 0 0 14px rgba(244, 63, 94, 0.25)',
-                tint1: 'rgba(16, 185, 129, 0.17)',
-                tint2: 'rgba(244, 63, 94, 0.14)',
+                shadow: 'drop-shadow(0 0 6px rgba(52, 211, 153, 0.65))',
+                borderColor: 'rgba(52, 211, 153, 0.45)',
+                boxGlow: '0 10px 24px rgba(0, 0, 0, 0.5)',
+                tint1: 'rgba(16, 185, 129, 0.14)',
+                tint2: 'rgba(244, 63, 94, 0.12)',
                 primaryColor: '#059669',
                 secondaryColor: '#991b1b',
                 accentColor: '#34d399',
-                glowColor: 'rgba(16, 185, 129, 0.55)',
-                orbTop: 'rgba(16, 185, 129, 0.32)',
-                orbBottom: 'rgba(244, 63, 94, 0.28)',
+                glowColor: 'rgba(16, 185, 129, 0.65)',
+                orbTop: 'rgba(16, 185, 129, 0.25)',
+                orbBottom: 'rgba(244, 63, 94, 0.22)',
                 icons: {
                     logoBadge: '🎄', header: '🎄', today: '🎁', settings: '🔔',
                     filter: '❄️', festival: '🎅', bookmark: '🎄', navRoster: '🗓️',
@@ -1158,7 +1183,6 @@
             const headerBar = document.getElementById('header-accent-bar');
             if (headerBar) {
                 headerBar.style.background = `linear-gradient(to bottom, ${theme.accentColor}, ${theme.primaryColor}, ${theme.secondaryColor})`;
-                headerBar.style.boxShadow = `0 0 15px ${theme.glowColor}`;
             }
 
             const box = document.getElementById('shift-legend-box');
@@ -1308,8 +1332,6 @@
                     ctx.beginPath();
                     ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
                     ctx.fillStyle = theme.accentColor;
-                    ctx.shadowColor = theme.accentColor;
-                    ctx.shadowBlur = 8;
                     ctx.globalAlpha = p.alpha * pulse;
                     ctx.fill();
                     ctx.restore();
@@ -1339,11 +1361,11 @@
             window.addEventListener('resize', resizeLegendCanvas);
 
             const fishPalettes = [
-                { body: '#38bdf8', fin: '#fbbf24', glow: 'rgba(251, 191, 36, 0.45)' },
-                { body: '#f472b6', fin: '#fbbf24', glow: 'rgba(244, 114, 182, 0.45)' },
-                { body: '#34d399', fin: '#fbbf24', glow: 'rgba(52, 211, 153, 0.45)' },
-                { body: '#fbbf24', fin: '#fb923c', glow: 'rgba(251, 191, 36, 0.45)' },
-                { body: '#a78bfa', fin: '#fbbf24', glow: 'rgba(167, 139, 250, 0.45)' }
+                { body: '#38bdf8', fin: '#fbbf24' },
+                { body: '#f472b6', fin: '#fbbf24' },
+                { body: '#34d399', fin: '#fbbf24' },
+                { body: '#fbbf24', fin: '#fb923c' },
+                { body: '#a78bfa', fin: '#fbbf24' }
             ];
             const fishes = Array.from({ length: 6 }, (_, i) => {
                 const dir = i % 2 === 0 ? 1 : -1;
@@ -1409,8 +1431,6 @@
                 ctx.translate(fish.x, fish.y);
                 ctx.scale(dir, 1);
                 ctx.globalAlpha = fish.alpha;
-                ctx.shadowColor = fish.palette.glow;
-                ctx.shadowBlur = 10;
 
                 ctx.beginPath();
                 ctx.moveTo(-s * 0.85, 0);
@@ -1444,8 +1464,6 @@
                 ctx.translate(bat.x, bat.y);
                 ctx.globalAlpha = 0.45;
                 ctx.fillStyle = '#c084fc';
-                ctx.shadowColor = 'rgba(249, 115, 22, 0.6)';
-                ctx.shadowBlur = 8;
 
                 ctx.beginPath();
                 ctx.moveTo(0, 0);
@@ -1491,8 +1509,6 @@
                         ctx.arc(s.x % canvas.width, s.y, s.r, 0, Math.PI * 2);
                         ctx.fillStyle = '#ffffff';
                         ctx.globalAlpha = s.alpha;
-                        ctx.shadowColor = '#38bdf8';
-                        ctx.shadowBlur = 6;
                         ctx.fill();
                         ctx.restore();
                     });
@@ -1521,8 +1537,6 @@
                             ctx.arc(sp.x, sp.y, 1.8, 0, Math.PI * 2);
                             ctx.fillStyle = fw.color;
                             ctx.globalAlpha = Math.max(0, fw.life);
-                            ctx.shadowColor = fw.color;
-                            ctx.shadowBlur = 8;
                             ctx.fill();
                             ctx.restore();
                         });
@@ -1545,8 +1559,6 @@
                         ctx.lineWidth = 1.2;
                         ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
                         ctx.globalAlpha = b.alpha;
-                        ctx.shadowColor = theme.accentColor;
-                        ctx.shadowBlur = 6;
                         ctx.fill();
                         ctx.stroke();
                         ctx.restore();
@@ -1668,7 +1680,7 @@
             if (onConfirm) {
                 actions.innerHTML = `
                     <button onclick="closeModal()" class="btn-space-3d px-4 py-2 text-slate-300 rounded-xl text-xs font-bold border-slate-600">ยกเลิก</button>
-                    <button id="modal-confirm-btn" class="btn-space-3d px-4 py-2 bg-rose-600 hover:bg-rose-500 text-white rounded-xl text-xs font-bold shadow-glow-rose border-rose-400/50">ยืนยัน</button>
+                    <button id="modal-confirm-btn" class="btn-space-3d px-4 py-2 bg-rose-600 text-white rounded-xl text-xs font-bold shadow-glow-rose border-rose-400/50">ยืนยัน</button>
                 `;
                 document.getElementById('modal-confirm-btn').onclick = () => { onConfirm(); closeModal(); };
             } else {
@@ -1767,7 +1779,7 @@
             const todayDate = today.getDate();
 
             document.getElementById('roster-legend').innerHTML = shifts.map(s => `
-                <span class="inline-flex items-center px-2.5 py-1 rounded-xl text-[10px] font-extrabold shadow-3d-sm transition-all hover:scale-105 cursor-pointer border border-white/20" style="background-color: ${s.bg}; color: ${s.text};">
+                <span class="inline-flex items-center px-2.5 py-1 rounded-xl text-[10px] font-extrabold shadow-3d-sm transition-transform active:scale-95 cursor-pointer border border-white/20" style="background-color: ${s.bg}; color: ${s.text};">
                     ${s.code}: ${s.name} (${s.start !== '-' ? s.start + '-' + s.end : 'หยุด'})
                 </span>
             `).join('');
@@ -1898,7 +1910,7 @@
                 if (shift.code !== 'OFF') totalAssigned += assignedEmps.length;
 
                 html += `
-                    <div class="kanok-panel rounded-2xl overflow-hidden flex flex-col transition-all hover:scale-[1.01] shadow-3d-md border border-amber-500/25">
+                    <div class="kanok-panel rounded-2xl overflow-hidden flex flex-col transition-transform active:scale-[0.99] shadow-3d-md border border-amber-500/25">
                         <div class="p-3 border-b border-white/10 flex items-center justify-between shadow-sm" style="background-color: ${shift.bg}; color: ${shift.text};">
                             <div class="font-bold flex items-center space-x-2 text-xs">
                                 <span class="px-2.5 py-0.5 rounded-lg bg-white/90 text-xs font-extrabold shadow-3d-sm">${shift.code}</span>
@@ -1972,7 +1984,7 @@
                             <button onclick="moveEmployee(${index}, 1)" ${index === employees.length - 1 ? 'disabled class="opacity-30 cursor-not-allowed"' : ''} class="btn-space-3d px-2 py-1 text-xs bg-slate-800 text-amber-300 rounded font-bold">▼ เลื่อนลง</button>
                         </td>
                         <td class="p-3 text-center">
-                            <button onclick="deleteEmployee('${emp.id}')" class="btn-space-3d p-1.5 text-rose-400 hover:bg-rose-950/60 rounded-lg transition-all border-rose-500/40" title="ลบพนักงาน">
+                            <button onclick="deleteEmployee('${emp.id}')" class="btn-space-3d p-1.5 text-rose-400 rounded-lg transition-all border-rose-500/40" title="ลบพนักงาน">
                                 <span class="kanok-icon-frame w-6 h-6 rounded-md border-rose-400/60">
                                     <i data-lucide="trash-2" class="w-3.5 h-3.5 text-rose-400"></i>
                                 </span>
@@ -2053,12 +2065,12 @@
                         <div class="text-[10px] text-slate-400 font-semibold mt-0.5">${shift.start !== '-' ? shift.start + ' - ' + shift.end : 'วันหยุด'}</div>
                     </div>
                     <div class="flex items-center space-x-1">
-                        <button onclick="editShift('${shift.code}')" class="btn-space-3d p-1 text-amber-400 hover:bg-amber-950 rounded-lg border-amber-500/40" title="แก้ไข">
+                        <button onclick="editShift('${shift.code}')" class="btn-space-3d p-1 text-amber-400 rounded-lg border-amber-500/40" title="แก้ไข">
                             <span class="kanok-icon-frame w-6 h-6 rounded-md">
                                 <i data-lucide="edit-3" class="w-3 h-3 text-amber-400"></i>
                             </span>
                         </button>
-                        ${shift.code !== 'OFF' ? `<button onclick="deleteShift('${shift.code}')" class="btn-space-3d p-1 text-rose-400 hover:bg-rose-950 rounded-lg border-rose-500/40" title="ลบ">
+                        ${shift.code !== 'OFF' ? `<button onclick="deleteShift('${shift.code}')" class="btn-space-3d p-1 text-rose-400 rounded-lg border-rose-500/40" title="ลบ">
                             <span class="kanok-icon-frame w-6 h-6 rounded-md border-rose-400/60">
                                 <i data-lucide="trash-2" class="w-3 h-3 text-rose-400"></i>
                             </span>
@@ -2071,6 +2083,7 @@
 
         // Initialize App & Smooth Transitions
         window.onload = function() {
+            bindPressGlowToButtons();
             initBackgroundParticles();
             initLegendFestivalCanvas();
             displayTodayInfo();
