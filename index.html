@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ระบบจัดการตารางกะพนักงาน (Asawann Hotel Future Glass 4D)</title>
+    <title>ระบบจัดการตารางกะพนักงาน (Asawann Hotel Galaxy Glass 4D)</title>
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#050816">
     
@@ -17,10 +17,10 @@
                         sans: ['Prompt', 'sans-serif'],
                     },
                     boxShadow: {
-                        '4d-glass-sm': '0 6px 16px -2px rgba(2, 6, 23, 0.65), 0 2px 4px -1px rgba(34, 211, 238, 0.14), inset 0 1.5px 1px 0 rgba(255, 255, 255, 0.28), inset 0 -2px 5px 0 rgba(2, 6, 23, 0.72)',
-                        '4d-glass-md': '0 14px 32px -6px rgba(2, 6, 23, 0.78), 0 4px 10px -2px rgba(34, 211, 238, 0.16), inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.24), inset 0 -3px 8px 0 rgba(2, 6, 23, 0.78)',
-                        '4d-glass-lg': '0 26px 56px -12px rgba(2, 6, 23, 0.88), 0 8px 20px -4px rgba(129, 140, 248, 0.2), inset 0 2px 3px 0 rgba(255, 255, 255, 0.26), inset 0 -4px 10px 0 rgba(2, 6, 23, 0.82)',
-                        'glow-future': '0 0 22px rgba(34, 211, 238, 0.36), 0 0 40px rgba(129, 140, 248, 0.18), inset 0 0 10px rgba(34, 211, 238, 0.16)',
+                        '4d-glass-sm': '0 6px 16px -2px rgba(2, 6, 23, 0.65), 0 2px 4px -1px rgba(168, 85, 247, 0.16), inset 0 1.5px 1px 0 rgba(255, 255, 255, 0.28), inset 0 -2px 5px 0 rgba(2, 6, 23, 0.72)',
+                        '4d-glass-md': '0 14px 32px -6px rgba(2, 6, 23, 0.78), 0 4px 10px -2px rgba(192, 132, 252, 0.18), inset 0 1.5px 2px 0 rgba(255, 255, 255, 0.24), inset 0 -3px 8px 0 rgba(2, 6, 23, 0.78)',
+                        '4d-glass-lg': '0 26px 56px -12px rgba(2, 6, 23, 0.88), 0 8px 20px -4px rgba(129, 140, 248, 0.22), inset 0 2px 3px 0 rgba(255, 255, 255, 0.26), inset 0 -4px 10px 0 rgba(2, 6, 23, 0.82)',
+                        'glow-galaxy': '0 0 22px rgba(192, 132, 252, 0.36), 0 0 40px rgba(56, 189, 248, 0.18), inset 0 0 10px rgba(192, 132, 252, 0.16)',
                         'glow-emerald': '0 0 14px rgba(16, 185, 129, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.35)',
                         'glow-rose': '0 0 14px rgba(244, 63, 94, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.35)',
                     }
@@ -39,13 +39,13 @@
 
     <style>
         :root {
-            --theme-primary: #06b6d4;
-            --theme-secondary: #6366f1;
-            --theme-accent: #22d3ee;
-            --theme-glow: rgba(34, 211, 238, 0.55);
-            --festival-tint-1: rgba(6, 182, 212, 0.16);
-            --festival-tint-2: rgba(99, 102, 241, 0.16);
-            --glass-border: rgba(165, 243, 252, 0.26);
+            --theme-primary: #8b5cf6;
+            --theme-secondary: #3b82f6;
+            --theme-accent: #c084fc;
+            --theme-glow: rgba(192, 132, 252, 0.55);
+            --festival-tint-1: rgba(139, 92, 246, 0.18);
+            --festival-tint-2: rgba(56, 189, 248, 0.16);
+            --glass-border: rgba(216, 180, 254, 0.28);
         }
 
         body {
@@ -56,18 +56,18 @@
         .dashboard-bg-pattern {
             background-color: #050816;
             background-image:
-                radial-gradient(at 12% 14%, var(--festival-tint-1) 0px, transparent 52%),
-                radial-gradient(at 88% 82%, var(--festival-tint-2) 0px, transparent 55%),
-                radial-gradient(at 50% 0%, rgba(168, 85, 247, 0.08) 0px, transparent 50%),
-                linear-gradient(rgba(165, 243, 252, 0.04) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(165, 243, 252, 0.04) 1px, transparent 1px);
-            background-size: 100% 100%, 100% 100%, 100% 100%, 44px 44px, 44px 44px;
+                radial-gradient(at 15% 18%, var(--festival-tint-1) 0px, transparent 54%),
+                radial-gradient(at 85% 78%, var(--festival-tint-2) 0px, transparent 56%),
+                radial-gradient(at 55% 10%, rgba(236, 72, 153, 0.1) 0px, transparent 52%),
+                linear-gradient(rgba(192, 132, 252, 0.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(56, 189, 248, 0.035) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 100% 100%, 48px 48px, 48px 48px;
             transition: background-image 0.6s ease;
         }
 
         .glass-4d-panel {
             position: relative;
-            background: linear-gradient(145deg, rgba(18, 28, 54, 0.82) 0%, rgba(9, 15, 32, 0.88) 55%, rgba(15, 23, 46, 0.85) 100%);
+            background: linear-gradient(145deg, rgba(20, 24, 56, 0.82) 0%, rgba(9, 13, 32, 0.88) 55%, rgba(16, 20, 48, 0.85) 100%);
             backdrop-filter: blur(14px) saturate(145%);
             -webkit-backdrop-filter: blur(14px) saturate(145%);
             border: 1px solid var(--glass-border);
@@ -114,20 +114,20 @@
 
         .logo-glass-frame {
             position: relative;
-            background: linear-gradient(145deg, rgba(255, 255, 255, 0.2) 0%, rgba(15, 23, 42, 0.82) 50%, rgba(6, 182, 212, 0.22) 100%);
-            border: 1.5px solid rgba(165, 243, 252, 0.55);
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.2) 0%, rgba(15, 23, 42, 0.82) 50%, rgba(139, 92, 246, 0.24) 100%);
+            border: 1.5px solid rgba(216, 180, 254, 0.55);
             box-shadow: 0 8px 20px -4px rgba(2, 6, 23, 0.8);
         }
 
         .space-divider {
             height: 6px;
             width: 100%;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='6' viewBox='0 0 48 6'%3E%3Cline x1='0' y1='3' x2='18' y2='3' stroke='%2367e8f9' stroke-opacity='0.38' stroke-width='1.2'/%3E%3Cline x1='30' y1='3' x2='48' y2='3' stroke='%23a5b4fc' stroke-opacity='0.38' stroke-width='1.2'/%3E%3Cpolygon points='24,0.5 27.5,3 24,5.5 20.5,3' fill='%2322d3ee' fill-opacity='0.8'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='6' viewBox='0 0 48 6'%3E%3Cline x1='0' y1='3' x2='18' y2='3' stroke='%23c084fc' stroke-opacity='0.42' stroke-width='1.2'/%3E%3Cline x1='30' y1='3' x2='48' y2='3' stroke='%2338bdf8' stroke-opacity='0.42' stroke-width='1.2'/%3E%3Cpolygon points='24,0.5 27.5,3 24,5.5 20.5,3' fill='%23e879f9' fill-opacity='0.85'/%3E%3C/svg%3E");
             background-repeat: repeat-x;
             background-position: center;
         }
 
-        /* ลูกเล่นปุ่มไอคอน Future Glass 4D */
+        /* ลูกเล่นปุ่มไอคอน Galaxy Glass 4D */
         .hud-icon-frame {
             position: relative;
             display: inline-flex;
@@ -135,7 +135,7 @@
             justify-content: center;
             overflow: hidden;
             background: linear-gradient(145deg, rgba(255, 255, 255, 0.18) 0%, rgba(15, 23, 42, 0.82) 100%);
-            border: 1px solid rgba(165, 243, 252, 0.44);
+            border: 1px solid rgba(216, 180, 254, 0.44);
             box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 2px 8px rgba(2, 6, 23, 0.55);
             transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
         }
@@ -245,7 +245,7 @@
             background:
                 radial-gradient(at 20% 25%, var(--festival-tint-1) 0px, transparent 55%),
                 radial-gradient(at 80% 75%, var(--festival-tint-2) 0px, transparent 55%),
-                rgba(6, 11, 25, 0.8);
+                rgba(6, 10, 26, 0.82);
         }
 
         #roster-bg-canvas {
@@ -261,8 +261,8 @@
 
         .btn-glass-4d {
             position: relative;
-            background: linear-gradient(145deg, rgba(255, 255, 255, 0.14) 0%, rgba(16, 28, 56, 0.84) 50%, rgba(8, 15, 32, 0.92) 100%);
-            border: 1px solid rgba(165, 243, 252, 0.34);
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.14) 0%, rgba(20, 26, 58, 0.84) 50%, rgba(8, 14, 32, 0.92) 100%);
+            border: 1px solid rgba(216, 180, 254, 0.34);
             box-shadow: 0 6px 14px -4px rgba(2, 6, 23, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.25);
             transition: transform 0.14s ease, border-color 0.14s ease, background 0.16s ease;
             overflow: hidden;
@@ -284,7 +284,7 @@
 
         .nav-btn-theme-active {
             background: linear-gradient(135deg, color-mix(in srgb, var(--theme-primary) 82%, white 18%), color-mix(in srgb, var(--theme-secondary) 85%, #0f172a 15%)) !important;
-            border-color: rgba(224, 242, 254, 0.78) !important;
+            border-color: rgba(243, 232, 255, 0.78) !important;
             color: #ffffff !important;
         }
 
@@ -298,21 +298,21 @@
         }
 
         .today-laser-column {
-            background: rgba(14, 116, 144, 0.3) !important;
+            background: rgba(109, 40, 217, 0.32) !important;
             animation: laserPulseSoft 2.1s infinite ease-in-out;
         }
 
         .header-glass-bg {
-            background: linear-gradient(180deg, rgba(16, 26, 52, 0.9) 0%, rgba(8, 14, 30, 0.95) 100%);
+            background: linear-gradient(180deg, rgba(20, 25, 56, 0.9) 0%, rgba(8, 13, 30, 0.95) 100%);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(165, 243, 252, 0.25);
+            border-bottom: 1px solid rgba(216, 180, 254, 0.25);
         }
 
         #splash-screen {
             position: fixed;
             inset: 0;
-            background: radial-gradient(circle at 50% 40%, #101c38 0%, #050816 100%);
+            background: radial-gradient(circle at 50% 40%, #17173b 0%, #050816 100%);
             z-index: 9999;
             display: flex;
             flex-direction: column;
@@ -323,7 +323,7 @@
         #splash-screen.fade-out { opacity: 0; visibility: hidden; pointer-events: none; }
 
         .glass-sidebar-pattern {
-            background: linear-gradient(175deg, rgba(16, 25, 48, 0.94) 0%, rgba(7, 12, 26, 0.97) 100%);
+            background: linear-gradient(175deg, rgba(19, 24, 52, 0.94) 0%, rgba(7, 11, 26, 0.97) 100%);
             box-shadow: 8px 0 24px rgba(2, 6, 23, 0.7);
         }
 
@@ -378,7 +378,7 @@
         }
 
         .emp-dark-col {
-            background-color: rgba(8, 15, 34, 0.9) !important;
+            background-color: rgba(8, 14, 34, 0.9) !important;
             color: #ffffff !important;
             position: sticky !important;
             left: 0 !important;
@@ -393,17 +393,17 @@
 
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.65); }
-        ::-webkit-scrollbar-thumb { background: rgba(34, 211, 238, 0.55); border-radius: 999px; }
-        ::-webkit-scrollbar-thumb:hover { background: rgba(103, 232, 249, 0.85); }
+        ::-webkit-scrollbar-thumb { background: rgba(192, 132, 252, 0.55); border-radius: 999px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(232, 121, 249, 0.85); }
     </style>
 </head>
-<body class="h-full text-slate-100 flex flex-col md:flex-row overflow-hidden m-0 p-0 antialiased selection:bg-cyan-400 selection:text-slate-950">
+<body class="h-full text-slate-100 flex flex-col md:flex-row overflow-hidden m-0 p-0 antialiased selection:bg-purple-400 selection:text-slate-950">
 
     <!-- SPLASH SCREEN -->
     <div id="splash-screen">
         <div class="flex flex-col items-center space-y-4">
             <div class="relative group">
-                <div id="splash-logo-glow" class="absolute -inset-2.5 bg-gradient-to-r from-cyan-400 via-indigo-500 to-fuchsia-500 rounded-3xl blur-xl opacity-65"></div>
+                <div id="splash-logo-glow" class="absolute -inset-2.5 bg-gradient-to-r from-purple-500 via-sky-400 to-fuchsia-500 rounded-3xl blur-xl opacity-65"></div>
                 <div id="splash-logo-frame" class="logo-glass-frame relative p-1.5 rounded-3xl">
                     <img src="icon-512.png" alt="Logo" class="relative w-24 h-24 rounded-2xl object-cover">
                 </div>
@@ -411,27 +411,27 @@
             <div class="text-center space-y-1">
                 <h1 class="text-2xl font-extrabold text-white tracking-wider flex items-center justify-center gap-2 drop-shadow-md">
                     Asawann Hotel
-                    <span id="splash-4d-tag" class="text-[9px] font-extrabold px-2.5 py-0.5 rounded-full bg-gradient-to-r from-cyan-500 to-indigo-600 text-white shadow-glow-future border border-cyan-200/60">FUTURE GLASS 4D</span>
+                    <span id="splash-4d-tag" class="text-[9px] font-extrabold px-2.5 py-0.5 rounded-full bg-gradient-to-r from-purple-600 to-sky-500 text-white shadow-glow-galaxy border border-purple-200/60">GALAXY GLASS 4D</span>
                 </h1>
-                <p id="splash-subtitle" class="text-xs text-cyan-200 font-medium tracking-wide">ระบบจัดการตารางกะพนักงานแบบเรียลไทม์</p>
+                <p id="splash-subtitle" class="text-xs text-purple-200 font-medium tracking-wide">ระบบจัดการตารางกะพนักงานแบบเรียลไทม์</p>
             </div>
-            <div class="w-36 h-1.5 bg-slate-900/90 border border-cyan-400/30 rounded-full overflow-hidden mt-2 shadow-inner">
-                <div class="w-full h-full bg-gradient-to-r from-cyan-400 via-indigo-400 to-fuchsia-400"></div>
+            <div class="w-36 h-1.5 bg-slate-900/90 border border-purple-400/30 rounded-full overflow-hidden mt-2 shadow-inner">
+                <div class="w-full h-full bg-gradient-to-r from-purple-400 via-sky-400 to-fuchsia-400"></div>
             </div>
         </div>
     </div>
 
     <!-- Sidebar Navigation -->
-    <aside class="w-full md:w-60 glass-sidebar-pattern text-slate-300 flex flex-col justify-between shrink-0 z-25 border-r border-cyan-400/20 relative overflow-hidden">
-        <div id="sidebar-orb-top" class="absolute -top-16 -left-16 w-48 h-48 bg-cyan-500/25 rounded-full blur-3xl pointer-events-none transition-colors duration-700"></div>
-        <div id="sidebar-orb-bottom" class="absolute bottom-10 -right-10 w-48 h-48 bg-indigo-600/25 rounded-full blur-3xl pointer-events-none transition-colors duration-700"></div>
+    <aside class="w-full md:w-60 glass-sidebar-pattern text-slate-300 flex flex-col justify-between shrink-0 z-25 border-r border-purple-400/20 relative overflow-hidden">
+        <div id="sidebar-orb-top" class="absolute -top-16 -left-16 w-48 h-48 bg-purple-600/25 rounded-full blur-3xl pointer-events-none transition-colors duration-700"></div>
+        <div id="sidebar-orb-bottom" class="absolute bottom-10 -right-10 w-48 h-48 bg-sky-500/25 rounded-full blur-3xl pointer-events-none transition-colors duration-700"></div>
 
-        <div class="hidden md:block absolute top-0 right-0 w-2 h-full opacity-40 pointer-events-none" style="background-image: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%228%22 height=%2232%22 viewBox=%220 0 8 32%22%3E%3Cline x1=%224%22 y1=%220%22 x2=%224%22 y2=%2212%22 stroke=%2367e8f9%22 stroke-width=%221%22/%3E%3Crect x=%222.5%22 y=%2214%22 width=%223%22 height=%224%22 fill=%2322d3ee%22/%3E%3Cline x1=%224%22 y1=%2220%22 x2=%224%22 y2=%2232%22 stroke=%23a5b4fc%22 stroke-width=%221%22/%3E%3C/svg%3E'); background-repeat: repeat-y;"></div>
+        <div class="hidden md:block absolute top-0 right-0 w-2 h-full opacity-40 pointer-events-none" style="background-image: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%228%22 height=%2232%22 viewBox=%220 0 8 32%22%3E%3Cline x1=%224%22 y1=%220%22 x2=%224%22 y2=%2212%22 stroke=%23c084fc%22 stroke-width=%221%22/%3E%3Ccircle cx=%224%22 cy=%2216%22 r=%222%22 fill=%23e879f9%22/%3E%3Cline x1=%224%22 y1=%2220%22 x2=%224%22 y2=%2232%22 stroke=%2338bdf8%22 stroke-width=%221%22/%3E%3C/svg%3E'); background-repeat: repeat-y;"></div>
 
         <div class="relative z-10">
-            <div class="px-3.5 py-3.5 flex items-center space-x-3 border-b border-cyan-400/20 bg-slate-950/55 shadow-md">
+            <div class="px-3.5 py-3.5 flex items-center space-x-3 border-b border-purple-400/20 bg-slate-950/55 shadow-md">
                 <div class="relative group shrink-0">
-                    <div id="sidebar-logo-glow" class="absolute -inset-1 bg-gradient-to-r from-cyan-400 to-indigo-600 rounded-2xl blur-md opacity-65 transition duration-300"></div>
+                    <div id="sidebar-logo-glow" class="absolute -inset-1 bg-gradient-to-r from-purple-500 to-sky-500 rounded-2xl blur-md opacity-65 transition duration-300"></div>
                     <div id="sidebar-logo-frame" class="logo-glass-frame relative p-0.5 rounded-xl">
                         <img src="icon-192.png" alt="Logo" class="relative w-9 h-9 rounded-lg object-cover">
                     </div>
@@ -439,9 +439,9 @@
                 <div>
                     <h1 class="font-extrabold text-white text-xs tracking-wide flex items-center gap-1">
                         Asawann Hotel
-                        <span id="sidebar-4d-badge" class="text-[7.5px] font-extrabold px-1.5 py-0.5 rounded-full bg-gradient-to-r from-cyan-500 to-indigo-600 text-white border border-cyan-200/50">GLASS 4D</span>
+                        <span id="sidebar-4d-badge" class="text-[7.5px] font-extrabold px-1.5 py-0.5 rounded-full bg-gradient-to-r from-purple-600 to-sky-500 text-white border border-purple-200/50">GALAXY 4D</span>
                     </h1>
-                    <p id="sidebar-festival-subtitle" class="text-[9px] text-cyan-300 font-bold leading-none mt-1">ระบบตารางกะ 4D</p>
+                    <p id="sidebar-festival-subtitle" class="text-[9px] text-purple-300 font-bold leading-none mt-1">ระบบตารางกะกาแลคซี่</p>
                 </div>
             </div>
 
@@ -455,19 +455,19 @@
                     </div>
                     <i data-lucide="chevron-right" class="w-3.5 h-3.5 opacity-80"></i>
                 </button>
-                <button type="button" onclick="switchTab('daily')" id="nav-daily" class="btn-glass-4d w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium transition-all text-slate-300 hover:text-white border-cyan-400/30">
+                <button type="button" onclick="switchTab('daily')" id="nav-daily" class="btn-glass-4d w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium transition-all text-slate-300 hover:text-white border-purple-400/30">
                     <div class="flex items-center space-x-2.5">
                         <span class="hud-icon-frame w-6 h-6 rounded-lg shrink-0">
-                            <i data-lucide="layout-grid" class="w-3.5 h-3.5 text-cyan-300"></i>
+                            <i data-lucide="layout-grid" class="w-3.5 h-3.5 text-purple-300"></i>
                         </span>
                         <span>สรุปรายวัน</span>
                     </div>
                     <i data-lucide="chevron-right" class="w-3.5 h-3.5 opacity-60"></i>
                 </button>
-                <button type="button" onclick="switchTab('employees')" id="nav-employees" class="btn-glass-4d w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium transition-all text-slate-300 hover:text-white border-cyan-400/30">
+                <button type="button" onclick="switchTab('employees')" id="nav-employees" class="btn-glass-4d w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium transition-all text-slate-300 hover:text-white border-purple-400/30">
                     <div class="flex items-center space-x-2.5">
                         <span class="hud-icon-frame w-6 h-6 rounded-lg shrink-0">
-                            <i data-lucide="users" class="w-3.5 h-3.5 text-cyan-300"></i>
+                            <i data-lucide="users" class="w-3.5 h-3.5 text-purple-300"></i>
                         </span>
                         <span>จัดการพนักงาน</span>
                     </div>
@@ -476,10 +476,10 @@
             </nav>
         </div>
 
-        <div class="p-3 border-t border-cyan-400/20 bg-slate-950/75 relative z-10">
+        <div class="p-3 border-t border-purple-400/20 bg-slate-950/75 relative z-10">
             <div class="space-divider mb-2"></div>
             <div class="flex items-center justify-between text-[9.5px] font-semibold">
-                <span class="text-cyan-200/90">v8.5 Future Glass-4D</span>
+                <span class="text-purple-200/90">v8.5 Galaxy Glass-4D</span>
                 <span id="sync-status" class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[8.5px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-400/40 shadow-glow-emerald">
                     <span id="sync-dot" class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
                     <span id="sync-label">เชื่อมต่อแล้ว</span>
@@ -494,16 +494,16 @@
 
         <header class="header-glass-bg px-4 py-1.5 flex flex-wrap items-center justify-between gap-2 shrink-0 z-20 relative">
             <div class="flex items-center space-x-2.5">
-                <div id="header-accent-bar" class="w-2 h-5 bg-gradient-to-b from-cyan-300 via-cyan-500 to-indigo-600 rounded-full shadow-glow-future"></div>
+                <div id="header-accent-bar" class="w-2 h-5 bg-gradient-to-b from-purple-300 via-purple-500 to-sky-500 rounded-full shadow-glow-galaxy"></div>
                 <span class="hud-icon-frame w-6 h-6 rounded-lg shrink-0">
-                    <i data-lucide="layers" class="w-3.5 h-3.5 text-cyan-300"></i>
+                    <i data-lucide="orbit" class="w-3.5 h-3.5 text-purple-300"></i>
                 </span>
                 <h2 id="page-title" class="text-xs font-extrabold text-white tracking-tight drop-shadow">ตารางงานรายเดือน</h2>
             </div>
             <div class="flex flex-wrap items-center space-x-2">
-                <button type="button" onclick="jumpToToday()" title="คลิกเพื่อไปยังวันปัจจุบัน" class="btn-glass-4d text-[11px] font-bold text-cyan-100 px-3 py-1 rounded-xl flex items-center space-x-2 cursor-pointer shadow-4d-glass-sm">
+                <button type="button" onclick="jumpToToday()" title="คลิกเพื่อไปยังวันปัจจุบัน" class="btn-glass-4d text-[11px] font-bold text-purple-100 px-3 py-1 rounded-xl flex items-center space-x-2 cursor-pointer shadow-4d-glass-sm">
                     <span class="hud-icon-frame w-5 h-5 rounded-md shrink-0">
-                        <i data-lucide="calendar-check" class="w-3 h-3 text-cyan-300"></i>
+                        <i data-lucide="calendar-check" class="w-3 h-3 text-purple-300"></i>
                     </span>
                     <span id="today-text-display">กำลังโหลด...</span>
                 </button>
@@ -522,9 +522,9 @@
             <section id="tab-roster" class="space-y-2 flex-1 flex flex-col">
                 <div class="glass-4d-panel p-2 rounded-2xl flex flex-wrap items-center justify-between gap-2 shrink-0">
                     <div class="flex flex-wrap items-center space-x-2 gap-y-1.5">
-                        <div class="flex items-center space-x-2 bg-slate-950/65 backdrop-blur-md px-2.5 py-1 rounded-xl border border-cyan-400/25 shadow-inner">
+                        <div class="flex items-center space-x-2 bg-slate-950/65 backdrop-blur-md px-2.5 py-1 rounded-xl border border-purple-400/25 shadow-inner">
                             <span class="hud-icon-frame w-5 h-5 rounded-md shrink-0">
-                                <i data-lucide="calendar" class="w-3 h-3 text-cyan-300"></i>
+                                <i data-lucide="calendar" class="w-3 h-3 text-purple-300"></i>
                             </span>
                             <label for="roster-month" class="text-[11px] font-bold text-slate-300">เดือน:</label>
                             <select id="roster-month" onchange="updateRosterView()" class="bg-transparent text-[11px] font-extrabold text-white focus:outline-none cursor-pointer">
@@ -543,19 +543,19 @@
                             </select>
                         </div>
                         
-                        <div class="flex items-center space-x-1.5 bg-slate-950/65 backdrop-blur-md px-3 py-1 rounded-xl border border-cyan-400/25 shadow-inner">
+                        <div class="flex items-center space-x-1.5 bg-slate-950/65 backdrop-blur-md px-3 py-1 rounded-xl border border-purple-400/25 shadow-inner">
                             <label for="roster-year" class="text-[11px] font-bold text-slate-300">ปี:</label>
                             <select id="roster-year" onchange="updateRosterView()" class="bg-transparent text-[11px] font-extrabold text-white focus:outline-none cursor-pointer"></select>
                         </div>
 
-                        <div class="flex items-center space-x-2 bg-slate-950/70 backdrop-blur-md px-2.5 py-1 rounded-xl border border-cyan-400/35 shadow-4d-glass-sm">
+                        <div class="flex items-center space-x-2 bg-slate-950/70 backdrop-blur-md px-2.5 py-1 rounded-xl border border-purple-400/35 shadow-4d-glass-sm">
                             <span class="hud-icon-frame w-5 h-5 rounded-md shrink-0">
-                                <i data-lucide="sparkles" class="w-3 h-3 text-cyan-300"></i>
+                                <i data-lucide="sparkles" class="w-3 h-3 text-purple-300"></i>
                             </span>
-                            <label for="festival-theme-select" class="text-[11px] font-bold text-cyan-200">เทศกาล:</label>
-                            <select id="festival-theme-select" onchange="changeFestivalTheme(this.value)" class="bg-transparent text-[11px] font-extrabold text-cyan-300 focus:outline-none cursor-pointer">
+                            <label for="festival-theme-select" class="text-[11px] font-bold text-purple-200">เทศกาล:</label>
+                            <select id="festival-theme-select" onchange="changeFestivalTheme(this.value)" class="bg-transparent text-[11px] font-extrabold text-purple-300 focus:outline-none cursor-pointer">
                                 <option value="auto" class="bg-slate-900 text-white">อัตโนมัติ (ตามวันจริง)</option>
-                                <option value="space" class="bg-slate-900 text-white">อนาคต 4D (ปกติ)</option>
+                                <option value="galaxy" class="bg-slate-900 text-white">กาแลคซี่ (ปกติ)</option>
                                 <option value="newyear" class="bg-slate-900 text-white">ปีใหม่</option>
                                 <option value="valentine" class="bg-slate-900 text-white">วาเลนไทน์</option>
                                 <option value="chinesenewyear" class="bg-slate-900 text-white">ตรุษจีน</option>
@@ -578,21 +578,21 @@
                     </div>
                 </div>
 
-                <div id="shift-legend-box" class="glass-4d-panel px-4 py-2.5 rounded-2xl flex flex-wrap items-center justify-between gap-3 shrink-0 border border-cyan-400/35 relative overflow-hidden shadow-glow-future">
+                <div id="shift-legend-box" class="glass-4d-panel px-4 py-2.5 rounded-2xl flex flex-wrap items-center justify-between gap-3 shrink-0 border border-purple-400/35 relative overflow-hidden shadow-glow-galaxy">
                     <canvas id="legend-festival-canvas"></canvas>
 
                     <div class="flex flex-wrap items-center gap-2 relative z-10">
-                        <span class="text-[10px] font-extrabold text-cyan-200 uppercase tracking-wider mr-1 flex items-center gap-1.5 bg-slate-950/70 backdrop-blur-md px-2.5 py-1 rounded-xl border border-cyan-400/35 shadow-4d-glass-sm">
+                        <span class="text-[10px] font-extrabold text-purple-200 uppercase tracking-wider mr-1 flex items-center gap-1.5 bg-slate-950/70 backdrop-blur-md px-2.5 py-1 rounded-xl border border-purple-400/35 shadow-4d-glass-sm">
                             <span class="hud-icon-frame w-5 h-5 rounded-md shrink-0">
-                                <i data-lucide="clock" class="w-3 h-3 text-cyan-300"></i>
+                                <i data-lucide="clock" class="w-3 h-3 text-purple-300"></i>
                             </span>
                             ประเภทกะ:
                         </span>
                         <div id="roster-legend" class="flex flex-wrap gap-2"></div>
                     </div>
 
-                    <div class="flex flex-wrap items-center gap-1.5 text-[9.5px] font-extrabold border-l border-cyan-400/25 pl-3 my-0.5 relative z-10 bg-slate-950/65 backdrop-blur-md px-3 py-1.5 rounded-xl border border-white/10">
-                        <span class="text-cyan-300 mr-1">สีตำแหน่ง:</span>
+                    <div class="flex flex-wrap items-center gap-1.5 text-[9.5px] font-extrabold border-l border-purple-400/25 pl-3 my-0.5 relative z-10 bg-slate-950/65 backdrop-blur-md px-3 py-1.5 rounded-xl border border-white/10">
+                        <span class="text-purple-300 mr-1">สีตำแหน่ง:</span>
                         <span class="px-2 py-0.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-400/40 shadow-sm">ต้อนรับ</span>
                         <span class="px-2 py-0.5 rounded-lg bg-sky-500/20 text-sky-300 border border-sky-400/40 shadow-sm">ตลาด/เสมียน</span>
                         <span class="px-2 py-0.5 rounded-lg bg-purple-500/20 text-purple-300 border border-purple-400/40 shadow-sm">เบลบอย</span>
@@ -602,12 +602,12 @@
                     </div>
                 </div>
 
-                <div class="glass-4d-panel rounded-2xl flex-1 flex flex-col overflow-hidden border border-cyan-400/25 shadow-4d-glass-lg">
+                <div class="glass-4d-panel rounded-2xl flex-1 flex flex-col overflow-hidden border border-purple-400/25 shadow-4d-glass-lg">
                     <div id="roster-stage-wrap">
                         <canvas id="roster-bg-canvas"></canvas>
                         <div id="roster-table-container" class="flex-1 relative rounded-2xl">
                             <table id="roster-table" class="w-full text-left">
-                                <thead id="roster-thead" class="bg-slate-950/85 text-slate-300 text-[10px] uppercase tracking-wider sticky top-0 z-40 border-b border-cyan-400/25 shadow-4d-glass-sm"></thead>
+                                <thead id="roster-thead" class="bg-slate-950/85 text-slate-300 text-[10px] uppercase tracking-wider sticky top-0 z-40 border-b border-purple-400/25 shadow-4d-glass-sm"></thead>
                                 <tbody id="roster-tbody" class="divide-y divide-slate-800/50 text-xs"></tbody>
                             </table>
                         </div>
@@ -619,9 +619,9 @@
             <section id="tab-daily" class="space-y-3 hidden">
                 <div class="glass-4d-panel p-3 rounded-2xl flex flex-wrap items-center justify-between gap-3">
                     <div class="flex items-center space-x-3">
-                        <label for="daily-date-picker" class="text-xs font-extrabold text-cyan-200">เลือกวันที่:</label>
-                        <input type="date" id="daily-date-picker" onchange="renderDailyOverview()" class="bg-slate-950/75 border border-cyan-400/30 rounded-xl px-3 py-1.5 text-xs font-bold text-white focus:outline-none focus:ring-2 focus:ring-cyan-400 shadow-inner">
-                        <button type="button" onclick="setDailyPickerToToday()" class="btn-glass-4d px-3 py-1.5 text-cyan-200 text-xs font-bold rounded-xl border-cyan-400/45 shadow-4d-glass-sm">
+                        <label for="daily-date-picker" class="text-xs font-extrabold text-purple-200">เลือกวันที่:</label>
+                        <input type="date" id="daily-date-picker" onchange="renderDailyOverview()" class="bg-slate-950/75 border border-purple-400/30 rounded-xl px-3 py-1.5 text-xs font-bold text-white focus:outline-none focus:ring-2 focus:ring-purple-400 shadow-inner">
+                        <button type="button" onclick="setDailyPickerToToday()" class="btn-glass-4d px-3 py-1.5 text-purple-200 text-xs font-bold rounded-xl border-purple-400/45 shadow-4d-glass-sm">
                             วันนี้
                         </button>
                     </div>
@@ -634,31 +634,31 @@
             <!-- TAB 3: EMPLOYEE MANAGEMENT -->
             <section id="tab-employees" class="space-y-3 hidden">
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                    <div class="glass-4d-panel p-5 rounded-2xl h-fit space-y-3 border border-cyan-400/25 shadow-4d-glass-md">
-                        <div class="flex items-center space-x-3 border-b border-cyan-400/20 pb-3">
-                            <div class="hud-icon-frame w-10 h-10 rounded-xl shadow-glow-future shrink-0">
-                                <i data-lucide="user-plus" class="w-4 h-4 text-cyan-300"></i>
+                    <div class="glass-4d-panel p-5 rounded-2xl h-fit space-y-3 border border-purple-400/25 shadow-4d-glass-md">
+                        <div class="flex items-center space-x-3 border-b border-purple-400/20 pb-3">
+                            <div class="hud-icon-frame w-10 h-10 rounded-xl shadow-glow-galaxy shrink-0">
+                                <i data-lucide="user-plus" class="w-4 h-4 text-purple-300"></i>
                             </div>
                             <div>
                                 <h3 class="font-extrabold text-white text-xs">เพิ่มพนักงานใหม่</h3>
-                                <p class="text-[10px] text-cyan-200/80 font-medium">ลงทะเบียนพนักงานเข้าสู่ตารางปฏิบัติการ</p>
+                                <p class="text-[10px] text-purple-200/80 font-medium">ลงทะเบียนพนักงานเข้าสู่ตารางปฏิบัติการ</p>
                             </div>
                         </div>
                         <form id="add-employee-form" onsubmit="handleAddEmployee(event)" class="space-y-3">
                             <div>
                                 <label for="emp-id" class="block text-[10px] font-extrabold text-slate-300 uppercase tracking-wider mb-0.5">รหัสพนักงาน (ID)</label>
-                                <input type="text" id="emp-id" required placeholder="เช่น EMP001" class="w-full bg-slate-950/75 border border-cyan-400/25 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-cyan-400 font-bold shadow-inner">
+                                <input type="text" id="emp-id" required placeholder="เช่น EMP001" class="w-full bg-slate-950/75 border border-purple-400/25 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-purple-400 font-bold shadow-inner">
                             </div>
                             <div>
                                 <label for="emp-name" class="block text-[10px] font-extrabold text-slate-300 uppercase tracking-wider mb-0.5">ชื่อ - นามสกุล</label>
-                                <input type="text" id="emp-name" required placeholder="เช่น สมชาย ใจดี" class="w-full bg-slate-950/75 border border-cyan-400/25 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-cyan-400 font-bold shadow-inner">
+                                <input type="text" id="emp-name" required placeholder="เช่น สมชาย ใจดี" class="w-full bg-slate-950/75 border border-purple-400/25 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-purple-400 font-bold shadow-inner">
                             </div>
                             <div>
                                 <label for="emp-role" class="block text-[10px] font-extrabold text-slate-300 uppercase tracking-wider mb-0.5">ตำแหน่ง / แผนก</label>
-                                <input type="text" id="emp-role" required placeholder="เช่น พนักงานต้อนรับ, ช่าง, แม่บ้าน, รปภ." class="w-full bg-slate-950/75 border border-cyan-400/25 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-cyan-400 font-bold shadow-inner">
-                                <p class="text-[9.5px] text-cyan-200 font-bold mt-1.5 flex items-center gap-1.5 bg-cyan-950/50 border border-cyan-400/30 p-1.5 rounded-lg">
+                                <input type="text" id="emp-role" required placeholder="เช่น พนักงานต้อนรับ, ช่าง, แม่บ้าน, รปภ." class="w-full bg-slate-950/75 border border-purple-400/25 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:ring-2 focus:ring-purple-400 font-bold shadow-inner">
+                                <p class="text-[9.5px] text-purple-200 font-bold mt-1.5 flex items-center gap-1.5 bg-purple-950/50 border border-purple-400/30 p-1.5 rounded-lg">
                                     <span class="hud-icon-frame w-4 h-4 rounded-sm shrink-0">
-                                        <i data-lucide="arrow-up-down" class="w-2.5 h-2.5 text-cyan-300"></i>
+                                        <i data-lucide="arrow-up-down" class="w-2.5 h-2.5 text-purple-300"></i>
                                     </span>
                                     สามารถจัดลำดับขึ้นลงได้ตามต้องการในตารางพนักงาน
                                 </p>
@@ -669,21 +669,21 @@
                         </form>
                     </div>
 
-                    <div class="lg:col-span-2 glass-4d-panel rounded-2xl border border-cyan-400/25 shadow-4d-glass-md overflow-hidden flex flex-col">
-                        <div class="p-3 border-b border-cyan-400/20 flex items-center justify-between bg-slate-950/55">
+                    <div class="lg:col-span-2 glass-4d-panel rounded-2xl border border-purple-400/25 shadow-4d-glass-md overflow-hidden flex flex-col">
+                        <div class="p-3 border-b border-purple-400/20 flex items-center justify-between bg-slate-950/55">
                             <h3 class="font-extrabold text-white text-xs flex items-center space-x-2">
                                 <span class="hud-icon-frame w-6 h-6 rounded-lg shrink-0">
-                                    <i data-lucide="users" class="w-3.5 h-3.5 text-cyan-300"></i>
+                                    <i data-lucide="users" class="w-3.5 h-3.5 text-purple-300"></i>
                                 </span>
                                 <span>รายชื่อพนักงานทั้งหมด (<span id="emp-count">0</span>)</span>
                             </h3>
-                            <span class="text-[9.5px] text-cyan-200 font-extrabold bg-cyan-950/60 border border-cyan-400/35 px-2.5 py-0.5 rounded-full shadow-4d-glass-sm">
+                            <span class="text-[9.5px] text-purple-200 font-extrabold bg-purple-950/60 border border-purple-400/35 px-2.5 py-0.5 rounded-full shadow-4d-glass-sm">
                                 จัดลำดับขึ้น/ลง ได้อิสระ
                             </span>
                         </div>
                         <div class="overflow-x-auto flex-1" style="max-height: calc(100vh - 200px); -webkit-overflow-scrolling: touch;">
                             <table class="w-full text-left border-collapse">
-                                <thead class="bg-slate-950/85 text-slate-300 text-[10px] uppercase tracking-wider sticky top-0 border-b border-cyan-400/20">
+                                <thead class="bg-slate-950/85 text-slate-300 text-[10px] uppercase tracking-wider sticky top-0 border-b border-purple-400/20">
                                     <tr>
                                         <th class="p-3 w-16 text-center">ลำดับ</th>
                                         <th class="p-3">รหัสพนักงาน</th>
@@ -705,11 +705,11 @@
 
     <!-- POPUP MODAL: SHIFT SETTINGS -->
     <div id="shift-settings-modal" class="fixed inset-0 bg-slate-950/75 backdrop-blur-lg z-50 flex items-center justify-center hidden p-4">
-        <div class="glass-4d-panel rounded-3xl max-w-2xl w-full p-5 shadow-4d-glass-lg border border-cyan-400/35 space-y-4 max-h-[90vh] overflow-y-auto">
-            <div class="flex items-center justify-between border-b border-cyan-400/20 pb-3">
-                <div class="flex items-center space-x-2.5 text-cyan-300">
+        <div class="glass-4d-panel rounded-3xl max-w-2xl w-full p-5 shadow-4d-glass-lg border border-purple-400/35 space-y-4 max-h-[90vh] overflow-y-auto">
+            <div class="flex items-center justify-between border-b border-purple-400/20 pb-3">
+                <div class="flex items-center space-x-2.5 text-purple-300">
                     <div class="hud-icon-frame w-8 h-8 rounded-xl shadow-4d-glass-sm shrink-0">
-                        <i data-lucide="sliders" class="w-4 h-4 text-cyan-300"></i>
+                        <i data-lucide="sliders" class="w-4 h-4 text-purple-300"></i>
                     </div>
                     <h3 class="text-sm font-extrabold text-white">จัดการเวลากะและสีแบดจ์</h3>
                 </div>
@@ -721,17 +721,17 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="bg-slate-950/70 backdrop-blur-md p-3.5 rounded-2xl border border-cyan-400/20 shadow-inner space-y-2.5">
+                <div class="bg-slate-950/70 backdrop-blur-md p-3.5 rounded-2xl border border-purple-400/20 shadow-inner space-y-2.5">
                     <h4 class="font-extrabold text-white text-xs" id="shift-form-title">เพิ่มกะเวลาใหม่</h4>
                     <form id="add-shift-form" onsubmit="handleSaveShift(event)" class="space-y-2">
                         <input type="hidden" id="shift-edit-code" value="">
                         <div>
                             <label for="shift-code" class="block text-[10px] font-extrabold text-slate-300 uppercase tracking-wider mb-0.5">รหัสย่อกะ (Code)</label>
-                            <input type="text" id="shift-code" required placeholder="เช่น M, A, N" class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-3 py-1.5 text-xs uppercase font-extrabold text-white focus:outline-none focus:ring-2 focus:ring-cyan-400">
+                            <input type="text" id="shift-code" required placeholder="เช่น M, A, N" class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-3 py-1.5 text-xs uppercase font-extrabold text-white focus:outline-none focus:ring-2 focus:ring-purple-400">
                         </div>
                         <div>
                             <label for="shift-name" class="block text-[10px] font-extrabold text-slate-300 uppercase tracking-wider mb-0.5">ชื่อกะ (Shift Name)</label>
-                            <input type="text" id="shift-name" required placeholder="เช่น กะเช้า" class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-3 py-1.5 text-xs font-semibold text-white focus:outline-none focus:ring-2 focus:ring-cyan-400">
+                            <input type="text" id="shift-name" required placeholder="เช่น กะเช้า" class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-3 py-1.5 text-xs font-semibold text-white focus:outline-none focus:ring-2 focus:ring-purple-400">
                         </div>
                         <div class="grid grid-cols-2 gap-2">
                             <div>
@@ -764,7 +764,7 @@
                     </form>
                 </div>
 
-                <div class="bg-slate-950/70 backdrop-blur-md rounded-2xl border border-cyan-400/20 overflow-hidden flex flex-col shadow-inner">
+                <div class="bg-slate-950/70 backdrop-blur-md rounded-2xl border border-purple-400/20 overflow-hidden flex flex-col shadow-inner">
                     <div class="p-2.5 bg-slate-900/90 border-b border-slate-800 font-extrabold text-[10px] uppercase tracking-wider text-slate-300 flex justify-between items-center">
                         <span>รายการกะ (<span id="shift-count">0</span>)</span>
                     </div>
@@ -772,7 +772,7 @@
                 </div>
             </div>
 
-            <div class="flex justify-end pt-2 border-t border-cyan-400/20">
+            <div class="flex justify-end pt-2 border-t border-purple-400/20">
                 <button type="button" onclick="closeShiftSettingsModal()" class="btn-glass-4d nav-btn-theme-active px-5 py-2 text-white rounded-xl text-xs font-extrabold">
                     เสร็จสิ้น
                 </button>
@@ -782,8 +782,8 @@
 
     <!-- General App Alert / Confirmation Modal -->
     <div id="app-modal" class="fixed inset-0 bg-slate-950/75 backdrop-blur-lg z-50 flex items-center justify-center hidden p-4">
-        <div class="glass-4d-panel rounded-3xl max-w-xs w-full p-5 shadow-4d-glass-lg border border-cyan-400/35 space-y-3.5">
-            <h3 id="modal-title" class="text-xs font-extrabold text-cyan-300">แจ้งเตือน</h3>
+        <div class="glass-4d-panel rounded-3xl max-w-xs w-full p-5 shadow-4d-glass-lg border border-purple-400/35 space-y-3.5">
+            <h3 id="modal-title" class="text-xs font-extrabold text-purple-300">แจ้งเตือน</h3>
             <p id="modal-message" class="text-xs font-medium text-slate-200 leading-relaxed"></p>
             <div id="modal-actions" class="flex justify-end space-x-2 pt-1">
                 <button type="button" onclick="closeModal()" class="btn-glass-4d nav-btn-theme-active px-4 py-2 text-white rounded-xl text-xs font-bold">ตกลง</button>
@@ -854,18 +854,18 @@
         }
 
         const FESTIVAL_THEMES = {
-            space: {
-                name: 'อนาคต 4D',
-                borderColor: 'rgba(165, 243, 252, 0.36)',
-                boxGlow: '0 12px 28px rgba(2, 6, 23, 0.72), 0 0 18px rgba(34, 211, 238, 0.18)',
-                tint1: 'rgba(6, 182, 212, 0.16)',
-                tint2: 'rgba(99, 102, 241, 0.16)',
-                primaryColor: '#06b6d4',
-                secondaryColor: '#6366f1',
-                accentColor: '#22d3ee',
-                glowColor: 'rgba(34, 211, 238, 0.6)',
-                orbTop: 'rgba(6, 182, 212, 0.25)',
-                orbBottom: 'rgba(99, 102, 241, 0.25)'
+            galaxy: {
+                name: 'กาแลคซี่',
+                borderColor: 'rgba(216, 180, 254, 0.42)',
+                boxGlow: '0 12px 28px rgba(2, 6, 23, 0.72), 0 0 18px rgba(192, 132, 252, 0.22)',
+                tint1: 'rgba(139, 92, 246, 0.18)',
+                tint2: 'rgba(56, 189, 248, 0.16)',
+                primaryColor: '#8b5cf6',
+                secondaryColor: '#2563eb',
+                accentColor: '#c084fc',
+                glowColor: 'rgba(192, 132, 252, 0.65)',
+                orbTop: 'rgba(139, 92, 246, 0.28)',
+                orbBottom: 'rgba(56, 189, 248, 0.25)'
             },
             newyear: {
                 name: 'ปีใหม่',
@@ -974,7 +974,8 @@
         };
 
         let selectedFestivalPref = localStorage.getItem('shift_festival_theme') || 'auto';
-        let activeFestivalKey = 'space';
+        if (selectedFestivalPref === 'space') selectedFestivalPref = 'galaxy';
+        let activeFestivalKey = 'galaxy';
 
         function getFestivalByTodayDate(dateObj = new Date()) {
             const y = dateObj.getFullYear();
@@ -1010,7 +1011,7 @@
 
             if (m === 12 && d >= 23 && d <= 26) return 'christmas';
 
-            return 'space';
+            return 'galaxy';
         }
 
         function resolveFestivalThemeKey() {
@@ -1033,7 +1034,7 @@
                 return;
             }
             activeFestivalKey = newKey;
-            const theme = FESTIVAL_THEMES[newKey] || FESTIVAL_THEMES.space;
+            const theme = FESTIVAL_THEMES[newKey] || FESTIVAL_THEMES.galaxy;
 
             document.documentElement.style.setProperty('--theme-primary', theme.primaryColor);
             document.documentElement.style.setProperty('--theme-secondary', theme.secondaryColor);
@@ -1057,7 +1058,7 @@
             const legendBox = document.getElementById('shift-legend-box');
 
             if (sidebarSub) {
-                sidebarSub.innerText = newKey === 'space' ? 'ระบบตารางกะ 4D' : `ธีม${theme.name} • 4D`;
+                sidebarSub.innerText = newKey === 'galaxy' ? 'ระบบตารางกะกาแลคซี่' : `ธีม${theme.name} • กาแลคซี่`;
                 sidebarSub.style.color = theme.accentColor;
             }
             if (sidebar4d) {
@@ -1100,257 +1101,312 @@
             if (r.includes('ช่าง') || r.includes('engineer') || r.includes('maintenance')) {
                 return { badgeClass: 'bg-amber-900/40 text-amber-200 border-amber-600/50', textClass: 'text-amber-300' };
             }
-            return { badgeClass: 'bg-slate-800/80 text-slate-300 border-slate-600', textClass: 'text-cyan-300' };
+            return { badgeClass: 'bg-slate-800/80 text-slate-300 border-slate-600', textClass: 'text-purple-300' };
         }
 
-        // --- SHARED FESTIVAL ANIMATION PAINTER ---
+        // --- REALISTIC GALAXY & FESTIVAL ANIMATION PAINTER ---
+        const PLANET_PALETTES = [
+            { base: '#f59e0b', shade: '#92400e', highlight: '#fde68a', band: '#d97706', ring: '#fbbf24', hasRing: true },
+            { base: '#38bdf8', shade: '#1e3a8a', highlight: '#bae6fd', band: '#0284c7', ring: '#7dd3fc', hasRing: false },
+            { base: '#c084fc', shade: '#4c1d95', highlight: '#f3e8ff', band: '#9333ea', ring: '#e879f9', hasRing: true },
+            { base: '#fb7185', shade: '#881337', highlight: '#fecdd3', band: '#e11d48', ring: '#fda4af', hasRing: false },
+            { base: '#34d399', shade: '#064e3b', highlight: '#a7f3d0', band: '#059669', ring: '#6ee7b7', hasRing: false },
+            { base: '#fb923c', shade: '#7c2d12', highlight: '#fed7aa', band: '#ea580c', ring: '#fdba74', hasRing: true }
+        ];
+
         function createFestivalState(seedCount = 16) {
             const colors = ['#facc15', '#38bdf8', '#f472b6', '#34d399', '#a78bfa', '#fb923c'];
             return {
-                gliders: Array.from({ length: 10 }, (_, i) => ({
+                planets: Array.from({ length: 6 }, (_, i) => {
+                    const pal = PLANET_PALETTES[i % PLANET_PALETTES.length];
+                    return {
+                        xRatio: 0.1 + ((i * 0.17) % 0.8),
+                        yRatio: 0.18 + ((i * 0.29) % 0.64),
+                        vxRatio: (i % 2 === 0 ? 1 : -1) * (0.00018 + Math.random() * 0.00015),
+                        vyRatio: Math.sin(i * 1.7) * 0.00012,
+                        radius: 9 + (i % 3) * 4.5,
+                        tilt: -0.34 + (i % 3) * 0.22,
+                        rotSpeed: (i % 2 === 0 ? 1 : -1) * 0.0008,
+                        phase: i * 1.35,
+                        palette: pal
+                    };
+                }),
+                galaxyStars: Array.from({ length: 34 }, (_, i) => ({
                     xRatio: Math.random(),
-                    yRatio: 0.08 + ((i * 0.1) % 0.84),
-                    len: 32 + Math.random() * 34,
-                    speedRatio: (i % 2 === 0 ? 1 : -1) * (0.0017 + Math.random() * 0.0011),
+                    yRatio: Math.random(),
+                    r: 0.9 + Math.random() * 2.1,
+                    twinkleSpeed: 0.003 + Math.random() * 0.004,
                     phase: Math.random() * Math.PI * 2,
-                    isNeonPurple: i % 3 === 1
+                    isCross: i % 6 === 0,
+                    color: i % 4 === 0 ? '#e879f9' : (i % 3 === 0 ? '#7dd3fc' : '#f8fafc')
                 })),
-                quantumNodes: Array.from({ length: 14 }, (_, i) => ({
-                    xRatio: 0.06 + ((i * 0.17) % 0.88),
-                    yRatio: 0.12 + ((i * 0.23) % 0.76),
-                    vxRatio: (Math.random() - 0.5) * 0.00085,
-                    vyRatio: (Math.random() - 0.5) * 0.00095,
-                    phase: Math.random() * Math.PI * 2
+                shootingStars: Array.from({ length: 4 }, (_, i) => ({
+                    xRatio: Math.random(),
+                    yRatio: Math.random() * 0.7,
+                    len: 36 + Math.random() * 34,
+                    speedX: 0.0022 + Math.random() * 0.0014,
+                    speedY: 0.0009 + Math.random() * 0.0007,
+                    phase: i * 1.9
                 })),
-                tesseractPulse: Math.random() * Math.PI * 2,
-                scanWavePhase: Math.random() * Math.PI * 2,
+                nebulaPhase: Math.random() * Math.PI * 2,
                 fireworks: [],
                 confetti: Array.from({ length: seedCount }, () => ({
                     x: Math.random() * 1000,
                     y: Math.random() * 400,
-                    w: 5.5 + Math.random() * 3.5,
-                    h: 2.5 + Math.random() * 2,
-                    speedY: 0.4 + Math.random() * 0.45,
-                    spin: Math.random() * Math.PI * 2,
-                    spinSpeed: (Math.random() - 0.5) * 0.1,
+                    w: 6 + Math.random() * 3.5,
+                    h: 2.6 + Math.random() * 1.8,
+                    speedY: 0.42 + Math.random() * 0.45,
+                    flutter: Math.random() * Math.PI * 2,
+                    flutterSpeed: 0.055 + Math.random() * 0.045,
+                    isRibbon: Math.random() > 0.65,
                     color: colors[Math.floor(Math.random() * colors.length)]
                 })),
                 hearts: Array.from({ length: seedCount }, () => ({
                     x: Math.random() * 1000,
                     y: Math.random() * 400,
-                    size: 6 + Math.random() * 4.5,
-                    speedY: -(0.35 + Math.random() * 0.4),
+                    size: 6.5 + Math.random() * 4.5,
+                    speedY: -(0.34 + Math.random() * 0.36),
                     wobble: Math.random() * Math.PI * 2,
+                    wobbleFreq: 0.0032 + Math.random() * 0.0018,
                     color: Math.random() > 0.45 ? '#fb7185' : '#f43f5e'
                 })),
                 cnyLanterns: Array.from({ length: 8 }, (_, i) => ({
                     x: (i + 0.5) * 130,
                     y: 20 + Math.random() * 280,
-                    r: 7 + Math.random() * 2.5,
-                    speedY: -(0.22 + Math.random() * 0.2),
+                    r: 7.5 + Math.random() * 2.2,
+                    speedY: -(0.22 + Math.random() * 0.18),
                     phase: Math.random() * Math.PI * 2
                 })),
                 waterDrops: Array.from({ length: seedCount + 6 }, () => ({
                     x: Math.random() * 1000,
                     y: Math.random() * 400,
-                    r: 2.2 + Math.random() * 3.2,
-                    vx: (Math.random() - 0.5) * 0.45,
-                    vy: -(0.4 + Math.random() * 0.55),
-                    phase: Math.random() * Math.PI * 2
+                    r: 2.4 + Math.random() * 3.2,
+                    vx: (Math.random() - 0.5) * 0.4,
+                    vy: -(0.38 + Math.random() * 0.5),
+                    phase: Math.random() * Math.PI * 2,
+                    rippleLife: Math.random(),
+                    rippleX: Math.random() * 1000,
+                    rippleY: 60 + Math.random() * 240
                 })),
                 jasmineFlowers: Array.from({ length: seedCount }, () => ({
                     x: Math.random() * 1000,
                     y: Math.random() * 400,
-                    r: 5.5 + Math.random() * 3,
-                    speedY: -(0.25 + Math.random() * 0.35),
+                    r: 5.5 + Math.random() * 2.8,
+                    speedY: -(0.24 + Math.random() * 0.3),
                     rot: Math.random() * Math.PI * 2,
-                    rotSpeed: (Math.random() - 0.5) * 0.025,
+                    rotSpeed: (Math.random() - 0.5) * 0.022,
                     phase: Math.random() * Math.PI * 2
                 })),
                 bats: Array.from({ length: 7 }, () => ({
                     x: Math.random() * 1000,
-                    yRatio: 0.15 + Math.random() * 0.65,
-                    speedX: 0.8 + Math.random() * 0.65,
+                    yRatio: 0.18 + Math.random() * 0.62,
+                    speedX: 0.75 + Math.random() * 0.55,
                     wingPhase: Math.random() * Math.PI * 2,
-                    scale: 0.75 + Math.random() * 0.4
+                    scale: 0.75 + Math.random() * 0.38
                 })),
                 pumpkins: Array.from({ length: 5 }, (_, i) => ({
                     xRatio: 0.12 + i * 0.2,
                     yRatio: 0.78,
-                    r: 7.5,
+                    r: 8,
                     phase: i * 1.4
                 })),
                 krathongs: Array.from({ length: 5 }, (_, i) => ({
                     x: 90 + i * 210,
                     yRatio: 0.82,
-                    w: 19,
-                    h: 7.5,
-                    speedX: 0.35 + Math.random() * 0.25,
+                    w: 20,
+                    h: 8,
+                    speedX: 0.32 + Math.random() * 0.22,
                     phase: i * 1.2
                 })),
                 skyLanterns: Array.from({ length: 6 }, () => ({
                     x: Math.random() * 1000,
                     y: Math.random() * 320,
-                    r: 5.5 + Math.random() * 2.5,
-                    speedY: -(0.28 + Math.random() * 0.24),
+                    r: 5.5 + Math.random() * 2.2,
+                    speedY: -(0.26 + Math.random() * 0.2),
                     phase: Math.random() * Math.PI * 2
                 })),
-                snowflakes: Array.from({ length: seedCount + 6 }, () => ({
+                snowflakes: Array.from({ length: seedCount + 8 }, () => ({
                     x: Math.random() * 1000,
                     y: Math.random() * 400,
-                    r: 2 + Math.random() * 2.3,
-                    speedY: 0.4 + Math.random() * 0.45,
-                    drift: (Math.random() - 0.5) * 0.4,
+                    r: 2.2 + Math.random() * 2.4,
+                    speedY: 0.38 + Math.random() * 0.42,
+                    drift: (Math.random() - 0.5) * 0.35,
                     phase: Math.random() * Math.PI * 2
                 })),
                 ornaments: Array.from({ length: 6 }, (_, i) => ({
                     xRatio: 0.1 + i * 0.17,
-                    yRatio: 0.18 + (i % 2) * 0.12,
-                    r: 6,
+                    yRatio: 0.2 + (i % 2) * 0.11,
+                    r: 6.5,
                     phase: i * 1.1,
-                    color: i % 2 === 0 ? '#ef4444' : '#facc15'
+                    color: i % 2 === 0 ? '#ef4444' : '#facc15',
+                    highlight: i % 2 === 0 ? '#fecaca' : '#fef9c3'
                 }))
             };
         }
 
-        function drawFuture4DHudLayer(ctx, w, h, state, time, opacityScale = 1) {
-            // 0. Moving horizontal energy wave
-            const waveY = ((time * 0.045 + state.scanWavePhase * 120) % Math.max(24, h + 30)) - 15;
-            ctx.save();
-            const waveGrad = ctx.createLinearGradient(0, waveY - 10, 0, waveY + 10);
-            waveGrad.addColorStop(0, 'rgba(34, 211, 238, 0)');
-            waveGrad.addColorStop(0.5, `rgba(34, 211, 238, ${(0.12 * opacityScale).toFixed(3)})`);
-            waveGrad.addColorStop(1, 'rgba(129, 140, 248, 0)');
-            ctx.fillStyle = waveGrad;
-            ctx.fillRect(0, waveY - 10, w, 20);
-            ctx.restore();
+        function drawPlanet(ctx, px, py, pl, time, opacityScale) {
+            const r = pl.radius;
+            const pal = pl.palette;
 
-            // 1. Quantum constellation network links
-            const pts = state.quantumNodes.map(n => {
-                n.xRatio += n.vxRatio;
-                n.yRatio += n.vyRatio;
-                if (n.xRatio < 0.03 || n.xRatio > 0.97) n.vxRatio *= -1;
-                if (n.yRatio < 0.06 || n.yRatio > 0.94) n.vyRatio *= -1;
-                return {
-                    x: n.xRatio * w,
-                    y: n.yRatio * h + Math.sin(time * 0.003 + n.phase) * 3,
-                    phase: n.phase
-                };
-            });
-
-            const maxDist = Math.min(230, Math.max(125, w * 0.2));
             ctx.save();
-            ctx.lineWidth = 1.1;
-            for (let i = 0; i < pts.length; i++) {
-                for (let j = i + 1; j < pts.length; j++) {
-                    const dx = pts[i].x - pts[j].x;
-                    const dy = pts[i].y - pts[j].y;
-                    const dist = Math.hypot(dx, dy);
-                    if (dist < maxDist) {
-                        const flow = 0.7 + 0.3 * Math.sin(time * 0.005 + i + j);
-                        const alpha = (1 - dist / maxDist) * 0.28 * opacityScale * flow;
-                        ctx.strokeStyle = `rgba(34, 211, 238, ${alpha.toFixed(3)})`;
-                        ctx.beginPath();
-                        ctx.moveTo(pts[i].x, pts[i].y);
-                        ctx.lineTo(pts[j].x, pts[j].y);
-                        ctx.stroke();
-                    }
-                }
+            ctx.translate(px, py);
+            ctx.globalAlpha = 0.85 * opacityScale;
+
+            const glow = ctx.createRadialGradient(0, 0, r * 0.6, 0, 0, r * 1.9);
+            glow.addColorStop(0, pal.highlight + '44');
+            glow.addColorStop(1, 'rgba(0,0,0,0)');
+            ctx.fillStyle = glow;
+            ctx.beginPath();
+            ctx.arc(0, 0, r * 1.9, 0, Math.PI * 2);
+            ctx.fill();
+
+            if (pl.hasRing) {
+                ctx.save();
+                ctx.rotate(pl.tilt);
+                ctx.strokeStyle = pal.ring;
+                ctx.lineWidth = Math.max(1.8, r * 0.22);
+                ctx.globalAlpha = 0.55 * opacityScale;
+                ctx.beginPath();
+                ctx.ellipse(0, 0, r * 2.15, r * 0.52, 0, Math.PI, Math.PI * 2);
+                ctx.stroke();
+                ctx.restore();
             }
 
-            pts.forEach((p, idx) => {
-                const pulse = 0.5 + 0.5 * Math.sin(time * 0.006 + p.phase);
-                ctx.fillStyle = idx % 3 === 0 ? '#a5b4fc' : '#22d3ee';
-                ctx.globalAlpha = 0.65 * pulse * opacityScale;
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, 2.4, 0, Math.PI * 2);
-                ctx.fill();
+            ctx.save();
+            ctx.beginPath();
+            ctx.arc(0, 0, r, 0, Math.PI * 2);
+            ctx.clip();
 
-                ctx.strokeStyle = '#22d3ee';
-                ctx.globalAlpha = 0.34 * pulse * opacityScale;
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, 5 + pulse * 4, 0, Math.PI * 2);
-                ctx.stroke();
-            });
+            const bodyGrad = ctx.createRadialGradient(-r * 0.35, -r * 0.35, r * 0.15, r * 0.2, r * 0.2, r * 1.25);
+            bodyGrad.addColorStop(0, pal.highlight);
+            bodyGrad.addColorStop(0.45, pal.base);
+            bodyGrad.addColorStop(1, pal.shade);
+            ctx.fillStyle = bodyGrad;
+            ctx.fillRect(-r, -r, r * 2, r * 2);
+
+            ctx.fillStyle = pal.band;
+            ctx.globalAlpha = 0.28 * opacityScale;
+            const bandShift = Math.sin(time * 0.001 + pl.phase) * (r * 0.15);
+            ctx.fillRect(-r, -r * 0.28 + bandShift, r * 2, r * 0.22);
+            ctx.fillRect(-r, r * 0.18 - bandShift, r * 2, r * 0.16);
             ctx.restore();
 
-            // 2. 4D Tesseract hypercube wireframe accents
-            const size = Math.min(40, Math.max(20, Math.min(w, h) * 0.16));
-            const anchors = [
-                { cx: w * 0.16, cy: h * 0.5 + Math.sin(time * 0.002) * 4, rot: time * 0.0012 },
-                { cx: w * 0.84, cy: h * 0.5 + Math.cos(time * 0.002) * 4, rot: -time * 0.0011 }
-            ];
-            anchors.forEach(anc => {
-                const depthOffset = Math.sin(time * 0.004 + state.tesseractPulse) * (size * 0.3);
-                const outerHalf = size * 0.5;
-                const innerHalf = Math.max(6, outerHalf * 0.48);
+            if (pl.hasRing) {
+                ctx.save();
+                ctx.rotate(pl.tilt);
+                ctx.strokeStyle = pal.ring;
+                ctx.lineWidth = Math.max(1.8, r * 0.22);
+                ctx.globalAlpha = 0.78 * opacityScale;
+                ctx.beginPath();
+                ctx.ellipse(0, 0, r * 2.15, r * 0.52, 0, 0, Math.PI);
+                ctx.stroke();
+                ctx.restore();
+            }
+
+            ctx.restore();
+        }
+
+        function drawGalaxyLayer(ctx, w, h, state, time, opacityScale = 1) {
+            const neb1X = w * (0.28 + 0.06 * Math.sin(time * 0.0005 + state.nebulaPhase));
+            const neb1Y = h * (0.45 + 0.05 * Math.cos(time * 0.0004 + state.nebulaPhase));
+            const neb1 = ctx.createRadialGradient(neb1X, neb1Y, 10, neb1X, neb1Y, Math.max(120, Math.min(w, h) * 0.55));
+            neb1.addColorStop(0, `rgba(139, 92, 246, ${(0.14 * opacityScale).toFixed(3)})`);
+            neb1.addColorStop(0.6, `rgba(217, 70, 239, ${(0.06 * opacityScale).toFixed(3)})`);
+            neb1.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            ctx.fillStyle = neb1;
+            ctx.fillRect(0, 0, w, h);
+
+            const neb2X = w * (0.76 + 0.05 * Math.cos(time * 0.00045 + state.nebulaPhase));
+            const neb2Y = h * (0.55 + 0.06 * Math.sin(time * 0.0005 + state.nebulaPhase));
+            const neb2 = ctx.createRadialGradient(neb2X, neb2Y, 10, neb2X, neb2Y, Math.max(120, Math.min(w, h) * 0.5));
+            neb2.addColorStop(0, `rgba(56, 189, 248, ${(0.13 * opacityScale).toFixed(3)})`);
+            neb2.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            ctx.fillStyle = neb2;
+            ctx.fillRect(0, 0, w, h);
+
+            state.galaxyStars.forEach(st => {
+                const sx = st.xRatio * w;
+                const sy = st.yRatio * h;
+                const pulse = 0.35 + 0.65 * (0.5 + 0.5 * Math.sin(time * st.twinkleSpeed + st.phase));
 
                 ctx.save();
-                ctx.translate(anc.cx, anc.cy);
-                ctx.rotate(anc.rot);
-                ctx.globalAlpha = 0.32 * opacityScale;
-                ctx.strokeStyle = '#67e8f9';
-                ctx.lineWidth = 1.2;
-                ctx.strokeRect(-outerHalf, -outerHalf, outerHalf * 2, outerHalf * 2);
-
-                ctx.strokeStyle = '#a5b4fc';
-                ctx.strokeRect(
-                    -innerHalf + depthOffset * 0.4,
-                    -innerHalf - depthOffset * 0.3,
-                    innerHalf * 2,
-                    innerHalf * 2
-                );
-
-                const corners = [
-                    [-1, -1], [1, -1], [1, 1], [-1, 1]
-                ];
-                ctx.strokeStyle = 'rgba(34, 211, 238, 0.52)';
-                corners.forEach(([sx, sy]) => {
+                ctx.globalAlpha = pulse * 0.85 * opacityScale;
+                ctx.fillStyle = st.color;
+                if (st.isCross) {
+                    const sLen = st.r * 2.4;
+                    ctx.strokeStyle = st.color;
+                    ctx.lineWidth = 1.1;
                     ctx.beginPath();
-                    ctx.moveTo(sx * outerHalf, sy * outerHalf);
-                    ctx.lineTo(sx * innerHalf + depthOffset * 0.4, sy * innerHalf - depthOffset * 0.3);
+                    ctx.moveTo(sx - sLen, sy);
+                    ctx.lineTo(sx + sLen, sy);
+                    ctx.moveTo(sx, sy - sLen);
+                    ctx.lineTo(sx, sy + sLen);
                     ctx.stroke();
-                });
+                }
+                ctx.beginPath();
+                ctx.arc(sx, sy, st.r, 0, Math.PI * 2);
+                ctx.fill();
                 ctx.restore();
             });
 
-            // 3. High-speed warp streaks with glowing plasma heads
-            state.gliders.forEach(g => {
-                g.xRatio += g.speedRatio;
-                if (g.xRatio > 1.08) g.xRatio = -0.08;
-                if (g.xRatio < -0.08) g.xRatio = 1.08;
+            state.planets.forEach(pl => {
+                pl.xRatio += pl.vxRatio;
+                pl.yRatio += pl.vyRatio;
+                pl.tilt += pl.rotSpeed;
+                if (pl.xRatio > 1.08) pl.xRatio = -0.08;
+                if (pl.xRatio < -0.08) pl.xRatio = 1.08;
 
-                const px = g.xRatio * w;
-                const py = Math.min(h - 8, Math.max(8, h * g.yRatio + Math.sin(time * 0.0045 + g.phase) * 10));
-                const dir = g.speedRatio >= 0 ? 1 : -1;
-                const headColor = g.isNeonPurple ? '#a5b4fc' : '#22d3ee';
-                const tailColor = g.isNeonPurple ? 'rgba(129, 140, 248, 0)' : 'rgba(34, 211, 238, 0)';
-                const headRgba = g.isNeonPurple ? `rgba(165, 180, 252, ${0.8 * opacityScale})` : `rgba(34, 211, 238, ${0.82 * opacityScale})`;
+                const px = pl.xRatio * w;
+                const py = Math.min(h - 16, Math.max(16, pl.yRatio * h + Math.sin(time * 0.002 + pl.phase) * 5));
+                drawPlanet(ctx, px, py, pl, time, opacityScale);
+            });
+
+            state.shootingStars.forEach(ss => {
+                ss.xRatio += ss.speedX;
+                ss.yRatio += ss.speedY;
+                if (ss.xRatio > 1.12 || ss.yRatio > 1.12) {
+                    ss.xRatio = Math.random() * 0.85;
+                    ss.yRatio = -0.05;
+                }
+                const sx = ss.xRatio * w;
+                const sy = ss.yRatio * h;
+                const dx = -ss.len * 0.85;
+                const dy = -ss.len * 0.35;
 
                 ctx.save();
-                const grad = ctx.createLinearGradient(px - dir * g.len, py, px, py);
-                grad.addColorStop(0, tailColor);
-                grad.addColorStop(1, headRgba);
+                const grad = ctx.createLinearGradient(sx + dx, sy + dy, sx, sy);
+                grad.addColorStop(0, 'rgba(255, 255, 255, 0)');
+                grad.addColorStop(1, `rgba(232, 121, 249, ${(0.75 * opacityScale).toFixed(3)})`);
                 ctx.strokeStyle = grad;
-                ctx.lineWidth = 2.4;
+                ctx.lineWidth = 1.8;
                 ctx.beginPath();
-                ctx.moveTo(px - dir * g.len, py);
-                ctx.lineTo(px, py);
+                ctx.moveTo(sx + dx, sy + dy);
+                ctx.lineTo(sx, sy);
                 ctx.stroke();
 
-                ctx.fillStyle = headColor;
-                ctx.globalAlpha = 0.92 * opacityScale;
+                ctx.fillStyle = '#ffffff';
+                ctx.globalAlpha = 0.9 * opacityScale;
                 ctx.beginPath();
-                ctx.arc(px, py, 2.7, 0, Math.PI * 2);
+                ctx.arc(sx, sy, 1.8, 0, Math.PI * 2);
                 ctx.fill();
                 ctx.restore();
             });
         }
 
-        function drawHeart(ctx, x, y, size, color, alpha) {
+        function drawHeart(ctx, x, y, size, color, alpha, tiltAngle = 0) {
             ctx.save();
             ctx.translate(x, y);
+            ctx.rotate(tiltAngle);
             ctx.globalAlpha = alpha;
+
+            const halo = ctx.createRadialGradient(0, size * 0.4, size * 0.1, 0, size * 0.4, size * 1.25);
+            halo.addColorStop(0, 'rgba(251, 113, 133, 0.32)');
+            halo.addColorStop(1, 'rgba(251, 113, 133, 0)');
+            ctx.fillStyle = halo;
+            ctx.beginPath();
+            ctx.arc(0, size * 0.4, size * 1.25, 0, Math.PI * 2);
+            ctx.fill();
+
             ctx.fillStyle = color;
             ctx.beginPath();
             const topCurveHeight = size * 0.3;
@@ -1361,75 +1417,140 @@
             ctx.bezierCurveTo(size / 2, 0, 0, 0, 0, topCurveHeight);
             ctx.closePath();
             ctx.fill();
+
+            // Specular highlight on upper-left lobe
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.45)';
+            ctx.beginPath();
+            ctx.ellipse(-size * 0.22, topCurveHeight * 0.85, size * 0.11, size * 0.06, -0.5, 0, Math.PI * 2);
+            ctx.fill();
+
             ctx.restore();
         }
 
-        function drawLantern(ctx, x, y, r, sway, primaryCol, accentCol, alpha) {
+        function drawLantern(ctx, x, y, r, sway, primaryCol, accentCol, alpha, time = 0) {
             ctx.save();
             ctx.translate(x, y);
             ctx.rotate(sway);
             ctx.globalAlpha = alpha;
-            ctx.strokeStyle = accentCol;
-            ctx.lineWidth = 1.2;
+
+            // Warm inner candle glow
+            const glow = ctx.createRadialGradient(0, 0, r * 0.15, 0, 0, r * 1.85);
+            glow.addColorStop(0, 'rgba(254, 240, 138, 0.52)');
+            glow.addColorStop(0.55, 'rgba(245, 158, 11, 0.22)');
+            glow.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            ctx.fillStyle = glow;
             ctx.beginPath();
-            ctx.moveTo(0, -r - 4);
-            ctx.lineTo(0, -r);
-            ctx.moveTo(0, r);
-            ctx.lineTo(0, r + 6);
+            ctx.arc(0, 0, r * 1.85, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Cap & tassel
+            ctx.fillStyle = accentCol;
+            ctx.fillRect(-r * 0.45, -r * 0.96, r * 0.9, r * 0.2);
+            ctx.fillRect(-r * 0.38, r * 0.78, r * 0.76, r * 0.16);
+
+            const tasselSwing = Math.sin(time * 0.008 + x * 0.05) * 2.5;
+            ctx.strokeStyle = accentCol;
+            ctx.lineWidth = 1.3;
+            ctx.beginPath();
+            ctx.moveTo(0, r * 0.94);
+            ctx.quadraticCurveTo(tasselSwing, r * 1.25, tasselSwing * 1.4, r * 1.55);
             ctx.stroke();
+
+            // Lantern body
             ctx.fillStyle = primaryCol;
             ctx.beginPath();
-            ctx.ellipse(0, 0, r * 1.05, r * 0.85, 0, 0, Math.PI * 2);
+            ctx.ellipse(0, 0, r * 1.08, r * 0.84, 0, 0, Math.PI * 2);
             ctx.fill();
+
+            // Ribbed vertical contours
             ctx.strokeStyle = accentCol;
-            ctx.lineWidth = 1;
+            ctx.lineWidth = 0.9;
+            ctx.globalAlpha = alpha * 0.75;
             ctx.beginPath();
-            ctx.ellipse(0, 0, r * 0.45, r * 0.85, 0, 0, Math.PI * 2);
+            ctx.ellipse(0, 0, r * 0.56, r * 0.84, 0, 0, Math.PI * 2);
+            ctx.moveTo(-r * 1.04, 0);
+            ctx.lineTo(r * 1.04, 0);
             ctx.stroke();
+
             ctx.restore();
         }
 
         function drawBat(ctx, b, time, alpha) {
             ctx.save();
-            ctx.translate(b.x, b.y);
+            const flightBob = Math.sin(time * 0.007 + b.wingPhase) * 4.5;
+            ctx.translate(b.x, b.y + flightBob);
             ctx.scale(b.scale, b.scale);
             ctx.globalAlpha = alpha;
-            ctx.fillStyle = '#1e1b4b';
+
+            const flap = Math.sin(time * 0.02 + b.wingPhase);
+            const wingLift = flap * 8.5;
+            const wingTipDrop = Math.cos(time * 0.02 + b.wingPhase) * 3.5;
+
+            ctx.fillStyle = '#181438';
             ctx.strokeStyle = '#fb923c';
             ctx.lineWidth = 1;
-            const flap = Math.sin(time * 0.018 + b.wingPhase) * 7;
+
             ctx.beginPath();
             ctx.moveTo(0, 2);
-            ctx.quadraticCurveTo(-8, -6 + flap, -14, 1 + flap * 0.5);
-            ctx.quadraticCurveTo(-7, 4, 0, 5);
-            ctx.quadraticCurveTo(7, 4, 14, 1 - flap * 0.5);
-            ctx.quadraticCurveTo(8, -6 - flap, 0, 2);
+            ctx.quadraticCurveTo(-7, -7 + wingLift, -15, -1 + wingLift * 0.65 + wingTipDrop);
+            ctx.quadraticCurveTo(-10, 3 + wingLift * 0.25, -6, 2 + wingLift * 0.2);
+            ctx.quadraticCurveTo(-3, 5, 0, 5.5);
+            ctx.quadraticCurveTo(3, 5, 6, 2 - wingLift * 0.2);
+            ctx.quadraticCurveTo(10, 3 - wingLift * 0.25, 15, -1 - wingLift * 0.65 + wingTipDrop);
+            ctx.quadraticCurveTo(7, -7 - wingLift, 0, 2);
             ctx.closePath();
             ctx.fill();
             ctx.stroke();
+
+            // Glowing eyes
+            ctx.fillStyle = '#facc15';
+            ctx.fillRect(-2.2, 0.8, 1.3, 1.3);
+            ctx.fillRect(1.1, 0.8, 1.3, 1.3);
+
             ctx.restore();
         }
 
         function drawPumpkin(ctx, p, time, alpha) {
             ctx.save();
-            const bob = Math.sin(time * 0.005 + p.phase) * 3.5;
+            const bob = Math.sin(time * 0.004 + p.phase) * 2.5;
             ctx.translate(p.x, p.y + bob);
             ctx.globalAlpha = alpha;
-            ctx.strokeStyle = '#22c55e';
-            ctx.lineWidth = 2;
+
+            // Warm pumpkin aura
+            const aura = ctx.createRadialGradient(0, 0, p.r * 0.4, 0, 0, p.r * 2.1);
+            aura.addColorStop(0, 'rgba(251, 146, 60, 0.35)');
+            aura.addColorStop(1, 'rgba(251, 146, 60, 0)');
+            ctx.fillStyle = aura;
             ctx.beginPath();
-            ctx.moveTo(0, -p.r);
-            ctx.lineTo(1, -p.r - 4);
-            ctx.stroke();
-            ctx.fillStyle = '#ea580c';
-            ctx.beginPath();
-            ctx.ellipse(0, 0, p.r * 1.25, p.r * 0.9, 0, 0, Math.PI * 2);
+            ctx.arc(0, 0, p.r * 2.1, 0, Math.PI * 2);
             ctx.fill();
-            ctx.strokeStyle = '#fb923c';
+
+            // Stem
+            ctx.strokeStyle = '#16a34a';
+            ctx.lineWidth = 2.2;
+            ctx.lineCap = 'round';
+            ctx.beginPath();
+            ctx.moveTo(0, -p.r * 0.85);
+            ctx.quadraticCurveTo(2, -p.r * 1.45, 5, -p.r * 1.35);
+            ctx.stroke();
+
+            // Pumpkin lobes
+            const grad = ctx.createRadialGradient(-p.r * 0.35, -p.r * 0.3, 1, 0, 0, p.r * 1.4);
+            grad.addColorStop(0, '#fdba74');
+            grad.addColorStop(0.55, '#ea580c');
+            grad.addColorStop(1, '#7c2d12');
+            ctx.fillStyle = grad;
+            ctx.beginPath();
+            ctx.ellipse(0, 0, p.r * 1.3, p.r * 0.92, 0, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.strokeStyle = 'rgba(124, 45, 18, 0.55)';
             ctx.lineWidth = 1;
             ctx.beginPath();
-            ctx.ellipse(0, 0, p.r * 0.55, p.r * 0.9, 0, 0, Math.PI * 2);
+            ctx.ellipse(0, 0, p.r * 0.65, p.r * 0.92, 0, 0, Math.PI * 2);
+            ctx.ellipse(0, 0, p.r * 0.22, p.r * 0.92, 0, 0, Math.PI * 2);
             ctx.stroke();
+
             ctx.restore();
         }
 
@@ -1438,62 +1559,125 @@
             ctx.translate(f.x, f.y);
             ctx.rotate(f.rot);
             ctx.globalAlpha = alpha;
-            for (let i = 0; i < 5; i++) {
-                const angle = (Math.PI * 2 * i) / 5;
+
+            const softGlow = ctx.createRadialGradient(0, 0, 1, 0, 0, f.r * 1.5);
+            softGlow.addColorStop(0, 'rgba(248, 250, 252, 0.28)');
+            softGlow.addColorStop(1, 'rgba(248, 250, 252, 0)');
+            ctx.fillStyle = softGlow;
+            ctx.beginPath();
+            ctx.arc(0, 0, f.r * 1.5, 0, Math.PI * 2);
+            ctx.fill();
+
+            for (let i = 0; i < 6; i++) {
+                const angle = (Math.PI * 2 * i) / 6;
                 const px = Math.cos(angle) * (f.r * 0.55);
                 const py = Math.sin(angle) * (f.r * 0.55);
-                ctx.fillStyle = '#f8fafc';
+                ctx.save();
+                ctx.translate(px, py);
+                ctx.rotate(angle);
+                ctx.fillStyle = i % 2 === 0 ? '#ffffff' : '#e2e8f0';
                 ctx.beginPath();
-                ctx.arc(px, py, f.r * 0.45, 0, Math.PI * 2);
+                ctx.ellipse(0, 0, f.r * 0.52, f.r * 0.32, 0, 0, Math.PI * 2);
                 ctx.fill();
+                ctx.restore();
             }
+
             ctx.fillStyle = '#facc15';
             ctx.beginPath();
-            ctx.arc(0, 0, f.r * 0.25, 0, Math.PI * 2);
+            ctx.arc(0, 0, f.r * 0.26, 0, Math.PI * 2);
             ctx.fill();
             ctx.restore();
         }
 
         function drawKrathong(ctx, k, time, alpha) {
             ctx.save();
-            const bob = Math.sin(time * 0.004 + k.phase) * 2.8;
+            const bob = Math.sin(time * 0.004 + k.phase) * 2.5;
             ctx.translate(k.x, k.y + bob);
             ctx.globalAlpha = alpha;
-            ctx.strokeStyle = '#38bdf8';
-            ctx.lineWidth = 1;
+
+            // Water ripples around krathong
+            const rippleR = k.w * (0.95 + ((time * 0.0008 + k.phase * 0.2) % 0.45));
+            const rippleAlpha = Math.max(0, 0.55 * (1 - ((time * 0.0008 + k.phase * 0.2) % 0.45) / 0.45));
+            ctx.strokeStyle = `rgba(125, 211, 252, ${rippleAlpha.toFixed(3)})`;
+            ctx.lineWidth = 1.1;
             ctx.beginPath();
-            ctx.ellipse(0, k.h * 0.6, k.w * 0.85, 2.5, 0, 0, Math.PI * 2);
+            ctx.ellipse(0, k.h * 0.65, rippleR, rippleR * 0.22, 0, 0, Math.PI * 2);
             ctx.stroke();
-            ctx.fillStyle = '#16a34a';
+
+            // Banana leaf petals
+            ctx.fillStyle = '#15803d';
             ctx.beginPath();
-            ctx.moveTo(-k.w * 0.6, 0);
-            ctx.lineTo(k.w * 0.6, 0);
-            ctx.lineTo(k.w * 0.42, k.h * 0.65);
-            ctx.lineTo(-k.w * 0.42, k.h * 0.65);
+            ctx.moveTo(-k.w * 0.65, 0);
+            ctx.lineTo(k.w * 0.65, 0);
+            ctx.lineTo(k.w * 0.44, k.h * 0.68);
+            ctx.lineTo(-k.w * 0.44, k.h * 0.68);
             ctx.closePath();
             ctx.fill();
+
+            ctx.fillStyle = '#4ade80';
+            for (let p = -2; p <= 2; p++) {
+                ctx.beginPath();
+                ctx.moveTo(p * (k.w * 0.22), 0);
+                ctx.lineTo(p * (k.w * 0.22) + 3, k.h * 0.55);
+                ctx.lineTo(p * (k.w * 0.22) - 3, k.h * 0.55);
+                ctx.closePath();
+                ctx.fill();
+            }
+
+            // Candle & flickering flame
             ctx.fillStyle = '#fef08a';
-            ctx.fillRect(-1.5, -6, 3, 6);
+            ctx.fillRect(-1.5, -6.5, 3, 6.5);
+
+            const flicker = Math.sin(time * 0.025 + k.phase) * 1.4;
+            const flameGlow = ctx.createRadialGradient(0, -9, 1, 0, -9, 13);
+            flameGlow.addColorStop(0, 'rgba(254, 240, 138, 0.75)');
+            flameGlow.addColorStop(1, 'rgba(245, 158, 11, 0)');
+            ctx.fillStyle = flameGlow;
+            ctx.beginPath();
+            ctx.arc(flicker * 0.5, -9, 13, 0, Math.PI * 2);
+            ctx.fill();
+
             ctx.fillStyle = '#f59e0b';
             ctx.beginPath();
-            ctx.arc(0, -8, 2.8, 0, Math.PI * 2);
+            ctx.ellipse(flicker * 0.5, -9, 2.5, 4.2, flicker * 0.15, 0, Math.PI * 2);
             ctx.fill();
+
             ctx.restore();
         }
 
         function drawSnowflake(ctx, s, time, alpha) {
             ctx.save();
             ctx.translate(s.x, s.y);
-            ctx.rotate(time * 0.0015 + s.phase);
+            ctx.rotate(time * 0.0012 + s.phase);
             ctx.globalAlpha = alpha;
             ctx.strokeStyle = '#e2e8f0';
             ctx.lineWidth = 1.1;
+            ctx.lineCap = 'round';
+
             for (let i = 0; i < 3; i++) {
                 const ang = (Math.PI * i) / 3;
+                const cosA = Math.cos(ang);
+                const sinA = Math.sin(ang);
+                const len = s.r * 1.5;
+
                 ctx.beginPath();
-                ctx.moveTo(Math.cos(ang) * -s.r * 1.4, Math.sin(ang) * -s.r * 1.4);
-                ctx.lineTo(Math.cos(ang) * s.r * 1.4, Math.sin(ang) * s.r * 1.4);
+                ctx.moveTo(-cosA * len, -sinA * len);
+                ctx.lineTo(cosA * len, sinA * len);
                 ctx.stroke();
+
+                // Small branch ticks on each arm
+                const bDist = len * 0.55;
+                const bLen = s.r * 0.48;
+                [-1, 1].forEach(dir => {
+                    const bx = cosA * bDist * dir;
+                    const by = sinA * bDist * dir;
+                    ctx.beginPath();
+                    ctx.moveTo(bx, by);
+                    ctx.lineTo(bx - sinA * bLen, by + cosA * bLen);
+                    ctx.moveTo(bx, by);
+                    ctx.lineTo(bx + sinA * bLen, by - cosA * bLen);
+                    ctx.stroke();
+                });
             }
             ctx.restore();
         }
@@ -1502,20 +1686,31 @@
             ctx.clearRect(0, 0, w, h);
             if (w <= 1 || h <= 1) return;
 
-            if (activeFestivalKey === 'space') {
-                drawFuture4DHudLayer(ctx, w, h, state, time, opacityScale);
+            if (activeFestivalKey === 'galaxy' || activeFestivalKey === 'space') {
+                drawGalaxyLayer(ctx, w, h, state, time, opacityScale);
             } else if (activeFestivalKey === 'newyear') {
                 state.confetti.forEach(c => {
-                    c.y += c.speedY * 1.3;
-                    c.spin += c.spinSpeed * 1.3;
-                    c.x += Math.sin(time * 0.004 + c.spin) * 0.6;
-                    if (c.y > h + 8) { c.y = -8; c.x = Math.random() * w; }
+                    c.y += c.speedY * 1.25;
+                    c.flutter += c.flutterSpeed;
+                    c.x += Math.sin(time * 0.0035 + c.flutter) * 0.65;
+                    if (c.y > h + 10) { c.y = -10; c.x = Math.random() * w; }
+
+                    const scaleX = Math.max(0.22, Math.abs(Math.cos(c.flutter)));
                     ctx.save();
                     ctx.translate(c.x % Math.max(1, w), c.y);
-                    ctx.rotate(c.spin);
-                    ctx.globalAlpha = 0.65 * opacityScale;
+                    ctx.rotate(Math.sin(c.flutter) * 0.55);
+                    ctx.globalAlpha = 0.72 * opacityScale;
                     ctx.fillStyle = c.color;
-                    ctx.fillRect(-c.w / 2, -c.h / 2, c.w, c.h);
+                    if (c.isRibbon) {
+                        ctx.beginPath();
+                        ctx.moveTo(-c.w * 0.6, 0);
+                        ctx.quadraticCurveTo(0, Math.sin(c.flutter * 1.6) * 4.5, c.w * 0.6, 0);
+                        ctx.lineWidth = Math.max(1.8, c.h * 0.7 * scaleX);
+                        ctx.strokeStyle = c.color;
+                        ctx.stroke();
+                    } else {
+                        ctx.fillRect(-(c.w * scaleX) / 2, -c.h / 2, c.w * scaleX, c.h);
+                    }
                     ctx.restore();
                 });
 
@@ -1524,24 +1719,44 @@
                     const cx = 40 + Math.random() * Math.max(80, w - 80);
                     const cy = 20 + Math.random() * Math.max(30, h - 40);
                     const color = colors[Math.floor(Math.random() * colors.length)];
-                    const sparks = Array.from({ length: 14 }, (_, k) => {
-                        const angle = (Math.PI * 2 * k) / 14;
+                    const sparks = Array.from({ length: 16 }, (_, k) => {
+                        const angle = (Math.PI * 2 * k) / 16;
                         const speed = 0.75 + Math.random() * 1.05;
-                        return { x: cx, y: cy, vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed };
+                        return {
+                            x: cx,
+                            y: cy,
+                            prevX: cx,
+                            prevY: cy,
+                            vx: Math.cos(angle) * speed,
+                            vy: Math.sin(angle) * speed
+                        };
                     });
                     state.fireworks.push({ sparks, color, life: 1.0 });
                 }
                 state.fireworks.forEach(fw => {
-                    fw.life -= 0.022;
+                    fw.life -= 0.02;
                     fw.sparks.forEach(sp => {
+                        sp.prevX = sp.x;
+                        sp.prevY = sp.y;
                         sp.x += sp.vx;
                         sp.y += sp.vy;
-                        sp.vy += 0.015;
+                        sp.vy += 0.018;
+                        sp.vx *= 0.99;
+
+                        const alpha = Math.max(0, fw.life * opacityScale);
                         ctx.save();
+                        ctx.strokeStyle = fw.color;
+                        ctx.globalAlpha = alpha * 0.55;
+                        ctx.lineWidth = 1.4;
                         ctx.beginPath();
-                        ctx.arc(sp.x, sp.y, 2.1, 0, Math.PI * 2);
-                        ctx.fillStyle = fw.color;
-                        ctx.globalAlpha = Math.max(0, fw.life * opacityScale);
+                        ctx.moveTo(sp.prevX, sp.prevY);
+                        ctx.lineTo(sp.x, sp.y);
+                        ctx.stroke();
+
+                        ctx.beginPath();
+                        ctx.arc(sp.x, sp.y, 2.2, 0, Math.PI * 2);
+                        ctx.fillStyle = '#ffffff';
+                        ctx.globalAlpha = alpha;
                         ctx.fill();
                         ctx.restore();
                     });
@@ -1549,91 +1764,128 @@
                 state.fireworks = state.fireworks.filter(fw => fw.life > 0);
             } else if (activeFestivalKey === 'valentine') {
                 state.hearts.forEach(ht => {
-                    ht.y += ht.speedY * 1.25;
-                    ht.x += Math.sin(time * 0.0045 + ht.wobble) * 0.65;
-                    if (ht.y < -16) { ht.y = h + 14; ht.x = Math.random() * w; }
-                    drawHeart(ctx, ht.x % Math.max(1, w), ht.y, ht.size, ht.color, 0.65 * opacityScale);
+                    ht.y += ht.speedY * 1.2;
+                    ht.x += Math.sin(time * ht.wobbleFreq + ht.wobble) * 0.7;
+                    if (ht.y < -18) { ht.y = h + 16; ht.x = Math.random() * w; }
+                    const tilt = Math.cos(time * ht.wobbleFreq + ht.wobble) * 0.22;
+                    drawHeart(ctx, ht.x % Math.max(1, w), ht.y, ht.size, ht.color, 0.72 * opacityScale, tilt);
                 });
             } else if (activeFestivalKey === 'chinesenewyear') {
                 state.cnyLanterns.forEach(ln => {
-                    ln.y += ln.speedY * 1.25;
-                    ln.x += Math.sin(time * 0.003 + ln.phase) * 0.45;
-                    if (ln.y < -18) { ln.y = h + 16; ln.x = Math.random() * w; }
-                    const sway = Math.sin(time * 0.005 + ln.phase) * 0.18;
-                    drawLantern(ctx, ln.x % Math.max(1, w), ln.y, ln.r, sway, '#dc2626', '#facc15', 0.72 * opacityScale);
+                    ln.y += ln.speedY * 1.2;
+                    ln.x += Math.sin(time * 0.0028 + ln.phase) * 0.45;
+                    if (ln.y < -22) { ln.y = h + 20; ln.x = Math.random() * w; }
+                    const sway = Math.sin(time * 0.0045 + ln.phase) * 0.16;
+                    drawLantern(ctx, ln.x % Math.max(1, w), ln.y, ln.r, sway, '#dc2626', '#facc15', 0.78 * opacityScale, time);
                 });
             } else if (activeFestivalKey === 'songkran') {
                 state.waterDrops.forEach(wd => {
-                    wd.x += wd.vx * 1.3;
-                    wd.y += wd.vy * 1.3;
-                    if (wd.y < -10) { wd.y = h + 8; wd.x = Math.random() * w; }
+                    wd.x += wd.vx * 1.2;
+                    wd.y += wd.vy * 1.2;
+                    wd.rippleLife += 0.015;
+                    if (wd.rippleLife > 1) {
+                        wd.rippleLife = 0;
+                        wd.rippleX = Math.random() * w;
+                        wd.rippleY = Math.max(20, Math.min(h - 16, Math.random() * h));
+                    }
+                    if (wd.y < -12) { wd.y = h + 10; wd.x = Math.random() * w; }
                     if (wd.x < 0) wd.x = w;
                     if (wd.x > w) wd.x = 0;
+
+                    // Expanding water ripple ring
+                    const ringR = 3 + wd.rippleLife * 14;
+                    const ringAlpha = (1 - wd.rippleLife) * 0.42 * opacityScale;
+                    ctx.save();
+                    ctx.strokeStyle = `rgba(125, 211, 252, ${ringAlpha.toFixed(3)})`;
+                    ctx.lineWidth = 1.1;
+                    ctx.beginPath();
+                    ctx.ellipse(wd.rippleX, wd.rippleY, ringR, ringR * 0.45, 0, 0, Math.PI * 2);
+                    ctx.stroke();
+                    ctx.restore();
+
+                    // Droplet with upper-left specular highlight
                     ctx.save();
                     ctx.beginPath();
                     ctx.arc(wd.x, wd.y, wd.r, 0, Math.PI * 2);
-                    ctx.fillStyle = 'rgba(56, 189, 248, 0.38)';
+                    ctx.fillStyle = 'rgba(56, 189, 248, 0.34)';
                     ctx.strokeStyle = '#7dd3fc';
                     ctx.lineWidth = 1.1;
-                    ctx.globalAlpha = 0.72 * opacityScale;
+                    ctx.globalAlpha = 0.76 * opacityScale;
                     ctx.fill();
                     ctx.stroke();
+
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.75)';
+                    ctx.beginPath();
+                    ctx.arc(wd.x - wd.r * 0.32, wd.y - wd.r * 0.32, Math.max(0.8, wd.r * 0.28), 0, Math.PI * 2);
+                    ctx.fill();
                     ctx.restore();
                 });
             } else if (activeFestivalKey === 'mothersday') {
                 state.jasmineFlowers.forEach(jf => {
-                    jf.y += jf.speedY * 1.25;
-                    jf.rot += jf.rotSpeed * 1.3;
-                    jf.x += Math.sin(time * 0.0035 + jf.phase) * 0.5;
-                    if (jf.y < -14) { jf.y = h + 12; jf.x = Math.random() * w; }
-                    drawJasmine(ctx, { ...jf, x: jf.x % Math.max(1, w) }, 0.75 * opacityScale);
+                    jf.y += jf.speedY * 1.2;
+                    jf.rot += jf.rotSpeed * 1.2;
+                    jf.x += Math.sin(time * 0.003 + jf.phase) * 0.55;
+                    if (jf.y < -16) { jf.y = h + 14; jf.x = Math.random() * w; }
+                    drawJasmine(ctx, { ...jf, x: jf.x % Math.max(1, w) }, 0.8 * opacityScale);
                 });
             } else if (activeFestivalKey === 'halloween') {
                 state.pumpkins.forEach(p => {
-                    drawPumpkin(ctx, { ...p, x: w * p.xRatio, y: h * p.yRatio }, time, 0.7 * opacityScale);
+                    drawPumpkin(ctx, { ...p, x: w * p.xRatio, y: h * p.yRatio }, time, 0.76 * opacityScale);
                 });
                 state.bats.forEach(b => {
-                    b.x += b.speedX * 1.25;
-                    const by = Math.min(h - 12, Math.max(10, h * b.yRatio + Math.sin(time * 0.006 + b.wingPhase) * 6));
-                    if (b.x > w + 25) b.x = -25;
-                    drawBat(ctx, { ...b, y: by }, time, 0.8 * opacityScale);
+                    b.x += b.speedX * 1.2;
+                    const by = Math.min(h - 14, Math.max(12, h * b.yRatio + Math.sin(time * 0.005 + b.wingPhase) * 6));
+                    if (b.x > w + 28) b.x = -28;
+                    drawBat(ctx, { ...b, y: by }, time, 0.82 * opacityScale);
                 });
             } else if (activeFestivalKey === 'loykrathong') {
                 state.skyLanterns.forEach(sl => {
-                    sl.y += sl.speedY * 1.25;
-                    sl.x += Math.sin(time * 0.003 + sl.phase) * 0.45;
-                    if (sl.y < -16) { sl.y = h - 18; sl.x = Math.random() * w; }
-                    drawLantern(ctx, sl.x % Math.max(1, w), sl.y, sl.r, Math.sin(time * 0.004 + sl.phase) * 0.12, '#f59e0b', '#fef08a', 0.62 * opacityScale);
+                    sl.y += sl.speedY * 1.2;
+                    sl.x += Math.sin(time * 0.0028 + sl.phase) * 0.45;
+                    if (sl.y < -18) { sl.y = h - 20; sl.x = Math.random() * w; }
+                    drawLantern(ctx, sl.x % Math.max(1, w), sl.y, sl.r, Math.sin(time * 0.004 + sl.phase) * 0.12, '#f59e0b', '#fef08a', 0.68 * opacityScale, time);
                 });
                 state.krathongs.forEach(k => {
-                    k.x += k.speedX * 1.25;
-                    if (k.x > w + 25) k.x = -25;
-                    drawKrathong(ctx, { ...k, y: h * k.yRatio }, time, 0.82 * opacityScale);
+                    k.x += k.speedX * 1.2;
+                    if (k.x > w + 28) k.x = -28;
+                    drawKrathong(ctx, { ...k, y: h * k.yRatio }, time, 0.86 * opacityScale);
                 });
             } else if (activeFestivalKey === 'christmas') {
                 state.ornaments.forEach(o => {
-                    const swing = Math.sin(time * 0.004 + o.phase) * 4.5;
+                    const swing = Math.sin(time * 0.0036 + o.phase) * 5;
                     const ox = w * o.xRatio;
                     const oy = h * o.yRatio;
+                    const bx = ox + swing;
                     ctx.save();
-                    ctx.globalAlpha = 0.72 * opacityScale;
+                    ctx.globalAlpha = 0.78 * opacityScale;
+
+                    // Hanging string & metal cap
                     ctx.strokeStyle = '#cbd5e1';
-                    ctx.lineWidth = 1;
+                    ctx.lineWidth = 1.1;
                     ctx.beginPath();
                     ctx.moveTo(ox, 0);
-                    ctx.lineTo(ox + swing, oy - o.r);
+                    ctx.lineTo(bx, oy - o.r);
                     ctx.stroke();
-                    ctx.fillStyle = o.color;
+
+                    ctx.fillStyle = '#e2e8f0';
+                    ctx.fillRect(bx - 2.2, oy - o.r - 1.5, 4.4, 2.5);
+
+                    // Glossy ornament ball
+                    const grad = ctx.createRadialGradient(bx - o.r * 0.35, oy - o.r * 0.35, 1, bx, oy, o.r * 1.1);
+                    grad.addColorStop(0, o.highlight);
+                    grad.addColorStop(0.55, o.color);
+                    grad.addColorStop(1, '#0f172a');
+                    ctx.fillStyle = grad;
                     ctx.beginPath();
-                    ctx.arc(ox + swing, oy, o.r, 0, Math.PI * 2);
+                    ctx.arc(bx, oy, o.r, 0, Math.PI * 2);
                     ctx.fill();
                     ctx.restore();
                 });
                 state.snowflakes.forEach(s => {
-                    s.y += s.speedY * 1.25;
-                    s.x += s.drift + Math.sin(time * 0.004 + s.phase) * 0.45;
-                    if (s.y > h + 8) { s.y = -8; s.x = Math.random() * w; }
-                    drawSnowflake(ctx, { ...s, x: s.x % Math.max(1, w) }, time, 0.72 * opacityScale);
+                    s.y += s.speedY * 1.2;
+                    s.x += s.drift + Math.sin(time * 0.0035 + s.phase) * 0.45;
+                    if (s.y > h + 10) { s.y = -10; s.x = Math.random() * w; }
+                    drawSnowflake(ctx, { ...s, x: s.x % Math.max(1, w) }, time, 0.76 * opacityScale);
                 });
             }
         }
@@ -1654,51 +1906,26 @@
             if (bgCanvasLoopStarted) return;
             bgCanvasLoopStarted = true;
 
-            const stars = Array.from({ length: 56 }, () => ({
+            const stars = Array.from({ length: 68 }, () => ({
                 x: Math.random() * width,
                 y: Math.random() * height,
-                radius: Math.random() * 1.7 + 0.45,
-                alpha: Math.random() * 0.62 + 0.2,
-                speedY: -(Math.random() * 0.22 + 0.06),
+                radius: Math.random() * 1.9 + 0.45,
+                alpha: Math.random() * 0.72 + 0.2,
+                speedY: -(Math.random() * 0.2 + 0.05),
                 phase: Math.random() * Math.PI * 2
             }));
 
-            const orbitalRings = Array.from({ length: 7 }, () => ({
+            const miniPlanets = Array.from({ length: 5 }, (_, i) => ({
                 x: Math.random() * width,
                 y: Math.random() * height,
-                r: 15 + Math.random() * 16,
-                angle: Math.random() * Math.PI * 2,
-                rotSpeed: (Math.random() - 0.5) * 0.025,
-                speedY: -(0.16 + Math.random() * 0.2)
+                vx: (Math.random() - 0.5) * 0.25,
+                vy: -(0.12 + Math.random() * 0.16),
+                radius: 7 + (i % 3) * 4,
+                tilt: -0.3 + i * 0.18,
+                rotSpeed: 0.0007,
+                phase: i * 1.7,
+                palette: PLANET_PALETTES[i % PLANET_PALETTES.length]
             }));
-
-            function drawOrbitNode(orb, color) {
-                ctx.save();
-                ctx.translate(orb.x, orb.y);
-                ctx.rotate(orb.angle);
-                ctx.globalAlpha = 0.26;
-                ctx.strokeStyle = color;
-                ctx.lineWidth = 1.15;
-                ctx.setLineDash([5, 4]);
-                ctx.beginPath();
-                ctx.arc(0, 0, orb.r, 0, Math.PI * 2);
-                ctx.stroke();
-                ctx.setLineDash([]);
-
-                ctx.beginPath();
-                ctx.moveTo(-orb.r - 3.5, 0);
-                ctx.lineTo(-orb.r + 3.5, 0);
-                ctx.moveTo(orb.r - 3.5, 0);
-                ctx.lineTo(orb.r + 3.5, 0);
-                ctx.stroke();
-
-                ctx.fillStyle = color;
-                ctx.beginPath();
-                ctx.arc(0, 0, 1.9, 0, Math.PI * 2);
-                ctx.arc(orb.r, 0, 2.3, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.restore();
-            }
 
             let lastFrameTime = 0;
             function animate(time = 0) {
@@ -1706,16 +1933,19 @@
                     lastFrameTime = time;
                     if (!isUserScrolling) {
                         ctx.clearRect(0, 0, width, height);
-                        const theme = FESTIVAL_THEMES[activeFestivalKey] || FESTIVAL_THEMES.space;
+                        const theme = FESTIVAL_THEMES[activeFestivalKey] || FESTIVAL_THEMES.galaxy;
 
-                        orbitalRings.forEach(orb => {
-                            orb.y += orb.speedY;
-                            orb.angle += orb.rotSpeed;
-                            if (orb.y < -35) {
-                                orb.y = height + 35;
-                                orb.x = Math.random() * width;
+                        miniPlanets.forEach(mp => {
+                            mp.x += mp.vx;
+                            mp.y += mp.vy;
+                            mp.tilt += mp.rotSpeed;
+                            if (mp.y < -35) {
+                                mp.y = height + 35;
+                                mp.x = Math.random() * width;
                             }
-                            drawOrbitNode(orb, theme.accentColor);
+                            if (mp.x < -35) mp.x = width + 35;
+                            if (mp.x > width + 35) mp.x = -35;
+                            drawPlanet(ctx, mp.x, mp.y, mp, time, 0.55);
                         });
 
                         stars.forEach(s => {
@@ -1731,7 +1961,7 @@
                             ctx.save();
                             ctx.beginPath();
                             ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
-                            ctx.fillStyle = s.radius > 1.35 ? theme.accentColor : '#e2e8f0';
+                            ctx.fillStyle = s.radius > 1.4 ? theme.accentColor : '#f8fafc';
                             ctx.globalAlpha = s.alpha * twinkle;
                             ctx.fill();
                             ctx.restore();
@@ -2023,7 +2253,7 @@
             ['roster', 'daily', 'employees'].forEach(t => {
                 document.getElementById(`tab-${t}`).classList.add('hidden');
                 const navBtn = document.getElementById(`nav-${t}`);
-                navBtn.className = "btn-glass-4d w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium transition-all text-slate-300 hover:text-white border-cyan-400/30";
+                navBtn.className = "btn-glass-4d w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-medium transition-all text-slate-300 hover:text-white border-purple-400/30";
             });
             document.getElementById(`tab-${tabId}`).classList.remove('hidden');
             document.getElementById(`nav-${tabId}`).className = "btn-glass-4d nav-btn-theme-active w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold transition-all";
@@ -2136,7 +2366,7 @@
                 `;
             }).join('');
 
-            let headHTML = `<tr><th class="py-2.5 px-3 emp-dark-col min-w-[200px] text-xs font-extrabold border-r border-cyan-400/20 text-cyan-200">รหัสและรายชื่อพนักงาน</th>`;
+            let headHTML = `<tr><th class="py-2.5 px-3 emp-dark-col min-w-[200px] text-xs font-extrabold border-r border-purple-400/20 text-purple-200">รหัสและรายชื่อพนักงาน</th>`;
             for (let d = 1; d <= daysInMonth; d++) {
                 const dateObj = new Date(year, month, d);
                 const isWeekend = dateObj.getDay() === 0 || dateObj.getDay() === 6;
@@ -2145,12 +2375,12 @@
                 if (isToday) bgClass = 'today-laser-column text-white font-extrabold';
 
                 headHTML += `<th ${isToday ? 'id="today-col-header"' : ''} class="py-1.5 px-0 text-center border-r border-slate-800/70 w-[42px] min-w-[42px] max-w-[42px] ${bgClass}">
-                    <div class="text-[9px] ${isToday ? 'text-cyan-100 font-extrabold' : 'text-slate-400'} leading-none mb-0.5">${dayShortNamesTH[dateObj.getDay()]}</div>
+                    <div class="text-[9px] ${isToday ? 'text-purple-100 font-extrabold' : 'text-slate-400'} leading-none mb-0.5">${dayShortNamesTH[dateObj.getDay()]}</div>
                     <div class="font-extrabold text-xs leading-none">${d}</div>
-                    ${isToday ? `<div class="text-[8px] leading-none mt-0.5 text-cyan-200 font-extrabold">วันนี้</div>` : ''}
+                    ${isToday ? `<div class="text-[8px] leading-none mt-0.5 text-purple-200 font-extrabold">วันนี้</div>` : ''}
                 </th>`;
             }
-            headHTML += `<th class="py-2.5 px-2 text-center min-w-[60px] text-xs font-extrabold bg-slate-950/80 text-cyan-200">รวมวัน</th></tr>`;
+            headHTML += `<th class="py-2.5 px-2 text-center min-w-[60px] text-xs font-extrabold bg-slate-950/80 text-purple-200">รวมวัน</th></tr>`;
             document.getElementById('roster-thead').innerHTML = headHTML;
 
             const tbody = document.getElementById('roster-tbody');
@@ -2165,7 +2395,7 @@
                 let workDaysCount = 0;
                 const roleStyle = getRoleBadgeStyle(emp.role);
                 const tr = document.createElement('tr');
-                tr.className = 'hover:bg-cyan-950/15';
+                tr.className = 'hover:bg-purple-950/15';
 
                 const safeId = escapeHtml(emp.id);
                 const safeName = escapeHtml(emp.name);
@@ -2181,8 +2411,8 @@
                             </div>
                         </div>
                         <div class="flex flex-col shrink-0 gap-0.5">
-                            <button type="button" onclick="moveEmployee(${index}, -1)" ${index === 0 ? 'disabled class="opacity-30 cursor-not-allowed"' : ''} class="hud-icon-frame text-[8.5px] text-cyan-200 px-1 py-0.5 rounded transition cursor-pointer" title="เลื่อนขึ้น">▲</button>
-                            <button type="button" onclick="moveEmployee(${index}, 1)" ${index === employees.length - 1 ? 'disabled class="opacity-30 cursor-not-allowed"' : ''} class="hud-icon-frame text-[8.5px] text-cyan-200 px-1 py-0.5 rounded transition cursor-pointer" title="เลื่อนลง">▼</button>
+                            <button type="button" onclick="moveEmployee(${index}, -1)" ${index === 0 ? 'disabled class="opacity-30 cursor-not-allowed"' : ''} class="hud-icon-frame text-[8.5px] text-purple-200 px-1 py-0.5 rounded transition cursor-pointer" title="เลื่อนขึ้น">▲</button>
+                            <button type="button" onclick="moveEmployee(${index}, 1)" ${index === employees.length - 1 ? 'disabled class="opacity-30 cursor-not-allowed"' : ''} class="hud-icon-frame text-[8.5px] text-purple-200 px-1 py-0.5 rounded transition cursor-pointer" title="เลื่อนลง">▼</button>
                         </div>
                     </div>
                 </td>`;
@@ -2197,13 +2427,13 @@
 
                     rowHTML += `<td class="p-0.5 text-center border-r border-slate-800/70 h-[40px] ${isToday ? 'today-laser-column' : ''}">
                         <select onchange="handleShiftChange('${safeId}', ${year}, ${month}, ${d}, this)" 
-                            class="shift-select-badge-4d w-full h-[34px] text-center text-xs font-extrabold py-0 px-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-400 cursor-pointer appearance-none shadow-4d-glass-sm"
+                            class="shift-select-badge-4d w-full h-[34px] text-center text-xs font-extrabold py-0 px-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-400 cursor-pointer appearance-none shadow-4d-glass-sm"
                             style="background-color: ${escapeHtml(shiftObj.bg)}; color: ${escapeHtml(shiftObj.text)};">
                             ${opts}
                         </select>
                     </td>`;
                 }
-                rowHTML += `<td class="py-2 px-2 text-center font-extrabold text-cyan-200 bg-slate-950/55 text-xs">${workDaysCount} วัน</td>`;
+                rowHTML += `<td class="py-2 px-2 text-center font-extrabold text-purple-200 bg-slate-950/55 text-xs">${workDaysCount} วัน</td>`;
                 tr.innerHTML = rowHTML;
                 frag.appendChild(tr);
             });
@@ -2303,7 +2533,7 @@
                 const timeRange = shift.start && shift.start !== '-' ? `${escapeHtml(shift.start)} - ${escapeHtml(shift.end)}` : 'วันหยุด';
 
                 html += `
-                    <div class="glass-4d-panel rounded-2xl overflow-hidden flex flex-col transition-transform active:scale-[0.99] shadow-4d-glass-md border border-cyan-400/25">
+                    <div class="glass-4d-panel rounded-2xl overflow-hidden flex flex-col transition-transform active:scale-[0.99] shadow-4d-glass-md border border-purple-400/25">
                         <div class="p-3 border-b border-white/20 flex items-center justify-between shadow-sm" style="background-color: ${escapeHtml(shift.bg)}; color: ${escapeHtml(shift.text)};">
                             <div class="font-bold flex items-center space-x-2 text-xs">
                                 <span class="px-2.5 py-0.5 rounded-lg bg-white/90 text-xs font-extrabold shadow-4d-glass-sm">${escapeHtml(shift.code)}</span>
@@ -2311,7 +2541,7 @@
                             </div>
                             <span class="text-xs font-extrabold px-2.5 py-0.5 rounded-full bg-white/90 shadow-4d-glass-sm">${assignedEmps.length} คน</span>
                         </div>
-                        <div class="px-3 py-1.5 bg-slate-950/65 border-b border-slate-800/80 text-[10.5px] text-cyan-200 font-bold">
+                        <div class="px-3 py-1.5 bg-slate-950/65 border-b border-slate-800/80 text-[10.5px] text-purple-200 font-bold">
                             เวลาปฏิบัติงาน: ${timeRange}
                         </div>
                         <div class="p-3 flex-1 space-y-2" style="max-height: 280px; overflow-y: auto; -webkit-overflow-scrolling: touch;">
@@ -2319,7 +2549,7 @@
                             ${assignedEmps.map(emp => {
                                 const roleStyle = getRoleBadgeStyle(emp.role);
                                 return `
-                                    <div class="flex items-center justify-between p-2.5 bg-slate-950/65 backdrop-blur-sm rounded-xl border border-cyan-400/15 shadow-4d-glass-sm">
+                                    <div class="flex items-center justify-between p-2.5 bg-slate-950/65 backdrop-blur-sm rounded-xl border border-purple-400/15 shadow-4d-glass-sm">
                                         <div>
                                             <div class="text-[10.5px] font-extrabold ${roleStyle.textClass}">[${escapeHtml(emp.id)}]</div>
                                             <div class="text-xs font-bold text-white">${escapeHtml(emp.name)}</div>
@@ -2333,7 +2563,7 @@
                 `;
             });
             document.getElementById('daily-shift-cards').innerHTML = html;
-            document.getElementById('daily-stats-summary').innerHTML = `<span class="bg-cyan-950/75 text-cyan-200 px-3.5 py-1.5 rounded-xl border border-cyan-400/40 font-extrabold text-xs shadow-4d-glass-sm">ปฏิบัติงานรวม: ${totalAssigned} คน / ทั้งหมด ${employees.length} คน</span>`;
+            document.getElementById('daily-stats-summary').innerHTML = `<span class="bg-purple-950/75 text-purple-200 px-3.5 py-1.5 rounded-xl border border-purple-400/40 font-extrabold text-xs shadow-4d-glass-sm">ปฏิบัติงานรวม: ${totalAssigned} คน / ทั้งหมด ${employees.length} คน</span>`;
         }
 
         function handleAddEmployee(e) {
@@ -2370,14 +2600,14 @@
                 const roleStyle = getRoleBadgeStyle(emp.role);
                 const safeId = escapeHtml(emp.id);
                 return `
-                    <tr class="hover:bg-cyan-950/20 transition-colors">
-                        <td class="p-3 text-center font-bold text-cyan-300">${index + 1}</td>
+                    <tr class="hover:bg-purple-950/20 transition-colors">
+                        <td class="p-3 text-center font-bold text-purple-300">${index + 1}</td>
                         <td class="p-3 font-extrabold ${roleStyle.textClass}">[${safeId}]</td>
                         <td class="p-3 font-bold text-white">${escapeHtml(emp.name)}</td>
                         <td class="p-3 font-semibold"><span class="px-2 py-0.5 rounded-lg border ${roleStyle.badgeClass}">${escapeHtml(emp.role)}</span></td>
                         <td class="p-3 text-center space-x-1">
-                            <button type="button" onclick="moveEmployee(${index}, -1)" ${index === 0 ? 'disabled class="opacity-30 cursor-not-allowed"' : ''} class="btn-glass-4d px-2 py-1 text-xs text-cyan-200 rounded font-bold">▲ เลื่อนขึ้น</button>
-                            <button type="button" onclick="moveEmployee(${index}, 1)" ${index === employees.length - 1 ? 'disabled class="opacity-30 cursor-not-allowed"' : ''} class="btn-glass-4d px-2 py-1 text-xs text-cyan-200 rounded font-bold">▼ เลื่อนลง</button>
+                            <button type="button" onclick="moveEmployee(${index}, -1)" ${index === 0 ? 'disabled class="opacity-30 cursor-not-allowed"' : ''} class="btn-glass-4d px-2 py-1 text-xs text-purple-200 rounded font-bold">▲ เลื่อนขึ้น</button>
+                            <button type="button" onclick="moveEmployee(${index}, 1)" ${index === employees.length - 1 ? 'disabled class="opacity-30 cursor-not-allowed"' : ''} class="btn-glass-4d px-2 py-1 text-xs text-purple-200 rounded font-bold">▼ เลื่อนลง</button>
                         </td>
                         <td class="p-3 text-center">
                             <button type="button" onclick="deleteEmployee('${safeId}')" class="btn-glass-4d p-1.5 text-rose-400 rounded-lg transition-all border-rose-400/40" title="ลบพนักงาน">
@@ -2471,9 +2701,9 @@
                             <div class="text-[10px] text-slate-400 font-semibold mt-0.5">${timeText}</div>
                         </div>
                         <div class="flex items-center space-x-1">
-                            <button type="button" onclick="editShift('${safeCode}')" class="btn-glass-4d p-1 text-cyan-300 rounded-lg border-cyan-400/40" title="แก้ไข">
+                            <button type="button" onclick="editShift('${safeCode}')" class="btn-glass-4d p-1 text-purple-300 rounded-lg border-purple-400/40" title="แก้ไข">
                                 <span class="hud-icon-frame w-6 h-6 rounded-md">
-                                    <i data-lucide="edit-3" class="w-3 h-3 text-cyan-300"></i>
+                                    <i data-lucide="edit-3" class="w-3 h-3 text-purple-300"></i>
                                 </span>
                             </button>
                             ${shift.code !== 'OFF' ? `<button type="button" onclick="deleteShift('${safeCode}')" class="btn-glass-4d p-1 text-rose-400 rounded-lg border-rose-400/40" title="ลบ">
