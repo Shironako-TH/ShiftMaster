@@ -77,7 +77,33 @@
             transition: border-color 0.25s ease;
         }
 
-        body.is-scrolling .today-laser-column {
+        @keyframes activeIconSweep {
+            0%, 72% {
+                transform: rotate(28deg) translateX(-150%);
+            }
+            92%, 100% {
+                transform: rotate(28deg) translateX(360%);
+            }
+        }
+
+        @keyframes syncDotAlive {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.85;
+            }
+            50% {
+                transform: scale(1.35);
+                opacity: 1;
+            }
+        }
+
+        #sync-dot {
+            animation: syncDotAlive 2.2s infinite ease-in-out;
+        }
+
+        body.is-scrolling .today-laser-column,
+        body.is-scrolling #sync-dot,
+        body.is-scrolling .nav-btn-theme-active .hud-icon-frame::after {
             animation-play-state: paused;
         }
 
@@ -101,14 +127,99 @@
             background-position: center;
         }
 
+        /* ลูกเล่นปุ่มไอคอน Future Glass 4D */
         .hud-icon-frame {
             position: relative;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(145deg, rgba(255, 255, 255, 0.16) 0%, rgba(15, 23, 42, 0.78) 100%);
-            border: 1px solid rgba(165, 243, 252, 0.42);
-            transition: transform 0.15s ease, border-color 0.15s ease;
+            overflow: hidden;
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.18) 0%, rgba(15, 23, 42, 0.82) 100%);
+            border: 1px solid rgba(165, 243, 252, 0.44);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 2px 8px rgba(2, 6, 23, 0.55);
+            transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+        }
+
+        .hud-icon-frame::before {
+            content: "";
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            width: 4px;
+            height: 4px;
+            border-radius: 9999px;
+            background: var(--theme-accent);
+            box-shadow: 0 0 6px var(--theme-accent);
+            opacity: 0.78;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+            pointer-events: none;
+        }
+
+        .hud-icon-frame::after {
+            content: "";
+            position: absolute;
+            top: -120%;
+            left: -120%;
+            width: 65%;
+            height: 340%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.58), transparent);
+            transform: rotate(28deg) translateX(-140%);
+            transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+            pointer-events: none;
+        }
+
+        .nav-btn-theme-active .hud-icon-frame::after {
+            animation: activeIconSweep 3.4s infinite ease-in-out;
+        }
+
+        .hud-icon-frame svg,
+        .hud-icon-frame i {
+            position: relative;
+            z-index: 1;
+            transition: transform 0.24s cubic-bezier(0.22, 1, 0.36, 1), filter 0.2s ease;
+        }
+
+        .btn-glass-4d:hover .hud-icon-frame,
+        button:hover .hud-icon-frame {
+            border-color: var(--theme-accent);
+            box-shadow: 0 0 14px var(--theme-glow), inset 0 1px 0 rgba(255, 255, 255, 0.38);
+            transform: translateY(-1px) scale(1.08);
+        }
+
+        .btn-glass-4d:hover .hud-icon-frame::after,
+        button:hover .hud-icon-frame::after {
+            animation: none;
+            transform: rotate(28deg) translateX(360%);
+        }
+
+        .btn-glass-4d:hover .hud-icon-frame::before,
+        button:hover .hud-icon-frame::before {
+            opacity: 1;
+            transform: scale(1.4);
+        }
+
+        .btn-glass-4d:hover .hud-icon-frame svg,
+        button:hover .hud-icon-frame svg {
+            transform: scale(1.15) rotate(-8deg);
+            filter: drop-shadow(0 0 6px var(--theme-glow));
+        }
+
+        .btn-glass-4d:active .hud-icon-frame,
+        .btn-glass-4d.is-pressed .hud-icon-frame,
+        button:active .hud-icon-frame {
+            transform: scale(0.9);
+            background: linear-gradient(135deg, color-mix(in srgb, var(--theme-primary) 50%, #0f172a 50%), color-mix(in srgb, var(--theme-secondary) 50%, #0f172a 50%));
+        }
+
+        .btn-glass-4d:active .hud-icon-frame svg,
+        .btn-glass-4d.is-pressed .hud-icon-frame svg {
+            transform: scale(1.22) rotate(10deg);
+        }
+
+        .nav-btn-theme-active .hud-icon-frame {
+            background: rgba(255, 255, 255, 0.22);
+            border-color: rgba(255, 255, 255, 0.75);
+            box-shadow: 0 0 14px rgba(255, 255, 255, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.45);
         }
 
         #bg-canvas,
@@ -182,13 +293,13 @@
                 box-shadow: inset 0 0 10px var(--theme-glow);
             }
             50% {
-                box-shadow: inset 0 0 18px var(--theme-glow);
+                box-shadow: inset 0 0 20px var(--theme-glow);
             }
         }
 
         .today-laser-column {
-            background: rgba(14, 116, 144, 0.28) !important;
-            animation: laserPulseSoft 2.6s infinite ease-in-out;
+            background: rgba(14, 116, 144, 0.3) !important;
+            animation: laserPulseSoft 2.1s infinite ease-in-out;
         }
 
         .header-glass-bg {
@@ -217,15 +328,19 @@
         }
 
         .shift-select-badge-4d {
-            transition: transform 0.1s ease, filter 0.1s ease;
+            transition: transform 0.12s ease, filter 0.12s ease;
             font-weight: 800;
             letter-spacing: 0.04em;
             border: 1px solid rgba(255, 255, 255, 0.35);
             position: relative;
             z-index: 10;
         }
+        .shift-select-badge-4d:hover {
+            transform: scale(1.04);
+            filter: brightness(1.05);
+        }
         .shift-select-badge-4d:active {
-            transform: scale(0.96);
+            transform: scale(0.95);
             filter: brightness(1.08);
         }
 
@@ -364,7 +479,7 @@
         <div class="p-3 border-t border-cyan-400/20 bg-slate-950/75 relative z-10">
             <div class="space-divider mb-2"></div>
             <div class="flex items-center justify-between text-[9.5px] font-semibold">
-                <span class="text-cyan-200/90">v8.3 Future Glass-4D</span>
+                <span class="text-cyan-200/90">v8.5 Future Glass-4D</span>
                 <span id="sync-status" class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[8.5px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-400/40 shadow-glow-emerald">
                     <span id="sync-dot" class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
                     <span id="sync-label">เชื่อมต่อแล้ว</span>
@@ -992,22 +1107,23 @@
         function createFestivalState(seedCount = 16) {
             const colors = ['#facc15', '#38bdf8', '#f472b6', '#34d399', '#a78bfa', '#fb923c'];
             return {
-                gliders: Array.from({ length: 7 }, (_, i) => ({
+                gliders: Array.from({ length: 10 }, (_, i) => ({
                     xRatio: Math.random(),
-                    yRatio: 0.1 + ((i * 0.14) % 0.8),
-                    len: 28 + Math.random() * 26,
-                    speedRatio: (i % 2 === 0 ? 1 : -1) * (0.0011 + Math.random() * 0.0008),
+                    yRatio: 0.08 + ((i * 0.1) % 0.84),
+                    len: 32 + Math.random() * 34,
+                    speedRatio: (i % 2 === 0 ? 1 : -1) * (0.0017 + Math.random() * 0.0011),
                     phase: Math.random() * Math.PI * 2,
                     isNeonPurple: i % 3 === 1
                 })),
-                quantumNodes: Array.from({ length: 10 }, (_, i) => ({
-                    xRatio: 0.08 + ((i * 0.19) % 0.84),
-                    yRatio: 0.15 + ((i * 0.27) % 0.72),
-                    vxRatio: (Math.random() - 0.5) * 0.00045,
-                    vyRatio: (Math.random() - 0.5) * 0.00055,
+                quantumNodes: Array.from({ length: 14 }, (_, i) => ({
+                    xRatio: 0.06 + ((i * 0.17) % 0.88),
+                    yRatio: 0.12 + ((i * 0.23) % 0.76),
+                    vxRatio: (Math.random() - 0.5) * 0.00085,
+                    vyRatio: (Math.random() - 0.5) * 0.00095,
                     phase: Math.random() * Math.PI * 2
                 })),
                 tesseractPulse: Math.random() * Math.PI * 2,
+                scanWavePhase: Math.random() * Math.PI * 2,
                 fireworks: [],
                 confetti: Array.from({ length: seedCount }, () => ({
                     x: Math.random() * 1000,
@@ -1098,29 +1214,41 @@
         }
 
         function drawFuture4DHudLayer(ctx, w, h, state, time, opacityScale = 1) {
+            // 0. Moving horizontal energy wave
+            const waveY = ((time * 0.045 + state.scanWavePhase * 120) % Math.max(24, h + 30)) - 15;
+            ctx.save();
+            const waveGrad = ctx.createLinearGradient(0, waveY - 10, 0, waveY + 10);
+            waveGrad.addColorStop(0, 'rgba(34, 211, 238, 0)');
+            waveGrad.addColorStop(0.5, `rgba(34, 211, 238, ${(0.12 * opacityScale).toFixed(3)})`);
+            waveGrad.addColorStop(1, 'rgba(129, 140, 248, 0)');
+            ctx.fillStyle = waveGrad;
+            ctx.fillRect(0, waveY - 10, w, 20);
+            ctx.restore();
+
             // 1. Quantum constellation network links
             const pts = state.quantumNodes.map(n => {
                 n.xRatio += n.vxRatio;
                 n.yRatio += n.vyRatio;
-                if (n.xRatio < 0.04 || n.xRatio > 0.96) n.vxRatio *= -1;
-                if (n.yRatio < 0.08 || n.yRatio > 0.92) n.vyRatio *= -1;
+                if (n.xRatio < 0.03 || n.xRatio > 0.97) n.vxRatio *= -1;
+                if (n.yRatio < 0.06 || n.yRatio > 0.94) n.vyRatio *= -1;
                 return {
                     x: n.xRatio * w,
-                    y: n.yRatio * h,
+                    y: n.yRatio * h + Math.sin(time * 0.003 + n.phase) * 3,
                     phase: n.phase
                 };
             });
 
-            const maxDist = Math.min(210, Math.max(115, w * 0.18));
+            const maxDist = Math.min(230, Math.max(125, w * 0.2));
             ctx.save();
-            ctx.lineWidth = 1;
+            ctx.lineWidth = 1.1;
             for (let i = 0; i < pts.length; i++) {
                 for (let j = i + 1; j < pts.length; j++) {
                     const dx = pts[i].x - pts[j].x;
                     const dy = pts[i].y - pts[j].y;
                     const dist = Math.hypot(dx, dy);
                     if (dist < maxDist) {
-                        const alpha = (1 - dist / maxDist) * 0.24 * opacityScale;
+                        const flow = 0.7 + 0.3 * Math.sin(time * 0.005 + i + j);
+                        const alpha = (1 - dist / maxDist) * 0.28 * opacityScale * flow;
                         ctx.strokeStyle = `rgba(34, 211, 238, ${alpha.toFixed(3)})`;
                         ctx.beginPath();
                         ctx.moveTo(pts[i].x, pts[i].y);
@@ -1131,57 +1259,56 @@
             }
 
             pts.forEach((p, idx) => {
-                const pulse = 0.55 + 0.45 * Math.sin(time * 0.004 + p.phase);
+                const pulse = 0.5 + 0.5 * Math.sin(time * 0.006 + p.phase);
                 ctx.fillStyle = idx % 3 === 0 ? '#a5b4fc' : '#22d3ee';
-                ctx.globalAlpha = 0.55 * pulse * opacityScale;
+                ctx.globalAlpha = 0.65 * pulse * opacityScale;
                 ctx.beginPath();
-                ctx.arc(p.x, p.y, 2.2, 0, Math.PI * 2);
+                ctx.arc(p.x, p.y, 2.4, 0, Math.PI * 2);
                 ctx.fill();
 
                 ctx.strokeStyle = '#22d3ee';
-                ctx.globalAlpha = 0.28 * pulse * opacityScale;
+                ctx.globalAlpha = 0.34 * pulse * opacityScale;
                 ctx.beginPath();
-                ctx.arc(p.x, p.y, 5.5 + pulse * 2.5, 0, Math.PI * 2);
+                ctx.arc(p.x, p.y, 5 + pulse * 4, 0, Math.PI * 2);
                 ctx.stroke();
             });
             ctx.restore();
 
             // 2. 4D Tesseract hypercube wireframe accents
-            const size = Math.min(36, Math.max(18, Math.min(w, h) * 0.14));
+            const size = Math.min(40, Math.max(20, Math.min(w, h) * 0.16));
             const anchors = [
-                { cx: w * 0.16, cy: h * 0.5, rot: time * 0.0007 },
-                { cx: w * 0.84, cy: h * 0.5, rot: -time * 0.0006 }
+                { cx: w * 0.16, cy: h * 0.5 + Math.sin(time * 0.002) * 4, rot: time * 0.0012 },
+                { cx: w * 0.84, cy: h * 0.5 + Math.cos(time * 0.002) * 4, rot: -time * 0.0011 }
             ];
             anchors.forEach(anc => {
-                const depthOffset = Math.sin(time * 0.0025 + state.tesseractPulse) * (size * 0.24);
+                const depthOffset = Math.sin(time * 0.004 + state.tesseractPulse) * (size * 0.3);
                 const outerHalf = size * 0.5;
-                const innerHalf = Math.max(5, outerHalf * 0.48);
+                const innerHalf = Math.max(6, outerHalf * 0.48);
 
                 ctx.save();
                 ctx.translate(anc.cx, anc.cy);
                 ctx.rotate(anc.rot);
-                ctx.globalAlpha = 0.26 * opacityScale;
+                ctx.globalAlpha = 0.32 * opacityScale;
                 ctx.strokeStyle = '#67e8f9';
-                ctx.lineWidth = 1.1;
+                ctx.lineWidth = 1.2;
                 ctx.strokeRect(-outerHalf, -outerHalf, outerHalf * 2, outerHalf * 2);
 
                 ctx.strokeStyle = '#a5b4fc';
                 ctx.strokeRect(
-                    -innerHalf + depthOffset * 0.35,
-                    -innerHalf - depthOffset * 0.25,
+                    -innerHalf + depthOffset * 0.4,
+                    -innerHalf - depthOffset * 0.3,
                     innerHalf * 2,
                     innerHalf * 2
                 );
 
-                // Connect 4D vertices
                 const corners = [
                     [-1, -1], [1, -1], [1, 1], [-1, 1]
                 ];
-                ctx.strokeStyle = 'rgba(34, 211, 238, 0.45)';
+                ctx.strokeStyle = 'rgba(34, 211, 238, 0.52)';
                 corners.forEach(([sx, sy]) => {
                     ctx.beginPath();
                     ctx.moveTo(sx * outerHalf, sy * outerHalf);
-                    ctx.lineTo(sx * innerHalf + depthOffset * 0.35, sy * innerHalf - depthOffset * 0.25);
+                    ctx.lineTo(sx * innerHalf + depthOffset * 0.4, sy * innerHalf - depthOffset * 0.3);
                     ctx.stroke();
                 });
                 ctx.restore();
@@ -1194,27 +1321,27 @@
                 if (g.xRatio < -0.08) g.xRatio = 1.08;
 
                 const px = g.xRatio * w;
-                const py = Math.min(h - 8, Math.max(8, h * g.yRatio + Math.sin(time * 0.0032 + g.phase) * 7));
+                const py = Math.min(h - 8, Math.max(8, h * g.yRatio + Math.sin(time * 0.0045 + g.phase) * 10));
                 const dir = g.speedRatio >= 0 ? 1 : -1;
                 const headColor = g.isNeonPurple ? '#a5b4fc' : '#22d3ee';
                 const tailColor = g.isNeonPurple ? 'rgba(129, 140, 248, 0)' : 'rgba(34, 211, 238, 0)';
-                const headRgba = g.isNeonPurple ? `rgba(165, 180, 252, ${0.72 * opacityScale})` : `rgba(34, 211, 238, ${0.75 * opacityScale})`;
+                const headRgba = g.isNeonPurple ? `rgba(165, 180, 252, ${0.8 * opacityScale})` : `rgba(34, 211, 238, ${0.82 * opacityScale})`;
 
                 ctx.save();
                 const grad = ctx.createLinearGradient(px - dir * g.len, py, px, py);
                 grad.addColorStop(0, tailColor);
                 grad.addColorStop(1, headRgba);
                 ctx.strokeStyle = grad;
-                ctx.lineWidth = 2.2;
+                ctx.lineWidth = 2.4;
                 ctx.beginPath();
                 ctx.moveTo(px - dir * g.len, py);
                 ctx.lineTo(px, py);
                 ctx.stroke();
 
                 ctx.fillStyle = headColor;
-                ctx.globalAlpha = 0.85 * opacityScale;
+                ctx.globalAlpha = 0.92 * opacityScale;
                 ctx.beginPath();
-                ctx.arc(px, py, 2.4, 0, Math.PI * 2);
+                ctx.arc(px, py, 2.7, 0, Math.PI * 2);
                 ctx.fill();
                 ctx.restore();
             });
@@ -1270,7 +1397,7 @@
             ctx.fillStyle = '#1e1b4b';
             ctx.strokeStyle = '#fb923c';
             ctx.lineWidth = 1;
-            const flap = Math.sin(time * 0.015 + b.wingPhase) * 6;
+            const flap = Math.sin(time * 0.018 + b.wingPhase) * 7;
             ctx.beginPath();
             ctx.moveTo(0, 2);
             ctx.quadraticCurveTo(-8, -6 + flap, -14, 1 + flap * 0.5);
@@ -1285,7 +1412,7 @@
 
         function drawPumpkin(ctx, p, time, alpha) {
             ctx.save();
-            const bob = Math.sin(time * 0.004 + p.phase) * 2.5;
+            const bob = Math.sin(time * 0.005 + p.phase) * 3.5;
             ctx.translate(p.x, p.y + bob);
             ctx.globalAlpha = alpha;
             ctx.strokeStyle = '#22c55e';
@@ -1329,7 +1456,7 @@
 
         function drawKrathong(ctx, k, time, alpha) {
             ctx.save();
-            const bob = Math.sin(time * 0.003 + k.phase) * 2;
+            const bob = Math.sin(time * 0.004 + k.phase) * 2.8;
             ctx.translate(k.x, k.y + bob);
             ctx.globalAlpha = alpha;
             ctx.strokeStyle = '#38bdf8';
@@ -1357,7 +1484,7 @@
         function drawSnowflake(ctx, s, time, alpha) {
             ctx.save();
             ctx.translate(s.x, s.y);
-            ctx.rotate(time * 0.001 + s.phase);
+            ctx.rotate(time * 0.0015 + s.phase);
             ctx.globalAlpha = alpha;
             ctx.strokeStyle = '#e2e8f0';
             ctx.lineWidth = 1.1;
@@ -1379,40 +1506,40 @@
                 drawFuture4DHudLayer(ctx, w, h, state, time, opacityScale);
             } else if (activeFestivalKey === 'newyear') {
                 state.confetti.forEach(c => {
-                    c.y += c.speedY;
-                    c.spin += c.spinSpeed;
-                    c.x += Math.sin(time * 0.003 + c.spin) * 0.4;
+                    c.y += c.speedY * 1.3;
+                    c.spin += c.spinSpeed * 1.3;
+                    c.x += Math.sin(time * 0.004 + c.spin) * 0.6;
                     if (c.y > h + 8) { c.y = -8; c.x = Math.random() * w; }
                     ctx.save();
                     ctx.translate(c.x % Math.max(1, w), c.y);
                     ctx.rotate(c.spin);
-                    ctx.globalAlpha = 0.6 * opacityScale;
+                    ctx.globalAlpha = 0.65 * opacityScale;
                     ctx.fillStyle = c.color;
                     ctx.fillRect(-c.w / 2, -c.h / 2, c.w, c.h);
                     ctx.restore();
                 });
 
-                if (Math.random() < 0.045 && state.fireworks.length < 3) {
+                if (Math.random() < 0.065 && state.fireworks.length < 4) {
                     const colors = ['#facc15', '#f472b6', '#22d3ee', '#a78bfa', '#34d399', '#fb923c'];
                     const cx = 40 + Math.random() * Math.max(80, w - 80);
                     const cy = 20 + Math.random() * Math.max(30, h - 40);
                     const color = colors[Math.floor(Math.random() * colors.length)];
-                    const sparks = Array.from({ length: 12 }, (_, k) => {
-                        const angle = (Math.PI * 2 * k) / 12;
-                        const speed = 0.6 + Math.random() * 0.9;
+                    const sparks = Array.from({ length: 14 }, (_, k) => {
+                        const angle = (Math.PI * 2 * k) / 14;
+                        const speed = 0.75 + Math.random() * 1.05;
                         return { x: cx, y: cy, vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed };
                     });
                     state.fireworks.push({ sparks, color, life: 1.0 });
                 }
                 state.fireworks.forEach(fw => {
-                    fw.life -= 0.02;
+                    fw.life -= 0.022;
                     fw.sparks.forEach(sp => {
                         sp.x += sp.vx;
                         sp.y += sp.vy;
-                        sp.vy += 0.012;
+                        sp.vy += 0.015;
                         ctx.save();
                         ctx.beginPath();
-                        ctx.arc(sp.x, sp.y, 1.9, 0, Math.PI * 2);
+                        ctx.arc(sp.x, sp.y, 2.1, 0, Math.PI * 2);
                         ctx.fillStyle = fw.color;
                         ctx.globalAlpha = Math.max(0, fw.life * opacityScale);
                         ctx.fill();
@@ -1422,74 +1549,74 @@
                 state.fireworks = state.fireworks.filter(fw => fw.life > 0);
             } else if (activeFestivalKey === 'valentine') {
                 state.hearts.forEach(ht => {
-                    ht.y += ht.speedY;
-                    ht.x += Math.sin(time * 0.0035 + ht.wobble) * 0.45;
+                    ht.y += ht.speedY * 1.25;
+                    ht.x += Math.sin(time * 0.0045 + ht.wobble) * 0.65;
                     if (ht.y < -16) { ht.y = h + 14; ht.x = Math.random() * w; }
-                    drawHeart(ctx, ht.x % Math.max(1, w), ht.y, ht.size, ht.color, 0.58 * opacityScale);
+                    drawHeart(ctx, ht.x % Math.max(1, w), ht.y, ht.size, ht.color, 0.65 * opacityScale);
                 });
             } else if (activeFestivalKey === 'chinesenewyear') {
                 state.cnyLanterns.forEach(ln => {
-                    ln.y += ln.speedY;
-                    ln.x += Math.sin(time * 0.002 + ln.phase) * 0.3;
+                    ln.y += ln.speedY * 1.25;
+                    ln.x += Math.sin(time * 0.003 + ln.phase) * 0.45;
                     if (ln.y < -18) { ln.y = h + 16; ln.x = Math.random() * w; }
-                    const sway = Math.sin(time * 0.004 + ln.phase) * 0.14;
-                    drawLantern(ctx, ln.x % Math.max(1, w), ln.y, ln.r, sway, '#dc2626', '#facc15', 0.68 * opacityScale);
+                    const sway = Math.sin(time * 0.005 + ln.phase) * 0.18;
+                    drawLantern(ctx, ln.x % Math.max(1, w), ln.y, ln.r, sway, '#dc2626', '#facc15', 0.72 * opacityScale);
                 });
             } else if (activeFestivalKey === 'songkran') {
                 state.waterDrops.forEach(wd => {
-                    wd.x += wd.vx;
-                    wd.y += wd.vy;
+                    wd.x += wd.vx * 1.3;
+                    wd.y += wd.vy * 1.3;
                     if (wd.y < -10) { wd.y = h + 8; wd.x = Math.random() * w; }
                     if (wd.x < 0) wd.x = w;
                     if (wd.x > w) wd.x = 0;
                     ctx.save();
                     ctx.beginPath();
                     ctx.arc(wd.x, wd.y, wd.r, 0, Math.PI * 2);
-                    ctx.fillStyle = 'rgba(56, 189, 248, 0.35)';
+                    ctx.fillStyle = 'rgba(56, 189, 248, 0.38)';
                     ctx.strokeStyle = '#7dd3fc';
                     ctx.lineWidth = 1.1;
-                    ctx.globalAlpha = 0.68 * opacityScale;
+                    ctx.globalAlpha = 0.72 * opacityScale;
                     ctx.fill();
                     ctx.stroke();
                     ctx.restore();
                 });
             } else if (activeFestivalKey === 'mothersday') {
                 state.jasmineFlowers.forEach(jf => {
-                    jf.y += jf.speedY;
-                    jf.rot += jf.rotSpeed;
-                    jf.x += Math.sin(time * 0.0025 + jf.phase) * 0.35;
+                    jf.y += jf.speedY * 1.25;
+                    jf.rot += jf.rotSpeed * 1.3;
+                    jf.x += Math.sin(time * 0.0035 + jf.phase) * 0.5;
                     if (jf.y < -14) { jf.y = h + 12; jf.x = Math.random() * w; }
-                    drawJasmine(ctx, { ...jf, x: jf.x % Math.max(1, w) }, 0.72 * opacityScale);
+                    drawJasmine(ctx, { ...jf, x: jf.x % Math.max(1, w) }, 0.75 * opacityScale);
                 });
             } else if (activeFestivalKey === 'halloween') {
                 state.pumpkins.forEach(p => {
-                    drawPumpkin(ctx, { ...p, x: w * p.xRatio, y: h * p.yRatio }, time, 0.65 * opacityScale);
+                    drawPumpkin(ctx, { ...p, x: w * p.xRatio, y: h * p.yRatio }, time, 0.7 * opacityScale);
                 });
                 state.bats.forEach(b => {
-                    b.x += b.speedX;
-                    const by = Math.min(h - 12, Math.max(10, h * b.yRatio + Math.sin(time * 0.005 + b.wingPhase) * 4));
+                    b.x += b.speedX * 1.25;
+                    const by = Math.min(h - 12, Math.max(10, h * b.yRatio + Math.sin(time * 0.006 + b.wingPhase) * 6));
                     if (b.x > w + 25) b.x = -25;
-                    drawBat(ctx, { ...b, y: by }, time, 0.75 * opacityScale);
+                    drawBat(ctx, { ...b, y: by }, time, 0.8 * opacityScale);
                 });
             } else if (activeFestivalKey === 'loykrathong') {
                 state.skyLanterns.forEach(sl => {
-                    sl.y += sl.speedY;
-                    sl.x += Math.sin(time * 0.002 + sl.phase) * 0.3;
+                    sl.y += sl.speedY * 1.25;
+                    sl.x += Math.sin(time * 0.003 + sl.phase) * 0.45;
                     if (sl.y < -16) { sl.y = h - 18; sl.x = Math.random() * w; }
-                    drawLantern(ctx, sl.x % Math.max(1, w), sl.y, sl.r, Math.sin(time * 0.003 + sl.phase) * 0.08, '#f59e0b', '#fef08a', 0.56 * opacityScale);
+                    drawLantern(ctx, sl.x % Math.max(1, w), sl.y, sl.r, Math.sin(time * 0.004 + sl.phase) * 0.12, '#f59e0b', '#fef08a', 0.62 * opacityScale);
                 });
                 state.krathongs.forEach(k => {
-                    k.x += k.speedX;
+                    k.x += k.speedX * 1.25;
                     if (k.x > w + 25) k.x = -25;
-                    drawKrathong(ctx, { ...k, y: h * k.yRatio }, time, 0.78 * opacityScale);
+                    drawKrathong(ctx, { ...k, y: h * k.yRatio }, time, 0.82 * opacityScale);
                 });
             } else if (activeFestivalKey === 'christmas') {
                 state.ornaments.forEach(o => {
-                    const swing = Math.sin(time * 0.003 + o.phase) * 3;
+                    const swing = Math.sin(time * 0.004 + o.phase) * 4.5;
                     const ox = w * o.xRatio;
                     const oy = h * o.yRatio;
                     ctx.save();
-                    ctx.globalAlpha = 0.68 * opacityScale;
+                    ctx.globalAlpha = 0.72 * opacityScale;
                     ctx.strokeStyle = '#cbd5e1';
                     ctx.lineWidth = 1;
                     ctx.beginPath();
@@ -1503,10 +1630,10 @@
                     ctx.restore();
                 });
                 state.snowflakes.forEach(s => {
-                    s.y += s.speedY;
-                    s.x += s.drift + Math.sin(time * 0.003 + s.phase) * 0.3;
+                    s.y += s.speedY * 1.25;
+                    s.x += s.drift + Math.sin(time * 0.004 + s.phase) * 0.45;
                     if (s.y > h + 8) { s.y = -8; s.x = Math.random() * w; }
-                    drawSnowflake(ctx, { ...s, x: s.x % Math.max(1, w) }, time, 0.68 * opacityScale);
+                    drawSnowflake(ctx, { ...s, x: s.x % Math.max(1, w) }, time, 0.72 * opacityScale);
                 });
             }
         }
@@ -1527,56 +1654,55 @@
             if (bgCanvasLoopStarted) return;
             bgCanvasLoopStarted = true;
 
-            const stars = Array.from({ length: 48 }, () => ({
+            const stars = Array.from({ length: 56 }, () => ({
                 x: Math.random() * width,
                 y: Math.random() * height,
-                radius: Math.random() * 1.5 + 0.4,
-                alpha: Math.random() * 0.55 + 0.18,
-                speedY: -(Math.random() * 0.12 + 0.03),
+                radius: Math.random() * 1.7 + 0.45,
+                alpha: Math.random() * 0.62 + 0.2,
+                speedY: -(Math.random() * 0.22 + 0.06),
                 phase: Math.random() * Math.PI * 2
             }));
 
-            const orbitalRings = Array.from({ length: 5 }, () => ({
+            const orbitalRings = Array.from({ length: 7 }, () => ({
                 x: Math.random() * width,
                 y: Math.random() * height,
-                r: 14 + Math.random() * 14,
+                r: 15 + Math.random() * 16,
                 angle: Math.random() * Math.PI * 2,
-                rotSpeed: (Math.random() - 0.5) * 0.014,
-                speedY: -(0.08 + Math.random() * 0.12)
+                rotSpeed: (Math.random() - 0.5) * 0.025,
+                speedY: -(0.16 + Math.random() * 0.2)
             }));
 
             function drawOrbitNode(orb, color) {
                 ctx.save();
                 ctx.translate(orb.x, orb.y);
                 ctx.rotate(orb.angle);
-                ctx.globalAlpha = 0.2;
+                ctx.globalAlpha = 0.26;
                 ctx.strokeStyle = color;
-                ctx.lineWidth = 1.1;
+                ctx.lineWidth = 1.15;
                 ctx.setLineDash([5, 4]);
                 ctx.beginPath();
                 ctx.arc(0, 0, orb.r, 0, Math.PI * 2);
                 ctx.stroke();
                 ctx.setLineDash([]);
 
-                // Crosshair ticks
                 ctx.beginPath();
-                ctx.moveTo(-orb.r - 3, 0);
-                ctx.lineTo(-orb.r + 3, 0);
-                ctx.moveTo(orb.r - 3, 0);
-                ctx.lineTo(orb.r + 3, 0);
+                ctx.moveTo(-orb.r - 3.5, 0);
+                ctx.lineTo(-orb.r + 3.5, 0);
+                ctx.moveTo(orb.r - 3.5, 0);
+                ctx.lineTo(orb.r + 3.5, 0);
                 ctx.stroke();
 
                 ctx.fillStyle = color;
                 ctx.beginPath();
-                ctx.arc(0, 0, 1.7, 0, Math.PI * 2);
-                ctx.arc(orb.r, 0, 2.1, 0, Math.PI * 2);
+                ctx.arc(0, 0, 1.9, 0, Math.PI * 2);
+                ctx.arc(orb.r, 0, 2.3, 0, Math.PI * 2);
                 ctx.fill();
                 ctx.restore();
             }
 
             let lastFrameTime = 0;
             function animate(time = 0) {
-                if (time - lastFrameTime >= 32) {
+                if (time - lastFrameTime >= 28) {
                     lastFrameTime = time;
                     if (!isUserScrolling) {
                         ctx.clearRect(0, 0, width, height);
@@ -1594,18 +1720,18 @@
 
                         stars.forEach(s => {
                             if (activeFestivalKey === 'christmas') {
-                                s.y += Math.abs(s.speedY) * 2.0;
+                                s.y += Math.abs(s.speedY) * 2.2;
                                 if (s.y > height + 5) { s.y = -5; s.x = Math.random() * width; }
                             } else {
                                 s.y += s.speedY;
                                 if (s.y < -5) { s.y = height + 5; s.x = Math.random() * width; }
                             }
 
-                            const twinkle = 0.55 + 0.45 * Math.sin(time * 0.002 + s.phase);
+                            const twinkle = 0.45 + 0.55 * Math.sin(time * 0.004 + s.phase);
                             ctx.save();
                             ctx.beginPath();
                             ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
-                            ctx.fillStyle = s.radius > 1.3 ? theme.accentColor : '#e2e8f0';
+                            ctx.fillStyle = s.radius > 1.35 ? theme.accentColor : '#e2e8f0';
                             ctx.globalAlpha = s.alpha * twinkle;
                             ctx.fill();
                             ctx.restore();
@@ -1673,14 +1799,14 @@
 
             let lastLegendFrame = 0;
             function animate(time = 0) {
-                if (time - lastLegendFrame >= 32) {
+                if (time - lastLegendFrame >= 28) {
                     lastLegendFrame = time;
                     if (!isUserScrolling) {
                         if (legendCtx && legendCanvas) {
                             renderFestivalFrame(legendCtx, legendCanvas.width, legendCanvas.height, legendState, time, 1);
                         }
                         if (rosterCtx && rosterCanvas) {
-                            renderFestivalFrame(rosterCtx, rosterCanvas.width, rosterCanvas.height, rosterState, time, 0.85);
+                            renderFestivalFrame(rosterCtx, rosterCanvas.width, rosterCanvas.height, rosterState, time, 0.9);
                         }
                     }
                 }
