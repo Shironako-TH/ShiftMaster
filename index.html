@@ -127,7 +127,6 @@
             background-position: center;
         }
 
-        /* ลูกเล่นปุ่มไอคอน Galaxy Glass 4D */
         .hud-icon-frame {
             position: relative;
             display: inline-flex;
@@ -235,7 +234,6 @@
         #bg-canvas { z-index: 2; }
         #legend-festival-canvas { z-index: 1; }
 
-        /* แอนิเมชันเต็มกรอบพื้นที่ตารางกะแบบไม่กระพริบ */
         #roster-stage-wrap {
             position: relative;
             flex: 1;
@@ -1104,222 +1102,154 @@
             return { badgeClass: 'bg-slate-800/80 text-slate-300 border-slate-600', textClass: 'text-purple-300' };
         }
 
-        // --- REALISTIC GALAXY & FESTIVAL ANIMATION PAINTER ---
-        const PLANET_PALETTES = [
-            { base: '#f59e0b', shade: '#92400e', highlight: '#fde68a', band: '#d97706', ring: '#fbbf24', hasRing: true },
-            { base: '#38bdf8', shade: '#1e3a8a', highlight: '#bae6fd', band: '#0284c7', ring: '#7dd3fc', hasRing: false },
-            { base: '#c084fc', shade: '#4c1d95', highlight: '#f3e8ff', band: '#9333ea', ring: '#e879f9', hasRing: true },
-            { base: '#fb7185', shade: '#881337', highlight: '#fecdd3', band: '#e11d48', ring: '#fda4af', hasRing: false },
-            { base: '#34d399', shade: '#064e3b', highlight: '#a7f3d0', band: '#059669', ring: '#6ee7b7', hasRing: false },
-            { base: '#fb923c', shade: '#7c2d12', highlight: '#fed7aa', band: '#ea580c', ring: '#fdba74', hasRing: true }
-        ];
-
+        // --- FESTIVAL & GALAXY (NEBULA + STARS + SHOOTING STARS ONLY) ENGINE ---
         function createFestivalState(seedCount = 16) {
             const colors = ['#facc15', '#38bdf8', '#f472b6', '#34d399', '#a78bfa', '#fb923c'];
             return {
-                planets: Array.from({ length: 6 }, (_, i) => {
-                    const pal = PLANET_PALETTES[i % PLANET_PALETTES.length];
-                    return {
-                        xRatio: 0.1 + ((i * 0.17) % 0.8),
-                        yRatio: 0.18 + ((i * 0.29) % 0.64),
-                        vxRatio: (i % 2 === 0 ? 1 : -1) * (0.00018 + Math.random() * 0.00015),
-                        vyRatio: Math.sin(i * 1.7) * 0.00012,
-                        radius: 9 + (i % 3) * 4.5,
-                        tilt: -0.34 + (i % 3) * 0.22,
-                        rotSpeed: (i % 2 === 0 ? 1 : -1) * 0.0008,
-                        phase: i * 1.35,
-                        palette: pal
-                    };
-                }),
-                galaxyStars: Array.from({ length: 34 }, (_, i) => ({
+                galaxyStars: Array.from({ length: 48 }, (_, i) => ({
                     xRatio: Math.random(),
                     yRatio: Math.random(),
-                    r: 0.9 + Math.random() * 2.1,
+                    r: 0.85 + Math.random() * 2.2,
                     twinkleSpeed: 0.003 + Math.random() * 0.004,
                     phase: Math.random() * Math.PI * 2,
-                    isCross: i % 6 === 0,
-                    color: i % 4 === 0 ? '#e879f9' : (i % 3 === 0 ? '#7dd3fc' : '#f8fafc')
+                    isCross: i % 5 === 0,
+                    color: i % 4 === 0 ? '#e879f9' : (i % 3 === 0 ? '#7dd3fc' : (i % 7 === 0 ? '#fde047' : '#f8fafc'))
                 })),
-                shootingStars: Array.from({ length: 4 }, (_, i) => ({
+                shootingStars: Array.from({ length: 5 }, (_, i) => ({
                     xRatio: Math.random(),
                     yRatio: Math.random() * 0.7,
-                    len: 36 + Math.random() * 34,
+                    len: 44 + Math.random() * 38,
                     speedX: 0.0022 + Math.random() * 0.0014,
                     speedY: 0.0009 + Math.random() * 0.0007,
                     phase: i * 1.9
                 })),
                 nebulaPhase: Math.random() * Math.PI * 2,
                 fireworks: [],
-                confetti: Array.from({ length: seedCount }, () => ({
+                confetti: Array.from({ length: seedCount + 6 }, () => ({
                     x: Math.random() * 1000,
                     y: Math.random() * 400,
                     w: 6 + Math.random() * 3.5,
-                    h: 2.6 + Math.random() * 1.8,
+                    h: 2.8 + Math.random() * 2,
                     speedY: 0.42 + Math.random() * 0.45,
-                    flutter: Math.random() * Math.PI * 2,
-                    flutterSpeed: 0.055 + Math.random() * 0.045,
-                    isRibbon: Math.random() > 0.65,
+                    spin: Math.random() * Math.PI * 2,
+                    spinSpeed: (Math.random() - 0.5) * 0.12,
                     color: colors[Math.floor(Math.random() * colors.length)]
                 })),
-                hearts: Array.from({ length: seedCount }, () => ({
+                hearts: Array.from({ length: seedCount + 4 }, () => ({
                     x: Math.random() * 1000,
                     y: Math.random() * 400,
-                    size: 6.5 + Math.random() * 4.5,
-                    speedY: -(0.34 + Math.random() * 0.36),
+                    size: 7 + Math.random() * 5,
+                    speedY: -(0.35 + Math.random() * 0.4),
                     wobble: Math.random() * Math.PI * 2,
-                    wobbleFreq: 0.0032 + Math.random() * 0.0018,
+                    hasArrow: Math.random() < 0.25,
                     color: Math.random() > 0.45 ? '#fb7185' : '#f43f5e'
                 })),
                 cnyLanterns: Array.from({ length: 8 }, (_, i) => ({
                     x: (i + 0.5) * 130,
                     y: 20 + Math.random() * 280,
-                    r: 7.5 + Math.random() * 2.2,
-                    speedY: -(0.22 + Math.random() * 0.18),
+                    r: 8 + Math.random() * 2.5,
+                    speedY: -(0.22 + Math.random() * 0.2),
                     phase: Math.random() * Math.PI * 2
                 })),
-                waterDrops: Array.from({ length: seedCount + 6 }, () => ({
-                    x: Math.random() * 1000,
-                    y: Math.random() * 400,
-                    r: 2.4 + Math.random() * 3.2,
-                    vx: (Math.random() - 0.5) * 0.4,
-                    vy: -(0.38 + Math.random() * 0.5),
-                    phase: Math.random() * Math.PI * 2,
-                    rippleLife: Math.random(),
-                    rippleX: Math.random() * 1000,
-                    rippleY: 60 + Math.random() * 240
-                })),
-                jasmineFlowers: Array.from({ length: seedCount }, () => ({
-                    x: Math.random() * 1000,
-                    y: Math.random() * 400,
-                    r: 5.5 + Math.random() * 2.8,
-                    speedY: -(0.24 + Math.random() * 0.3),
+                cnyCoins: Array.from({ length: 8 }, (_, i) => ({
+                    x: 70 + i * 135,
+                    y: Math.random() * 360,
+                    r: 6.5 + Math.random() * 2,
+                    speedY: 0.35 + Math.random() * 0.35,
                     rot: Math.random() * Math.PI * 2,
-                    rotSpeed: (Math.random() - 0.5) * 0.022,
+                    rotSpeed: (Math.random() - 0.5) * 0.05
+                })),
+                waterDrops: Array.from({ length: seedCount + 10 }, () => ({
+                    x: Math.random() * 1000,
+                    y: Math.random() * 400,
+                    r: 2.4 + Math.random() * 3.4,
+                    vx: (Math.random() - 0.5) * 0.5,
+                    vy: -(0.42 + Math.random() * 0.55),
+                    phase: Math.random() * Math.PI * 2
+                })),
+                waterBowls: Array.from({ length: 4 }, (_, i) => ({
+                    xRatio: 0.16 + i * 0.23,
+                    yRatio: 0.78,
+                    r: 8.5,
+                    phase: i * 1.5
+                })),
+                jasmineFlowers: Array.from({ length: seedCount + 4 }, () => ({
+                    x: Math.random() * 1000,
+                    y: Math.random() * 400,
+                    r: 6 + Math.random() * 3,
+                    speedY: -(0.25 + Math.random() * 0.35),
+                    rot: Math.random() * Math.PI * 2,
+                    rotSpeed: (Math.random() - 0.5) * 0.025,
                     phase: Math.random() * Math.PI * 2
                 })),
                 bats: Array.from({ length: 7 }, () => ({
                     x: Math.random() * 1000,
-                    yRatio: 0.18 + Math.random() * 0.62,
-                    speedX: 0.75 + Math.random() * 0.55,
+                    yRatio: 0.18 + Math.random() * 0.55,
+                    speedX: 0.85 + Math.random() * 0.65,
                     wingPhase: Math.random() * Math.PI * 2,
-                    scale: 0.75 + Math.random() * 0.38
+                    scale: 0.78 + Math.random() * 0.38
                 })),
-                pumpkins: Array.from({ length: 5 }, (_, i) => ({
-                    xRatio: 0.12 + i * 0.2,
-                    yRatio: 0.78,
-                    r: 8,
+                ghosts: Array.from({ length: 5 }, (_, i) => ({
+                    x: 120 + i * 210,
+                    yRatio: 0.68,
+                    r: 9,
+                    speedX: (i % 2 === 0 ? 1 : -1) * (0.35 + Math.random() * 0.25),
                     phase: i * 1.4
                 })),
                 krathongs: Array.from({ length: 5 }, (_, i) => ({
                     x: 90 + i * 210,
                     yRatio: 0.82,
-                    w: 20,
-                    h: 8,
-                    speedX: 0.32 + Math.random() * 0.22,
+                    w: 22,
+                    h: 8.5,
+                    speedX: 0.35 + Math.random() * 0.25,
                     phase: i * 1.2
                 })),
-                skyLanterns: Array.from({ length: 6 }, () => ({
+                skyLanterns: Array.from({ length: 7 }, () => ({
                     x: Math.random() * 1000,
                     y: Math.random() * 320,
-                    r: 5.5 + Math.random() * 2.2,
-                    speedY: -(0.26 + Math.random() * 0.2),
+                    r: 6 + Math.random() * 2.5,
+                    speedY: -(0.28 + Math.random() * 0.24),
                     phase: Math.random() * Math.PI * 2
                 })),
-                snowflakes: Array.from({ length: seedCount + 8 }, () => ({
+                snowflakes: Array.from({ length: seedCount + 10 }, () => ({
                     x: Math.random() * 1000,
                     y: Math.random() * 400,
                     r: 2.2 + Math.random() * 2.4,
-                    speedY: 0.38 + Math.random() * 0.42,
-                    drift: (Math.random() - 0.5) * 0.35,
+                    speedY: 0.4 + Math.random() * 0.45,
+                    drift: (Math.random() - 0.5) * 0.4,
                     phase: Math.random() * Math.PI * 2
                 })),
                 ornaments: Array.from({ length: 6 }, (_, i) => ({
                     xRatio: 0.1 + i * 0.17,
-                    yRatio: 0.2 + (i % 2) * 0.11,
+                    yRatio: 0.18 + (i % 2) * 0.12,
                     r: 6.5,
                     phase: i * 1.1,
-                    color: i % 2 === 0 ? '#ef4444' : '#facc15',
-                    highlight: i % 2 === 0 ? '#fecaca' : '#fef9c3'
+                    color: i % 2 === 0 ? '#ef4444' : '#facc15'
+                })),
+                reindeers: Array.from({ length: 3 }, (_, i) => ({
+                    x: 140 + i * 260,
+                    yRatio: 0.78,
+                    speedX: 0.55 + Math.random() * 0.25,
+                    scale: 0.85 + (i % 2) * 0.15,
+                    phase: i * 1.6
                 }))
             };
         }
 
-        function drawPlanet(ctx, px, py, pl, time, opacityScale) {
-            const r = pl.radius;
-            const pal = pl.palette;
-
-            ctx.save();
-            ctx.translate(px, py);
-            ctx.globalAlpha = 0.85 * opacityScale;
-
-            const glow = ctx.createRadialGradient(0, 0, r * 0.6, 0, 0, r * 1.9);
-            glow.addColorStop(0, pal.highlight + '44');
-            glow.addColorStop(1, 'rgba(0,0,0,0)');
-            ctx.fillStyle = glow;
-            ctx.beginPath();
-            ctx.arc(0, 0, r * 1.9, 0, Math.PI * 2);
-            ctx.fill();
-
-            if (pl.hasRing) {
-                ctx.save();
-                ctx.rotate(pl.tilt);
-                ctx.strokeStyle = pal.ring;
-                ctx.lineWidth = Math.max(1.8, r * 0.22);
-                ctx.globalAlpha = 0.55 * opacityScale;
-                ctx.beginPath();
-                ctx.ellipse(0, 0, r * 2.15, r * 0.52, 0, Math.PI, Math.PI * 2);
-                ctx.stroke();
-                ctx.restore();
-            }
-
-            ctx.save();
-            ctx.beginPath();
-            ctx.arc(0, 0, r, 0, Math.PI * 2);
-            ctx.clip();
-
-            const bodyGrad = ctx.createRadialGradient(-r * 0.35, -r * 0.35, r * 0.15, r * 0.2, r * 0.2, r * 1.25);
-            bodyGrad.addColorStop(0, pal.highlight);
-            bodyGrad.addColorStop(0.45, pal.base);
-            bodyGrad.addColorStop(1, pal.shade);
-            ctx.fillStyle = bodyGrad;
-            ctx.fillRect(-r, -r, r * 2, r * 2);
-
-            ctx.fillStyle = pal.band;
-            ctx.globalAlpha = 0.28 * opacityScale;
-            const bandShift = Math.sin(time * 0.001 + pl.phase) * (r * 0.15);
-            ctx.fillRect(-r, -r * 0.28 + bandShift, r * 2, r * 0.22);
-            ctx.fillRect(-r, r * 0.18 - bandShift, r * 2, r * 0.16);
-            ctx.restore();
-
-            if (pl.hasRing) {
-                ctx.save();
-                ctx.rotate(pl.tilt);
-                ctx.strokeStyle = pal.ring;
-                ctx.lineWidth = Math.max(1.8, r * 0.22);
-                ctx.globalAlpha = 0.78 * opacityScale;
-                ctx.beginPath();
-                ctx.ellipse(0, 0, r * 2.15, r * 0.52, 0, 0, Math.PI);
-                ctx.stroke();
-                ctx.restore();
-            }
-
-            ctx.restore();
-        }
-
         function drawGalaxyLayer(ctx, w, h, state, time, opacityScale = 1) {
-            const neb1X = w * (0.28 + 0.06 * Math.sin(time * 0.0005 + state.nebulaPhase));
+            const neb1X = w * (0.25 + 0.06 * Math.sin(time * 0.0005 + state.nebulaPhase));
             const neb1Y = h * (0.45 + 0.05 * Math.cos(time * 0.0004 + state.nebulaPhase));
-            const neb1 = ctx.createRadialGradient(neb1X, neb1Y, 10, neb1X, neb1Y, Math.max(120, Math.min(w, h) * 0.55));
-            neb1.addColorStop(0, `rgba(139, 92, 246, ${(0.14 * opacityScale).toFixed(3)})`);
-            neb1.addColorStop(0.6, `rgba(217, 70, 239, ${(0.06 * opacityScale).toFixed(3)})`);
+            const neb1 = ctx.createRadialGradient(neb1X, neb1Y, 10, neb1X, neb1Y, Math.max(130, Math.min(w, h) * 0.6));
+            neb1.addColorStop(0, `rgba(139, 92, 246, ${(0.16 * opacityScale).toFixed(3)})`);
+            neb1.addColorStop(0.55, `rgba(217, 70, 239, ${(0.07 * opacityScale).toFixed(3)})`);
             neb1.addColorStop(1, 'rgba(0, 0, 0, 0)');
             ctx.fillStyle = neb1;
             ctx.fillRect(0, 0, w, h);
 
             const neb2X = w * (0.76 + 0.05 * Math.cos(time * 0.00045 + state.nebulaPhase));
             const neb2Y = h * (0.55 + 0.06 * Math.sin(time * 0.0005 + state.nebulaPhase));
-            const neb2 = ctx.createRadialGradient(neb2X, neb2Y, 10, neb2X, neb2Y, Math.max(120, Math.min(w, h) * 0.5));
-            neb2.addColorStop(0, `rgba(56, 189, 248, ${(0.13 * opacityScale).toFixed(3)})`);
+            const neb2 = ctx.createRadialGradient(neb2X, neb2Y, 10, neb2X, neb2Y, Math.max(130, Math.min(w, h) * 0.55));
+            neb2.addColorStop(0, `rgba(56, 189, 248, ${(0.15 * opacityScale).toFixed(3)})`);
             neb2.addColorStop(1, 'rgba(0, 0, 0, 0)');
             ctx.fillStyle = neb2;
             ctx.fillRect(0, 0, w, h);
@@ -1330,12 +1260,12 @@
                 const pulse = 0.35 + 0.65 * (0.5 + 0.5 * Math.sin(time * st.twinkleSpeed + st.phase));
 
                 ctx.save();
-                ctx.globalAlpha = pulse * 0.85 * opacityScale;
+                ctx.globalAlpha = pulse * 0.88 * opacityScale;
                 ctx.fillStyle = st.color;
                 if (st.isCross) {
-                    const sLen = st.r * 2.4;
+                    const sLen = st.r * 2.6;
                     ctx.strokeStyle = st.color;
-                    ctx.lineWidth = 1.1;
+                    ctx.lineWidth = 1.15;
                     ctx.beginPath();
                     ctx.moveTo(sx - sLen, sy);
                     ctx.lineTo(sx + sLen, sy);
@@ -1347,18 +1277,6 @@
                 ctx.arc(sx, sy, st.r, 0, Math.PI * 2);
                 ctx.fill();
                 ctx.restore();
-            });
-
-            state.planets.forEach(pl => {
-                pl.xRatio += pl.vxRatio;
-                pl.yRatio += pl.vyRatio;
-                pl.tilt += pl.rotSpeed;
-                if (pl.xRatio > 1.08) pl.xRatio = -0.08;
-                if (pl.xRatio < -0.08) pl.xRatio = 1.08;
-
-                const px = pl.xRatio * w;
-                const py = Math.min(h - 16, Math.max(16, pl.yRatio * h + Math.sin(time * 0.002 + pl.phase) * 5));
-                drawPlanet(ctx, px, py, pl, time, opacityScale);
             });
 
             state.shootingStars.forEach(ss => {
@@ -1376,33 +1294,32 @@
                 ctx.save();
                 const grad = ctx.createLinearGradient(sx + dx, sy + dy, sx, sy);
                 grad.addColorStop(0, 'rgba(255, 255, 255, 0)');
-                grad.addColorStop(1, `rgba(232, 121, 249, ${(0.75 * opacityScale).toFixed(3)})`);
+                grad.addColorStop(1, `rgba(232, 121, 249, ${(0.8 * opacityScale).toFixed(3)})`);
                 ctx.strokeStyle = grad;
-                ctx.lineWidth = 1.8;
+                ctx.lineWidth = 1.9;
                 ctx.beginPath();
                 ctx.moveTo(sx + dx, sy + dy);
                 ctx.lineTo(sx, sy);
                 ctx.stroke();
 
                 ctx.fillStyle = '#ffffff';
-                ctx.globalAlpha = 0.9 * opacityScale;
+                ctx.globalAlpha = 0.92 * opacityScale;
                 ctx.beginPath();
-                ctx.arc(sx, sy, 1.8, 0, Math.PI * 2);
+                ctx.arc(sx, sy, 1.9, 0, Math.PI * 2);
                 ctx.fill();
                 ctx.restore();
             });
         }
 
-        function drawHeart(ctx, x, y, size, color, alpha, tiltAngle = 0) {
+        function drawHeart(ctx, x, y, size, color, alpha, hasArrow = false) {
             ctx.save();
             ctx.translate(x, y);
-            ctx.rotate(tiltAngle);
             ctx.globalAlpha = alpha;
 
-            const halo = ctx.createRadialGradient(0, size * 0.4, size * 0.1, 0, size * 0.4, size * 1.25);
-            halo.addColorStop(0, 'rgba(251, 113, 133, 0.32)');
-            halo.addColorStop(1, 'rgba(251, 113, 133, 0)');
-            ctx.fillStyle = halo;
+            const glow = ctx.createRadialGradient(0, size * 0.4, 1, 0, size * 0.4, size * 1.25);
+            glow.addColorStop(0, 'rgba(251, 113, 133, 0.35)');
+            glow.addColorStop(1, 'rgba(251, 113, 133, 0)');
+            ctx.fillStyle = glow;
             ctx.beginPath();
             ctx.arc(0, size * 0.4, size * 1.25, 0, Math.PI * 2);
             ctx.fill();
@@ -1418,138 +1335,197 @@
             ctx.closePath();
             ctx.fill();
 
-            // Specular highlight on upper-left lobe
             ctx.fillStyle = 'rgba(255, 255, 255, 0.45)';
             ctx.beginPath();
-            ctx.ellipse(-size * 0.22, topCurveHeight * 0.85, size * 0.11, size * 0.06, -0.5, 0, Math.PI * 2);
+            ctx.ellipse(-size * 0.24, size * 0.26, size * 0.11, size * 0.07, -0.5, 0, Math.PI * 2);
             ctx.fill();
+
+            if (hasArrow) {
+                ctx.save();
+                ctx.rotate(-0.45);
+                ctx.strokeStyle = '#fde047';
+                ctx.lineWidth = 1.4;
+                ctx.beginPath();
+                ctx.moveTo(-size * 0.95, size * 0.45);
+                ctx.lineTo(size * 0.95, size * 0.45);
+                ctx.stroke();
+
+                ctx.fillStyle = '#fde047';
+                ctx.beginPath();
+                ctx.moveTo(size * 1.05, size * 0.45);
+                ctx.lineTo(size * 0.72, size * 0.32);
+                ctx.lineTo(size * 0.72, size * 0.58);
+                ctx.closePath();
+                ctx.fill();
+                ctx.restore();
+            }
 
             ctx.restore();
         }
 
-        function drawLantern(ctx, x, y, r, sway, primaryCol, accentCol, alpha, time = 0) {
+        function drawLantern(ctx, x, y, r, sway, primaryCol, accentCol, alpha) {
             ctx.save();
             ctx.translate(x, y);
             ctx.rotate(sway);
             ctx.globalAlpha = alpha;
 
-            // Warm inner candle glow
-            const glow = ctx.createRadialGradient(0, 0, r * 0.15, 0, 0, r * 1.85);
-            glow.addColorStop(0, 'rgba(254, 240, 138, 0.52)');
-            glow.addColorStop(0.55, 'rgba(245, 158, 11, 0.22)');
-            glow.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            const glow = ctx.createRadialGradient(0, 0, 2, 0, 0, r * 2.2);
+            glow.addColorStop(0, primaryCol + '55');
+            glow.addColorStop(1, 'rgba(0,0,0,0)');
             ctx.fillStyle = glow;
             ctx.beginPath();
-            ctx.arc(0, 0, r * 1.85, 0, Math.PI * 2);
+            ctx.arc(0, 0, r * 2.2, 0, Math.PI * 2);
             ctx.fill();
 
-            // Cap & tassel
             ctx.fillStyle = accentCol;
-            ctx.fillRect(-r * 0.45, -r * 0.96, r * 0.9, r * 0.2);
-            ctx.fillRect(-r * 0.38, r * 0.78, r * 0.76, r * 0.16);
+            ctx.fillRect(-r * 0.55, -r * 0.95, r * 1.1, r * 0.22);
+            ctx.fillRect(-r * 0.5, r * 0.75, r * 1.0, r * 0.2);
 
-            const tasselSwing = Math.sin(time * 0.008 + x * 0.05) * 2.5;
             ctx.strokeStyle = accentCol;
             ctx.lineWidth = 1.3;
             ctx.beginPath();
-            ctx.moveTo(0, r * 0.94);
-            ctx.quadraticCurveTo(tasselSwing, r * 1.25, tasselSwing * 1.4, r * 1.55);
+            ctx.moveTo(0, r * 0.95);
+            ctx.lineTo(0, r + 9);
             ctx.stroke();
 
-            // Lantern body
             ctx.fillStyle = primaryCol;
             ctx.beginPath();
-            ctx.ellipse(0, 0, r * 1.08, r * 0.84, 0, 0, Math.PI * 2);
+            ctx.ellipse(0, 0, r * 1.12, r * 0.85, 0, 0, Math.PI * 2);
             ctx.fill();
 
-            // Ribbed vertical contours
             ctx.strokeStyle = accentCol;
-            ctx.lineWidth = 0.9;
-            ctx.globalAlpha = alpha * 0.75;
+            ctx.lineWidth = 1;
             ctx.beginPath();
-            ctx.ellipse(0, 0, r * 0.56, r * 0.84, 0, 0, Math.PI * 2);
-            ctx.moveTo(-r * 1.04, 0);
-            ctx.lineTo(r * 1.04, 0);
+            ctx.ellipse(0, 0, r * 0.55, r * 0.85, 0, 0, Math.PI * 2);
             ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(-r * 1.1, 0);
+            ctx.lineTo(r * 1.1, 0);
+            ctx.stroke();
+
+            ctx.restore();
+        }
+
+        function drawGoldCoin(ctx, c, alpha) {
+            ctx.save();
+            ctx.translate(c.x, c.y);
+            ctx.rotate(c.rot);
+            ctx.globalAlpha = alpha * 0.82;
+            ctx.fillStyle = '#facc15';
+            ctx.strokeStyle = '#ca8a04';
+            ctx.lineWidth = 1.3;
+            ctx.beginPath();
+            ctx.arc(0, 0, c.r, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+
+            const hole = c.r * 0.45;
+            ctx.fillStyle = '#450a0a';
+            ctx.fillRect(-hole / 2, -hole / 2, hole, hole);
+            ctx.restore();
+        }
+
+        function drawWaterBowl(ctx, b, time, alpha) {
+            ctx.save();
+            const bob = Math.sin(time * 0.004 + b.phase) * 3;
+            ctx.translate(b.x, b.y + bob);
+            ctx.globalAlpha = alpha * 0.88;
+
+            ctx.strokeStyle = '#7dd3fc';
+            ctx.lineWidth = 1.3;
+            for (let i = -1; i <= 1; i++) {
+                const splashY = -b.r * 0.9 - Math.abs(Math.sin(time * 0.006 + b.phase + i)) * 7;
+                ctx.beginPath();
+                ctx.arc(i * b.r * 0.55, splashY, 1.8, 0, Math.PI * 2);
+                ctx.stroke();
+            }
+
+            ctx.fillStyle = '#0284c7';
+            ctx.strokeStyle = '#bae6fd';
+            ctx.lineWidth = 1.3;
+            ctx.beginPath();
+            ctx.arc(0, 0, b.r, 0, Math.PI, false);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+
+            ctx.fillStyle = '#38bdf8';
+            ctx.beginPath();
+            ctx.ellipse(0, 0, b.r, b.r * 0.3, 0, 0, Math.PI * 2);
+            ctx.fill();
 
             ctx.restore();
         }
 
         function drawBat(ctx, b, time, alpha) {
             ctx.save();
-            const flightBob = Math.sin(time * 0.007 + b.wingPhase) * 4.5;
-            ctx.translate(b.x, b.y + flightBob);
+            ctx.translate(b.x, b.y);
             ctx.scale(b.scale, b.scale);
             ctx.globalAlpha = alpha;
-
-            const flap = Math.sin(time * 0.02 + b.wingPhase);
-            const wingLift = flap * 8.5;
-            const wingTipDrop = Math.cos(time * 0.02 + b.wingPhase) * 3.5;
-
-            ctx.fillStyle = '#181438';
+            ctx.fillStyle = '#1e1b4b';
             ctx.strokeStyle = '#fb923c';
-            ctx.lineWidth = 1;
-
+            ctx.lineWidth = 1.1;
+            const flap = Math.sin(time * 0.018 + b.wingPhase) * 7.5;
             ctx.beginPath();
             ctx.moveTo(0, 2);
-            ctx.quadraticCurveTo(-7, -7 + wingLift, -15, -1 + wingLift * 0.65 + wingTipDrop);
-            ctx.quadraticCurveTo(-10, 3 + wingLift * 0.25, -6, 2 + wingLift * 0.2);
-            ctx.quadraticCurveTo(-3, 5, 0, 5.5);
-            ctx.quadraticCurveTo(3, 5, 6, 2 - wingLift * 0.2);
-            ctx.quadraticCurveTo(10, 3 - wingLift * 0.25, 15, -1 - wingLift * 0.65 + wingTipDrop);
-            ctx.quadraticCurveTo(7, -7 - wingLift, 0, 2);
+            ctx.quadraticCurveTo(-8, -7 + flap, -15, 1 + flap * 0.5);
+            ctx.quadraticCurveTo(-7, 4, 0, 5);
+            ctx.quadraticCurveTo(7, 4, 15, 1 - flap * 0.5);
+            ctx.quadraticCurveTo(8, -7 - flap, 0, 2);
             ctx.closePath();
             ctx.fill();
             ctx.stroke();
 
-            // Glowing eyes
             ctx.fillStyle = '#facc15';
-            ctx.fillRect(-2.2, 0.8, 1.3, 1.3);
-            ctx.fillRect(1.1, 0.8, 1.3, 1.3);
-
+            ctx.beginPath();
+            ctx.arc(-2.5, 1, 1.1, 0, Math.PI * 2);
+            ctx.arc(2.5, 1, 1.1, 0, Math.PI * 2);
+            ctx.fill();
             ctx.restore();
         }
 
-        function drawPumpkin(ctx, p, time, alpha) {
+        function drawGhost(ctx, g, time, alpha) {
             ctx.save();
-            const bob = Math.sin(time * 0.004 + p.phase) * 2.5;
-            ctx.translate(p.x, p.y + bob);
-            ctx.globalAlpha = alpha;
+            const floatY = Math.sin(time * 0.0045 + g.phase) * 4;
+            const tilt = Math.sin(time * 0.0035 + g.phase) * 0.12;
+            ctx.translate(g.x, g.y + floatY);
+            ctx.rotate(tilt);
+            ctx.globalAlpha = alpha * 0.92;
 
-            // Warm pumpkin aura
-            const aura = ctx.createRadialGradient(0, 0, p.r * 0.4, 0, 0, p.r * 2.1);
-            aura.addColorStop(0, 'rgba(251, 146, 60, 0.35)');
-            aura.addColorStop(1, 'rgba(251, 146, 60, 0)');
-            ctx.fillStyle = aura;
+            // Spooky purple-orange aura
+            const glow = ctx.createRadialGradient(0, 0, 2, 0, 0, g.r * 2.2);
+            glow.addColorStop(0, 'rgba(232, 121, 249, 0.38)');
+            glow.addColorStop(1, 'rgba(232, 121, 249, 0)');
+            ctx.fillStyle = glow;
             ctx.beginPath();
-            ctx.arc(0, 0, p.r * 2.1, 0, Math.PI * 2);
+            ctx.arc(0, 0, g.r * 2.2, 0, Math.PI * 2);
             ctx.fill();
 
-            // Stem
-            ctx.strokeStyle = '#16a34a';
-            ctx.lineWidth = 2.2;
-            ctx.lineCap = 'round';
+            // Ghost body with wavy bottom hem
+            const r = g.r;
+            const wave = Math.sin(time * 0.012 + g.phase) * 1.4;
+            ctx.fillStyle = '#f8fafc';
+            ctx.strokeStyle = '#c084fc';
+            ctx.lineWidth = 1.2;
             ctx.beginPath();
-            ctx.moveTo(0, -p.r * 0.85);
-            ctx.quadraticCurveTo(2, -p.r * 1.45, 5, -p.r * 1.35);
+            ctx.arc(0, -r * 0.15, r, Math.PI, 0, false);
+            ctx.lineTo(r, r * 0.9);
+            ctx.quadraticCurveTo(r * 0.5, r * 0.55 + wave, 0, r * 0.9);
+            ctx.quadraticCurveTo(-r * 0.5, r * 0.55 - wave, -r, r * 0.9);
+            ctx.closePath();
+            ctx.fill();
             ctx.stroke();
 
-            // Pumpkin lobes
-            const grad = ctx.createRadialGradient(-p.r * 0.35, -p.r * 0.3, 1, 0, 0, p.r * 1.4);
-            grad.addColorStop(0, '#fdba74');
-            grad.addColorStop(0.55, '#ea580c');
-            grad.addColorStop(1, '#7c2d12');
-            ctx.fillStyle = grad;
+            // Eyes & mouth
+            ctx.fillStyle = '#1e1b4b';
             ctx.beginPath();
-            ctx.ellipse(0, 0, p.r * 1.3, p.r * 0.92, 0, 0, Math.PI * 2);
+            ctx.arc(-r * 0.35, -r * 0.2, 1.8, 0, Math.PI * 2);
+            ctx.arc(r * 0.35, -r * 0.2, 1.8, 0, Math.PI * 2);
             ctx.fill();
 
-            ctx.strokeStyle = 'rgba(124, 45, 18, 0.55)';
-            ctx.lineWidth = 1;
             ctx.beginPath();
-            ctx.ellipse(0, 0, p.r * 0.65, p.r * 0.92, 0, 0, Math.PI * 2);
-            ctx.ellipse(0, 0, p.r * 0.22, p.r * 0.92, 0, 0, Math.PI * 2);
-            ctx.stroke();
+            ctx.ellipse(0, r * 0.2, 2.2, 3.1, 0, 0, Math.PI * 2);
+            ctx.fill();
 
             ctx.restore();
         }
@@ -1559,87 +1535,165 @@
             ctx.translate(f.x, f.y);
             ctx.rotate(f.rot);
             ctx.globalAlpha = alpha;
-
-            const softGlow = ctx.createRadialGradient(0, 0, 1, 0, 0, f.r * 1.5);
-            softGlow.addColorStop(0, 'rgba(248, 250, 252, 0.28)');
-            softGlow.addColorStop(1, 'rgba(248, 250, 252, 0)');
-            ctx.fillStyle = softGlow;
-            ctx.beginPath();
-            ctx.arc(0, 0, f.r * 1.5, 0, Math.PI * 2);
-            ctx.fill();
-
             for (let i = 0; i < 6; i++) {
                 const angle = (Math.PI * 2 * i) / 6;
-                const px = Math.cos(angle) * (f.r * 0.55);
-                const py = Math.sin(angle) * (f.r * 0.55);
-                ctx.save();
-                ctx.translate(px, py);
-                ctx.rotate(angle);
-                ctx.fillStyle = i % 2 === 0 ? '#ffffff' : '#e2e8f0';
+                const px = Math.cos(angle) * (f.r * 0.58);
+                const py = Math.sin(angle) * (f.r * 0.58);
+                ctx.fillStyle = '#f8fafc';
                 ctx.beginPath();
-                ctx.ellipse(0, 0, f.r * 0.52, f.r * 0.32, 0, 0, Math.PI * 2);
+                ctx.ellipse(px, py, f.r * 0.48, f.r * 0.28, angle, 0, Math.PI * 2);
                 ctx.fill();
-                ctx.restore();
             }
-
             ctx.fillStyle = '#facc15';
             ctx.beginPath();
-            ctx.arc(0, 0, f.r * 0.26, 0, Math.PI * 2);
+            ctx.arc(0, 0, f.r * 0.28, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+        }
+
+        function drawFullMoon(ctx, w, h, time, tintColor, alpha) {
+            const mx = w * 0.86;
+            const my = Math.min(h * 0.26, 48);
+            const mr = Math.min(22, Math.max(12, Math.min(w, h) * 0.2));
+            const pulse = 0.9 + 0.1 * Math.sin(time * 0.002);
+
+            ctx.save();
+            ctx.globalAlpha = alpha * pulse;
+            const halo = ctx.createRadialGradient(mx, my, mr * 0.5, mx, my, mr * 2.6);
+            halo.addColorStop(0, tintColor + '66');
+            halo.addColorStop(1, 'rgba(0,0,0,0)');
+            ctx.fillStyle = halo;
+            ctx.beginPath();
+            ctx.arc(mx, my, mr * 2.6, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.fillStyle = tintColor;
+            ctx.beginPath();
+            ctx.arc(mx, my, mr, 0, Math.PI * 2);
             ctx.fill();
             ctx.restore();
         }
 
         function drawKrathong(ctx, k, time, alpha) {
             ctx.save();
-            const bob = Math.sin(time * 0.004 + k.phase) * 2.5;
+            const bob = Math.sin(time * 0.004 + k.phase) * 2.8;
             ctx.translate(k.x, k.y + bob);
             ctx.globalAlpha = alpha;
 
-            // Water ripples around krathong
-            const rippleR = k.w * (0.95 + ((time * 0.0008 + k.phase * 0.2) % 0.45));
-            const rippleAlpha = Math.max(0, 0.55 * (1 - ((time * 0.0008 + k.phase * 0.2) % 0.45) / 0.45));
-            ctx.strokeStyle = `rgba(125, 211, 252, ${rippleAlpha.toFixed(3)})`;
+            ctx.strokeStyle = 'rgba(56, 189, 248, 0.55)';
             ctx.lineWidth = 1.1;
             ctx.beginPath();
-            ctx.ellipse(0, k.h * 0.65, rippleR, rippleR * 0.22, 0, 0, Math.PI * 2);
+            ctx.ellipse(0, k.h * 0.65, k.w * 1.05, 3, 0, 0, Math.PI * 2);
             ctx.stroke();
 
-            // Banana leaf petals
             ctx.fillStyle = '#15803d';
             ctx.beginPath();
-            ctx.moveTo(-k.w * 0.65, 0);
-            ctx.lineTo(k.w * 0.65, 0);
-            ctx.lineTo(k.w * 0.44, k.h * 0.68);
-            ctx.lineTo(-k.w * 0.44, k.h * 0.68);
+            ctx.moveTo(-k.w * 0.7, 0);
+            ctx.lineTo(k.w * 0.7, 0);
+            ctx.lineTo(k.w * 0.48, k.h * 0.65);
+            ctx.lineTo(-k.w * 0.48, k.h * 0.65);
             ctx.closePath();
             ctx.fill();
 
-            ctx.fillStyle = '#4ade80';
-            for (let p = -2; p <= 2; p++) {
-                ctx.beginPath();
-                ctx.moveTo(p * (k.w * 0.22), 0);
-                ctx.lineTo(p * (k.w * 0.22) + 3, k.h * 0.55);
-                ctx.lineTo(p * (k.w * 0.22) - 3, k.h * 0.55);
-                ctx.closePath();
-                ctx.fill();
-            }
-
-            // Candle & flickering flame
-            ctx.fillStyle = '#fef08a';
-            ctx.fillRect(-1.5, -6.5, 3, 6.5);
-
-            const flicker = Math.sin(time * 0.025 + k.phase) * 1.4;
-            const flameGlow = ctx.createRadialGradient(0, -9, 1, 0, -9, 13);
-            flameGlow.addColorStop(0, 'rgba(254, 240, 138, 0.75)');
-            flameGlow.addColorStop(1, 'rgba(245, 158, 11, 0)');
-            ctx.fillStyle = flameGlow;
+            ctx.fillStyle = '#fbcfe8';
             ctx.beginPath();
-            ctx.arc(flicker * 0.5, -9, 13, 0, Math.PI * 2);
+            ctx.ellipse(-k.w * 0.25, -1.5, k.w * 0.28, 3.2, -0.3, 0, Math.PI * 2);
+            ctx.ellipse(k.w * 0.25, -1.5, k.w * 0.28, 3.2, 0.3, 0, Math.PI * 2);
             ctx.fill();
 
-            ctx.fillStyle = '#f59e0b';
+            ctx.fillStyle = '#fef08a';
+            ctx.fillRect(-1.5, -7, 3, 6);
+            const flicker = 0.8 + 0.35 * Math.sin(time * 0.02 + k.phase);
+            ctx.fillStyle = '#f97316';
             ctx.beginPath();
-            ctx.ellipse(flicker * 0.5, -9, 2.5, 4.2, flicker * 0.15, 0, Math.PI * 2);
+            ctx.arc(0, -9.5, 3 * flicker, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#fef9c3';
+            ctx.beginPath();
+            ctx.arc(0, -9.2, 1.4, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.restore();
+        }
+
+        function drawReindeer(ctx, r, time, alpha) {
+            ctx.save();
+            const hop = Math.abs(Math.sin(time * 0.008 + r.phase)) * 3.5;
+            const legSwing = Math.sin(time * 0.012 + r.phase) * 3.5;
+            ctx.translate(r.x, r.y - hop);
+            ctx.scale(r.scale, r.scale);
+            ctx.globalAlpha = alpha * 0.92;
+
+            // Body
+            ctx.fillStyle = '#a16207';
+            ctx.beginPath();
+            ctx.ellipse(0, 0, 11, 6.5, 0, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Fluffy white tail
+            ctx.fillStyle = '#fef3c7';
+            ctx.beginPath();
+            ctx.arc(-11.5, -1, 2.5, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Animated legs
+            ctx.strokeStyle = '#78350f';
+            ctx.lineWidth = 2.2;
+            ctx.lineCap = 'round';
+            // Back legs
+            ctx.beginPath();
+            ctx.moveTo(-7, 5);
+            ctx.lineTo(-7 - legSwing, 12);
+            ctx.moveTo(-4, 5);
+            ctx.lineTo(-4 + legSwing, 12);
+            // Front legs
+            ctx.moveTo(6, 5);
+            ctx.lineTo(6 + legSwing, 12);
+            ctx.moveTo(9, 5);
+            ctx.lineTo(9 - legSwing, 12);
+            ctx.stroke();
+
+            // Neck & Head
+            ctx.fillStyle = '#a16207';
+            ctx.beginPath();
+            ctx.moveTo(7, -3);
+            ctx.lineTo(13, -10);
+            ctx.lineTo(17, -7);
+            ctx.lineTo(11, 2);
+            ctx.closePath();
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.ellipse(15, -8.5, 5.5, 4.2, -0.2, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Antlers
+            ctx.strokeStyle = '#fde68a';
+            ctx.lineWidth = 1.6;
+            ctx.beginPath();
+            ctx.moveTo(13.5, -12);
+            ctx.lineTo(12, -18);
+            ctx.lineTo(9.5, -20);
+            ctx.moveTo(12, -16);
+            ctx.lineTo(14.5, -18.5);
+
+            ctx.moveTo(16, -12);
+            ctx.lineTo(17.5, -18);
+            ctx.lineTo(20, -20);
+            ctx.moveTo(17.5, -16);
+            ctx.lineTo(15, -18.5);
+            ctx.stroke();
+
+            // Eye & glowing red Rudolph nose
+            ctx.fillStyle = '#0f172a';
+            ctx.beginPath();
+            ctx.arc(15.5, -9.8, 1.1, 0, Math.PI * 2);
+            ctx.fill();
+
+            const nosePulse = 0.8 + 0.25 * Math.sin(time * 0.01 + r.phase);
+            ctx.fillStyle = '#ef4444';
+            ctx.beginPath();
+            ctx.arc(20.5, -7.8, 2.2 * nosePulse, 0, Math.PI * 2);
             ctx.fill();
 
             ctx.restore();
@@ -1648,36 +1702,16 @@
         function drawSnowflake(ctx, s, time, alpha) {
             ctx.save();
             ctx.translate(s.x, s.y);
-            ctx.rotate(time * 0.0012 + s.phase);
+            ctx.rotate(time * 0.0015 + s.phase);
             ctx.globalAlpha = alpha;
-            ctx.strokeStyle = '#e2e8f0';
-            ctx.lineWidth = 1.1;
-            ctx.lineCap = 'round';
-
+            ctx.strokeStyle = '#f1f5f9';
+            ctx.lineWidth = 1.2;
             for (let i = 0; i < 3; i++) {
                 const ang = (Math.PI * i) / 3;
-                const cosA = Math.cos(ang);
-                const sinA = Math.sin(ang);
-                const len = s.r * 1.5;
-
                 ctx.beginPath();
-                ctx.moveTo(-cosA * len, -sinA * len);
-                ctx.lineTo(cosA * len, sinA * len);
+                ctx.moveTo(Math.cos(ang) * -s.r * 1.5, Math.sin(ang) * -s.r * 1.5);
+                ctx.lineTo(Math.cos(ang) * s.r * 1.5, Math.sin(ang) * s.r * 1.5);
                 ctx.stroke();
-
-                // Small branch ticks on each arm
-                const bDist = len * 0.55;
-                const bLen = s.r * 0.48;
-                [-1, 1].forEach(dir => {
-                    const bx = cosA * bDist * dir;
-                    const by = sinA * bDist * dir;
-                    ctx.beginPath();
-                    ctx.moveTo(bx, by);
-                    ctx.lineTo(bx - sinA * bLen, by + cosA * bLen);
-                    ctx.moveTo(bx, by);
-                    ctx.lineTo(bx + sinA * bLen, by - cosA * bLen);
-                    ctx.stroke();
-                });
             }
             ctx.restore();
         }
@@ -1690,73 +1724,44 @@
                 drawGalaxyLayer(ctx, w, h, state, time, opacityScale);
             } else if (activeFestivalKey === 'newyear') {
                 state.confetti.forEach(c => {
-                    c.y += c.speedY * 1.25;
-                    c.flutter += c.flutterSpeed;
-                    c.x += Math.sin(time * 0.0035 + c.flutter) * 0.65;
-                    if (c.y > h + 10) { c.y = -10; c.x = Math.random() * w; }
-
-                    const scaleX = Math.max(0.22, Math.abs(Math.cos(c.flutter)));
+                    c.y += c.speedY * 1.3;
+                    c.spin += c.spinSpeed * 1.3;
+                    c.x += Math.sin(time * 0.004 + c.spin) * 0.65;
+                    if (c.y > h + 8) { c.y = -8; c.x = Math.random() * w; }
                     ctx.save();
                     ctx.translate(c.x % Math.max(1, w), c.y);
-                    ctx.rotate(Math.sin(c.flutter) * 0.55);
+                    ctx.rotate(c.spin);
                     ctx.globalAlpha = 0.72 * opacityScale;
                     ctx.fillStyle = c.color;
-                    if (c.isRibbon) {
-                        ctx.beginPath();
-                        ctx.moveTo(-c.w * 0.6, 0);
-                        ctx.quadraticCurveTo(0, Math.sin(c.flutter * 1.6) * 4.5, c.w * 0.6, 0);
-                        ctx.lineWidth = Math.max(1.8, c.h * 0.7 * scaleX);
-                        ctx.strokeStyle = c.color;
-                        ctx.stroke();
-                    } else {
-                        ctx.fillRect(-(c.w * scaleX) / 2, -c.h / 2, c.w * scaleX, c.h);
-                    }
+                    ctx.fillRect(-c.w / 2, -c.h / 2, c.w, c.h);
                     ctx.restore();
                 });
 
-                if (Math.random() < 0.065 && state.fireworks.length < 4) {
+                if (Math.random() < 0.075 && state.fireworks.length < 4) {
                     const colors = ['#facc15', '#f472b6', '#22d3ee', '#a78bfa', '#34d399', '#fb923c'];
                     const cx = 40 + Math.random() * Math.max(80, w - 80);
-                    const cy = 20 + Math.random() * Math.max(30, h - 40);
+                    const cy = 18 + Math.random() * Math.max(28, h - 36);
                     const color = colors[Math.floor(Math.random() * colors.length)];
-                    const sparks = Array.from({ length: 16 }, (_, k) => {
-                        const angle = (Math.PI * 2 * k) / 16;
-                        const speed = 0.75 + Math.random() * 1.05;
-                        return {
-                            x: cx,
-                            y: cy,
-                            prevX: cx,
-                            prevY: cy,
-                            vx: Math.cos(angle) * speed,
-                            vy: Math.sin(angle) * speed
-                        };
+                    const innerColor = colors[(colors.indexOf(color) + 2) % colors.length];
+                    const sparks = Array.from({ length: 18 }, (_, k) => {
+                        const angle = (Math.PI * 2 * k) / 18;
+                        const isInner = k % 2 === 1;
+                        const speed = (isInner ? 0.55 : 1.05) + Math.random() * 0.45;
+                        return { x: cx, y: cy, vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed, col: isInner ? innerColor : color };
                     });
-                    state.fireworks.push({ sparks, color, life: 1.0 });
+                    state.fireworks.push({ sparks, life: 1.0 });
                 }
                 state.fireworks.forEach(fw => {
                     fw.life -= 0.02;
                     fw.sparks.forEach(sp => {
-                        sp.prevX = sp.x;
-                        sp.prevY = sp.y;
                         sp.x += sp.vx;
                         sp.y += sp.vy;
-                        sp.vy += 0.018;
-                        sp.vx *= 0.99;
-
-                        const alpha = Math.max(0, fw.life * opacityScale);
+                        sp.vy += 0.016;
                         ctx.save();
-                        ctx.strokeStyle = fw.color;
-                        ctx.globalAlpha = alpha * 0.55;
-                        ctx.lineWidth = 1.4;
-                        ctx.beginPath();
-                        ctx.moveTo(sp.prevX, sp.prevY);
-                        ctx.lineTo(sp.x, sp.y);
-                        ctx.stroke();
-
                         ctx.beginPath();
                         ctx.arc(sp.x, sp.y, 2.2, 0, Math.PI * 2);
-                        ctx.fillStyle = '#ffffff';
-                        ctx.globalAlpha = alpha;
+                        ctx.fillStyle = sp.col;
+                        ctx.globalAlpha = Math.max(0, fw.life * opacityScale);
                         ctx.fill();
                         ctx.restore();
                     });
@@ -1764,128 +1769,110 @@
                 state.fireworks = state.fireworks.filter(fw => fw.life > 0);
             } else if (activeFestivalKey === 'valentine') {
                 state.hearts.forEach(ht => {
-                    ht.y += ht.speedY * 1.2;
-                    ht.x += Math.sin(time * ht.wobbleFreq + ht.wobble) * 0.7;
+                    ht.y += ht.speedY * 1.25;
+                    ht.x += Math.sin(time * 0.0045 + ht.wobble) * 0.7;
                     if (ht.y < -18) { ht.y = h + 16; ht.x = Math.random() * w; }
-                    const tilt = Math.cos(time * ht.wobbleFreq + ht.wobble) * 0.22;
-                    drawHeart(ctx, ht.x % Math.max(1, w), ht.y, ht.size, ht.color, 0.72 * opacityScale, tilt);
+                    drawHeart(ctx, ht.x % Math.max(1, w), ht.y, ht.size, ht.color, 0.75 * opacityScale, ht.hasArrow);
                 });
             } else if (activeFestivalKey === 'chinesenewyear') {
+                state.cnyCoins.forEach(cn => {
+                    cn.y += cn.speedY * 1.2;
+                    cn.rot += cn.rotSpeed * 1.3;
+                    if (cn.y > h + 12) { cn.y = -12; cn.x = Math.random() * w; }
+                    drawGoldCoin(ctx, { ...cn, x: cn.x % Math.max(1, w) }, opacityScale);
+                });
                 state.cnyLanterns.forEach(ln => {
-                    ln.y += ln.speedY * 1.2;
-                    ln.x += Math.sin(time * 0.0028 + ln.phase) * 0.45;
-                    if (ln.y < -22) { ln.y = h + 20; ln.x = Math.random() * w; }
-                    const sway = Math.sin(time * 0.0045 + ln.phase) * 0.16;
-                    drawLantern(ctx, ln.x % Math.max(1, w), ln.y, ln.r, sway, '#dc2626', '#facc15', 0.78 * opacityScale, time);
+                    ln.y += ln.speedY * 1.25;
+                    ln.x += Math.sin(time * 0.003 + ln.phase) * 0.45;
+                    if (ln.y < -20) { ln.y = h + 18; ln.x = Math.random() * w; }
+                    const sway = Math.sin(time * 0.005 + ln.phase) * 0.18;
+                    drawLantern(ctx, ln.x % Math.max(1, w), ln.y, ln.r, sway, '#dc2626', '#facc15', 0.82 * opacityScale);
                 });
             } else if (activeFestivalKey === 'songkran') {
+                state.waterBowls.forEach(wb => {
+                    drawWaterBowl(ctx, { ...wb, x: w * wb.xRatio, y: h * wb.yRatio }, time, opacityScale);
+                });
                 state.waterDrops.forEach(wd => {
-                    wd.x += wd.vx * 1.2;
-                    wd.y += wd.vy * 1.2;
-                    wd.rippleLife += 0.015;
-                    if (wd.rippleLife > 1) {
-                        wd.rippleLife = 0;
-                        wd.rippleX = Math.random() * w;
-                        wd.rippleY = Math.max(20, Math.min(h - 16, Math.random() * h));
-                    }
-                    if (wd.y < -12) { wd.y = h + 10; wd.x = Math.random() * w; }
+                    wd.x += wd.vx * 1.35;
+                    wd.y += wd.vy * 1.35;
+                    if (wd.y < -10) { wd.y = h + 8; wd.x = Math.random() * w; }
                     if (wd.x < 0) wd.x = w;
                     if (wd.x > w) wd.x = 0;
-
-                    // Expanding water ripple ring
-                    const ringR = 3 + wd.rippleLife * 14;
-                    const ringAlpha = (1 - wd.rippleLife) * 0.42 * opacityScale;
-                    ctx.save();
-                    ctx.strokeStyle = `rgba(125, 211, 252, ${ringAlpha.toFixed(3)})`;
-                    ctx.lineWidth = 1.1;
-                    ctx.beginPath();
-                    ctx.ellipse(wd.rippleX, wd.rippleY, ringR, ringR * 0.45, 0, 0, Math.PI * 2);
-                    ctx.stroke();
-                    ctx.restore();
-
-                    // Droplet with upper-left specular highlight
                     ctx.save();
                     ctx.beginPath();
                     ctx.arc(wd.x, wd.y, wd.r, 0, Math.PI * 2);
-                    ctx.fillStyle = 'rgba(56, 189, 248, 0.34)';
-                    ctx.strokeStyle = '#7dd3fc';
+                    ctx.fillStyle = 'rgba(56, 189, 248, 0.42)';
+                    ctx.strokeStyle = '#bae6fd';
                     ctx.lineWidth = 1.1;
-                    ctx.globalAlpha = 0.76 * opacityScale;
+                    ctx.globalAlpha = 0.78 * opacityScale;
                     ctx.fill();
                     ctx.stroke();
-
-                    ctx.fillStyle = 'rgba(255, 255, 255, 0.75)';
-                    ctx.beginPath();
-                    ctx.arc(wd.x - wd.r * 0.32, wd.y - wd.r * 0.32, Math.max(0.8, wd.r * 0.28), 0, Math.PI * 2);
-                    ctx.fill();
                     ctx.restore();
                 });
             } else if (activeFestivalKey === 'mothersday') {
                 state.jasmineFlowers.forEach(jf => {
-                    jf.y += jf.speedY * 1.2;
-                    jf.rot += jf.rotSpeed * 1.2;
-                    jf.x += Math.sin(time * 0.003 + jf.phase) * 0.55;
-                    if (jf.y < -16) { jf.y = h + 14; jf.x = Math.random() * w; }
-                    drawJasmine(ctx, { ...jf, x: jf.x % Math.max(1, w) }, 0.8 * opacityScale);
+                    jf.y += jf.speedY * 1.25;
+                    jf.rot += jf.rotSpeed * 1.3;
+                    jf.x += Math.sin(time * 0.0035 + jf.phase) * 0.5;
+                    if (jf.y < -14) { jf.y = h + 12; jf.x = Math.random() * w; }
+                    drawJasmine(ctx, { ...jf, x: jf.x % Math.max(1, w) }, 0.82 * opacityScale);
                 });
             } else if (activeFestivalKey === 'halloween') {
-                state.pumpkins.forEach(p => {
-                    drawPumpkin(ctx, { ...p, x: w * p.xRatio, y: h * p.yRatio }, time, 0.76 * opacityScale);
+                drawFullMoon(ctx, w, h, time, '#fb923c', 0.55 * opacityScale);
+                state.ghosts.forEach(g => {
+                    g.x += g.speedX * 1.2;
+                    if (g.x > w + 25) g.x = -25;
+                    if (g.x < -25) g.x = w + 25;
+                    drawGhost(ctx, { ...g, y: h * g.yRatio }, time, opacityScale);
                 });
                 state.bats.forEach(b => {
-                    b.x += b.speedX * 1.2;
-                    const by = Math.min(h - 14, Math.max(12, h * b.yRatio + Math.sin(time * 0.005 + b.wingPhase) * 6));
-                    if (b.x > w + 28) b.x = -28;
-                    drawBat(ctx, { ...b, y: by }, time, 0.82 * opacityScale);
+                    b.x += b.speedX * 1.25;
+                    const by = Math.min(h - 14, Math.max(10, h * b.yRatio + Math.sin(time * 0.006 + b.wingPhase) * 6));
+                    if (b.x > w + 25) b.x = -25;
+                    drawBat(ctx, { ...b, y: by }, time, 0.85 * opacityScale);
                 });
             } else if (activeFestivalKey === 'loykrathong') {
+                drawFullMoon(ctx, w, h, time, '#fef08a', 0.55 * opacityScale);
                 state.skyLanterns.forEach(sl => {
-                    sl.y += sl.speedY * 1.2;
-                    sl.x += Math.sin(time * 0.0028 + sl.phase) * 0.45;
-                    if (sl.y < -18) { sl.y = h - 20; sl.x = Math.random() * w; }
-                    drawLantern(ctx, sl.x % Math.max(1, w), sl.y, sl.r, Math.sin(time * 0.004 + sl.phase) * 0.12, '#f59e0b', '#fef08a', 0.68 * opacityScale, time);
+                    sl.y += sl.speedY * 1.25;
+                    sl.x += Math.sin(time * 0.003 + sl.phase) * 0.45;
+                    if (sl.y < -18) { sl.y = h - 22; sl.x = Math.random() * w; }
+                    drawLantern(ctx, sl.x % Math.max(1, w), sl.y, sl.r, Math.sin(time * 0.004 + sl.phase) * 0.12, '#f59e0b', '#fef08a', 0.7 * opacityScale);
                 });
                 state.krathongs.forEach(k => {
-                    k.x += k.speedX * 1.2;
+                    k.x += k.speedX * 1.25;
                     if (k.x > w + 28) k.x = -28;
-                    drawKrathong(ctx, { ...k, y: h * k.yRatio }, time, 0.86 * opacityScale);
+                    drawKrathong(ctx, { ...k, y: h * k.yRatio }, time, 0.88 * opacityScale);
                 });
             } else if (activeFestivalKey === 'christmas') {
+                state.reindeers.forEach(rd => {
+                    rd.x += rd.speedX * 1.25;
+                    if (rd.x > w + 32) rd.x = -32;
+                    drawReindeer(ctx, { ...rd, y: h * rd.yRatio }, time, opacityScale);
+                });
                 state.ornaments.forEach(o => {
-                    const swing = Math.sin(time * 0.0036 + o.phase) * 5;
+                    const swing = Math.sin(time * 0.004 + o.phase) * 4.5;
                     const ox = w * o.xRatio;
                     const oy = h * o.yRatio;
-                    const bx = ox + swing;
                     ctx.save();
                     ctx.globalAlpha = 0.78 * opacityScale;
-
-                    // Hanging string & metal cap
                     ctx.strokeStyle = '#cbd5e1';
-                    ctx.lineWidth = 1.1;
+                    ctx.lineWidth = 1;
                     ctx.beginPath();
                     ctx.moveTo(ox, 0);
-                    ctx.lineTo(bx, oy - o.r);
+                    ctx.lineTo(ox + swing, oy - o.r);
                     ctx.stroke();
-
-                    ctx.fillStyle = '#e2e8f0';
-                    ctx.fillRect(bx - 2.2, oy - o.r - 1.5, 4.4, 2.5);
-
-                    // Glossy ornament ball
-                    const grad = ctx.createRadialGradient(bx - o.r * 0.35, oy - o.r * 0.35, 1, bx, oy, o.r * 1.1);
-                    grad.addColorStop(0, o.highlight);
-                    grad.addColorStop(0.55, o.color);
-                    grad.addColorStop(1, '#0f172a');
-                    ctx.fillStyle = grad;
+                    ctx.fillStyle = o.color;
                     ctx.beginPath();
-                    ctx.arc(bx, oy, o.r, 0, Math.PI * 2);
+                    ctx.arc(ox + swing, oy, o.r, 0, Math.PI * 2);
                     ctx.fill();
                     ctx.restore();
                 });
                 state.snowflakes.forEach(s => {
-                    s.y += s.speedY * 1.2;
-                    s.x += s.drift + Math.sin(time * 0.0035 + s.phase) * 0.45;
-                    if (s.y > h + 10) { s.y = -10; s.x = Math.random() * w; }
-                    drawSnowflake(ctx, { ...s, x: s.x % Math.max(1, w) }, time, 0.76 * opacityScale);
+                    s.y += s.speedY * 1.25;
+                    s.x += s.drift + Math.sin(time * 0.004 + s.phase) * 0.45;
+                    if (s.y > h + 8) { s.y = -8; s.x = Math.random() * w; }
+                    drawSnowflake(ctx, { ...s, x: s.x % Math.max(1, w) }, time, 0.78 * opacityScale);
                 });
             }
         }
@@ -1906,25 +1893,13 @@
             if (bgCanvasLoopStarted) return;
             bgCanvasLoopStarted = true;
 
-            const stars = Array.from({ length: 68 }, () => ({
+            const stars = Array.from({ length: 76 }, () => ({
                 x: Math.random() * width,
                 y: Math.random() * height,
                 radius: Math.random() * 1.9 + 0.45,
                 alpha: Math.random() * 0.72 + 0.2,
                 speedY: -(Math.random() * 0.2 + 0.05),
                 phase: Math.random() * Math.PI * 2
-            }));
-
-            const miniPlanets = Array.from({ length: 5 }, (_, i) => ({
-                x: Math.random() * width,
-                y: Math.random() * height,
-                vx: (Math.random() - 0.5) * 0.25,
-                vy: -(0.12 + Math.random() * 0.16),
-                radius: 7 + (i % 3) * 4,
-                tilt: -0.3 + i * 0.18,
-                rotSpeed: 0.0007,
-                phase: i * 1.7,
-                palette: PLANET_PALETTES[i % PLANET_PALETTES.length]
             }));
 
             let lastFrameTime = 0;
@@ -1934,19 +1909,6 @@
                     if (!isUserScrolling) {
                         ctx.clearRect(0, 0, width, height);
                         const theme = FESTIVAL_THEMES[activeFestivalKey] || FESTIVAL_THEMES.galaxy;
-
-                        miniPlanets.forEach(mp => {
-                            mp.x += mp.vx;
-                            mp.y += mp.vy;
-                            mp.tilt += mp.rotSpeed;
-                            if (mp.y < -35) {
-                                mp.y = height + 35;
-                                mp.x = Math.random() * width;
-                            }
-                            if (mp.x < -35) mp.x = width + 35;
-                            if (mp.x > width + 35) mp.x = -35;
-                            drawPlanet(ctx, mp.x, mp.y, mp, time, 0.55);
-                        });
 
                         stars.forEach(s => {
                             if (activeFestivalKey === 'christmas') {
